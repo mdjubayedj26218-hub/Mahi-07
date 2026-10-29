@@ -991,8 +991,12 @@ section {
   height: 130px;
   position: relative;
   transform-style: preserve-3d;
-  animation: cubeRotate 14s linear infinite;
-  transition: transform 0.05s linear;
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+}
+.cube-wrapper:active {
+  cursor: grabbing;
 }
 .cube-wrapper.is-paused {
   animation-play-state: paused;
@@ -2527,7 +2531,7 @@ label:focus-visible,
   100% { transform: rotateZ(45deg) rotateX(68deg) rotate(360deg); }
 }
 
-/* Starburst Glow for Navodaya Illuminate */
+/* Starburst Glow for Navodaya Alumnus */
 .starburst-rays {
   position: absolute;
   width: 104px;
@@ -2684,6 +2688,38 @@ label:focus-visible,
 }
 @media (pointer: coarse) {
   .cursor-dot, .cursor-ring { display: none !important; }
+}
+
+
+/* Sport Card Header & Badges */
+.sport-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.sport-card-header .sport-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0;
+}
+.sport-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: rgba(0, 240, 224, 0.12);
+  border: 1px solid rgba(0, 240, 224, 0.35);
+  color: #00f0e0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.sport-badge--badminton {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.35);
+  color: #c084fc;
 }
 
 </style>
@@ -2880,7 +2916,7 @@ label:focus-visible,
         </div>
         <div class="achievement-stat-pill achievement-stat-pill--gold">
           <span>🌟</span>
-          <span>Proud Navodaya Illuminate</span>
+          <span>Proud Navodaya Alumnus</span>
         </div>
         <div class="achievement-stat-pill">
           <span>📐</span>
@@ -2921,30 +2957,30 @@ label:focus-visible,
           <h3 class="prestige-title">Science Olympiad</h3>
           <p class="prestige-sub prestige-sub--science">Bronze Medalist</p>
           <p class="prestige-desc">
-            Driven by relentless curiosity about how the universe operates. Awarded Bronze in Class 9 for scientific deduction, experimental understanding, and exploring the mechanics of physical and chemical systems.
+            Driven by relentless curiosity about natural laws and living systems. Awarded Bronze in Class 9 for scientific deduction and experimental understanding across Physics, Chemistry, and Biology.
           </p>
           <div class="prestige-tags">
-            <span class="prestige-tag">⚛️ Physics &amp; Chem</span>
+            <span class="prestige-tag">🧬 Biology, Physics &amp; Chem</span>
             <span class="prestige-tag">🔬 Class 9</span>
             <span class="prestige-tag">🥉 Bronze Medal</span>
           </div>
         </article>
 
-        <!-- Navodaya Illuminate -->
+        <!-- Navodaya Alumnus -->
         <article class="glass-card glow-border prestige-card prestige-card--navodaya">
           <div class="medallion-stage" aria-hidden="true">
             <div class="starburst-rays"></div>
             <div class="medallion-disc medallion-disc--gold">🌟</div>
           </div>
           <span class="prestige-ribbon prestige-ribbon--navodaya">Jawahar Navodaya Vidyalaya</span>
-          <h3 class="prestige-title">Navodaya Illuminate</h3>
+          <h3 class="prestige-title">Navodaya Alumnus</h3>
           <p class="prestige-sub prestige-sub--navodaya">Proud Alumnus &amp; Torchbearer</p>
           <p class="prestige-desc">
             Formed by the rigorous residential culture of Navodaya Vidyalaya, where leadership, self-reliance, intellectual depth, and lifelong brotherhood are forged. An enduring source of pride and purpose.
           </p>
           <div class="prestige-tags">
             <span class="prestige-tag">🌟 JNV Alumnus</span>
-            <span class="prestige-tag">🏛️ Navodaya Illuminate</span>
+            <span class="prestige-tag">🏛️ Navodaya Alumnus</span>
             <span class="prestige-tag">🎯 Pride &amp; Honor</span>
           </div>
         </article>
@@ -3009,30 +3045,8 @@ label:focus-visible,
             </div>
           </div>
           
-          <div class="cube-hud">
-            <div class="cube-status-line">
-              <span id="cube-status" class="cube-status-pill solved">Status: Solved ✨</span>
-              <span id="cube-moves" class="cube-moves-pill">Moves: 0</span>
-              <button id="cube-spin-toggle" class="cube-tool-btn" title="Toggle 3D Auto-Spin">🔄 Spin: ON</button>
-            </div>
-            <p class="cube-drag-hint">🖱️ Drag cube in 3D • Click patterns to transform or solve</p>
-            <div class="cube-patterns-bar">
-              <button class="cube-btn cube-btn--pattern" id="btn-checkerboard" title="Apply classic Checkerboard Pattern (U2 D2 F2 B2 L2 R2)">🏁 Checkerboard</button>
-              <button class="cube-btn cube-btn--pattern" id="btn-flower" title="Apply Center Flower Pattern">🌸 Flower</button>
-              <button class="cube-btn cube-btn--action" id="btn-scramble" title="Random Scramble">🔀 Scramble</button>
-              <button class="cube-btn cube-btn--solve" id="btn-solve" title="Animated step-by-step Auto-Solve!">⚡ Auto-Solve</button>
-              <button class="cube-btn cube-btn--reset" id="btn-reset" title="Instant Reset">🔄 Reset</button>
-            </div>
-            <div class="cube-turns-bar">
-              <span class="cube-turns-label">Turns:</span>
-              <button class="cube-turn-btn" data-move="U" title="Turn Up face">U</button>
-              <button class="cube-turn-btn" data-move="D" title="Turn Down face">D</button>
-              <button class="cube-turn-btn" data-move="L" title="Turn Left face">L</button>
-              <button class="cube-turn-btn" data-move="R" title="Turn Right face">R</button>
-              <button class="cube-turn-btn" data-move="F" title="Turn Front face">F</button>
-              <button class="cube-turn-btn" data-move="B" title="Turn Back face">B</button>
-              <button class="cube-turn-btn cube-turn-invert" id="btn-turn-invert" title="Toggle Counter-Clockwise (Prime)">' Prime: OFF</button>
-            </div>
+          <div class="cube-status-line" style="margin-top: 1.25rem;">
+            <span class="cube-status-pill solved">✨ Touch / Drag to Revolve &bull; Auto-Spins in 3D</span>
           </div>
           <p class="cube-label">🧊 Cube Solving &amp; Algorithmic Thinking</p>
           <p style="text-align:center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
@@ -3075,6 +3089,12 @@ label:focus-visible,
       <div class="sports-grid reveal stagger-2">
         <!-- Cricket Card (Playable & Overview) -->
         <div class="glass-card glow-border sport-card" id="cricket-card">
+          <!-- Tile Title Header -->
+          <div class="sport-card-header">
+            <h3 class="sport-title sport-title--cricket">🏏 Cricket</h3>
+            <span class="sport-badge">1-Over Challenge</span>
+          </div>
+
           <div class="sport-mode-nav">
             <button class="sport-mode-btn active" data-sport="cricket" data-mode="game">🎮 Play Match</button>
             <button class="sport-mode-btn" data-sport="cricket" data-mode="story">📖 Story</button>
@@ -3129,7 +3149,7 @@ label:focus-visible,
               </div>
               <p class="game-hint">🖱️ Move mouse to align bat • Click button or canvas to swing! • 6-Ball Over</p>
             </div>
-            <h3 class="sport-title sport-title--cricket" style="margin-top: 1rem;">🏏 Cricket: 1-Over Challenge</h3>
+            
           </div>
 
           <!-- Story View -->
@@ -3156,6 +3176,12 @@ label:focus-visible,
 
         <!-- Badminton Card (Playable & Overview) -->
         <div class="glass-card glow-border sport-card" id="badminton-card">
+          <!-- Tile Title Header -->
+          <div class="sport-card-header">
+            <h3 class="sport-title sport-title--badminton">🏸 Badminton</h3>
+            <span class="sport-badge sport-badge--badminton">Smash &amp; Rally</span>
+          </div>
+
           <div class="sport-mode-nav">
             <button class="sport-mode-btn active" data-sport="badminton" data-mode="game">🎮 Play Rally</button>
             <button class="sport-mode-btn" data-sport="badminton" data-mode="story">📖 Story</button>
@@ -3165,6 +3191,13 @@ label:focus-visible,
           <div class="sport-content-pane active" id="badminton-pane-game">
             <div class="game-arena">
               <div class="game-hud">
+                <div class="game-hud-stat">
+                  <span class="game-hud-label">YOU:</span>
+                  <span class="game-hud-val" id="badminton-score-player" style="color: #00f0e0; font-weight: bold;">0</span>
+                  <span class="game-hud-label">-</span>
+                  <span class="game-hud-val" id="badminton-score-ai" style="color: #f472b6; font-weight: bold;">0</span>
+                  <span class="game-hud-label">OPP</span>
+                </div>
                 <div class="game-hud-stat">
                   <span class="game-hud-label">RALLY:</span>
                   <span class="game-hud-val" id="badminton-rally">0</span>
@@ -3190,7 +3223,7 @@ label:focus-visible,
                   <div class="game-end-stats">
                     <div class="game-end-stat-box">
                       <div class="num" id="badminton-final-rally">0</div>
-                      <div class="lbl">Hits</div>
+                      <div class="lbl" id="badminton-final-score-lbl">Score (You - Opp)</div>
                     </div>
                     <div class="game-end-stat-box">
                       <div class="num" id="badminton-final-speed">0</div>
@@ -3208,7 +3241,7 @@ label:focus-visible,
               </div>
               <p class="game-hint">🖱️ Move mouse to return shuttle • Click button or canvas to POWER SMASH!</p>
             </div>
-            <h3 class="sport-title sport-title--badminton" style="margin-top: 1rem;">🏸 Badminton: Smash & Rally</h3>
+            
           </div>
 
           <!-- Story View -->
@@ -3444,12 +3477,59 @@ label:focus-visible,
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(950, t);
         osc.frequency.exponentialRampToValueAtTime(220, t + 0.15);
-        gain.gain.setValueAtTime(0.16, t);
+        gain.gain.setValueAtTime(0.18, t);
         gain.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start(t);
         osc.stop(t + 0.17);
+      } catch (e) {}
+    },
+
+    playPointWon() {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const t = this.ctx.currentTime;
+        const osc1 = this.ctx.createOscillator();
+        const osc2 = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc1.type = 'sine';
+        osc2.type = 'triangle';
+        osc1.frequency.setValueAtTime(523.25, t); // C5
+        osc1.frequency.setValueAtTime(659.25, t + 0.08); // E5
+        osc1.frequency.setValueAtTime(783.99, t + 0.16); // G5
+        osc2.frequency.setValueAtTime(1046.5, t + 0.22); // C6
+        gain.gain.setValueAtTime(0.15, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc1.start(t);
+        osc2.start(t + 0.22);
+        osc1.stop(t + 0.22);
+        osc2.stop(t + 0.36);
+      } catch (e) {}
+    },
+
+    playPointLost() {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(260, t);
+        osc.frequency.exponentialRampToValueAtTime(130, t + 0.22);
+        gain.gain.setValueAtTime(0.12, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.23);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.24);
       } catch (e) {}
     },
 
@@ -3511,8 +3591,7 @@ label:focus-visible,
       };
       requestAnimationFrame(animate);
 
-      // Hover expansion on interactive elements
-      const hoverTargets = 'a, button, [role="button"], input, textarea, select, .glass-card, .cube-tile, canvas';
+      const hoverTargets = 'a, button, [role="button"], input, textarea, select, .glass-card, .cube-container, canvas';
       document.addEventListener('mouseover', (e) => {
         if (e.target.closest(hoverTargets)) {
           this.ring.classList.add('cursor-hover');
@@ -3526,7 +3605,6 @@ label:focus-visible,
         }
       });
 
-      // Click pulse
       window.addEventListener('mousedown', () => {
         this.ring.classList.add('cursor-click');
       });
@@ -3537,262 +3615,103 @@ label:focus-visible,
   };
 
   // ═══════════════════════════════════════════════
-  // 3D RUBIK'S CUBE GAME & PATTERNS
+  // 3D RUBIK'S CUBE (SEAMLESS 3D ORBIT & REVOLUTION)
+  // Always spins automatically; pauses & revolves when touched/dragged;
+  // Automatically resumes smooth spinning when cursor is released.
   // ═══════════════════════════════════════════════
   const CubeGame = {
-    faces: {
-      U: ['W','W','W','W','W','W','W','W','W'],
-      D: ['Y','Y','Y','Y','Y','Y','Y','Y','Y'],
-      F: ['G','G','G','G','G','G','G','G','G'],
-      B: ['B','B','B','B','B','B','B','B','B'],
-      L: ['O','O','O','O','O','O','O','O','O'],
-      R: ['R','R','R','R','R','R','R','R','R']
-    },
-    colorMap: { W: 'white', Y: 'yellow', G: 'green', B: 'blue', O: 'orange', R: 'red' },
-    history: [],
-    primeMode: false,
-    autoSpin: true,
+    wrapper: null,
+    container: null,
     rotX: -22,
     rotY: -35,
+    autoSpeedY: 0.65,
+    autoSpeedX: 0.18,
     isDragging: false,
     startX: 0,
     startY: 0,
+    lastX: 0,
+    lastY: 0,
+    velX: 0,
+    velY: 0,
 
     init() {
-      this.resetState();
-      this.render();
+      this.wrapper = document.getElementById('cube-wrapper');
+      this.container = document.getElementById('cube-container');
+      if (!this.wrapper || !this.container) return;
+
       this.bindEvents();
-    },
-
-    resetState() {
-      for (const f of ['U','D','F','B','L','R']) {
-        const c = f === 'U' ? 'W' : f === 'D' ? 'Y' : f === 'F' ? 'G' : f === 'B' ? 'B' : f === 'L' ? 'O' : 'R';
-        this.faces[f] = Array(9).fill(c);
-      }
-      this.history = [];
-      this.updateHud('SOLVED 🎉', true);
-    },
-
-    rotCW(f) {
-      const p = this.faces[f];
-      this.faces[f] = [p[6], p[3], p[0], p[7], p[4], p[1], p[8], p[5], p[2]];
-    },
-
-    applyMove(move, record = true) {
-      const isPrime = move.endsWith("'");
-      const base = move.replace("'", "");
-      const count = isPrime ? 3 : 1;
-
-      for (let i = 0; i < count; i++) {
-        this.rawMove(base);
-      }
-      if (record) {
-        this.history.push(move);
-        AudioEngine.playClick();
-        this.render();
-        this.updateHud(`Moved ${move}`, false);
-      }
-    },
-
-    rawMove(base) {
-      const s = this.faces;
-      this.rotCW(base);
-      if (base === 'U') {
-        const t = [s.F[0], s.F[1], s.F[2]];
-        s.F[0] = s.R[0]; s.F[1] = s.R[1]; s.F[2] = s.R[2];
-        s.R[0] = s.B[0]; s.R[1] = s.B[1]; s.R[2] = s.B[2];
-        s.B[0] = s.L[0]; s.B[1] = s.L[1]; s.B[2] = s.L[2];
-        s.L[0] = t[0];    s.L[1] = t[1];    s.L[2] = t[2];
-      } else if (base === 'D') {
-        const t = [s.F[6], s.F[7], s.F[8]];
-        s.F[6] = s.L[6]; s.F[7] = s.L[7]; s.F[8] = s.L[8];
-        s.L[6] = s.B[6]; s.L[7] = s.B[7]; s.L[8] = s.B[8];
-        s.B[6] = s.R[6]; s.B[7] = s.R[7]; s.B[8] = s.R[8];
-        s.R[6] = t[0];    s.R[7] = t[1];    s.R[8] = t[2];
-      } else if (base === 'R') {
-        const t = [s.U[2], s.U[5], s.U[8]];
-        s.U[2] = s.F[2]; s.U[5] = s.F[5]; s.U[8] = s.F[8];
-        s.F[2] = s.D[2]; s.F[5] = s.D[5]; s.F[8] = s.D[8];
-        s.D[2] = s.B[6]; s.D[5] = s.B[3]; s.D[8] = s.B[0];
-        s.B[6] = t[0];    s.B[3] = t[1];    s.B[0] = t[2];
-      } else if (base === 'L') {
-        const t = [s.U[0], s.U[3], s.U[6]];
-        s.U[0] = s.B[8]; s.U[3] = s.B[5]; s.U[6] = s.B[2];
-        s.B[8] = s.D[0]; s.B[5] = s.D[3]; s.B[2] = s.D[6];
-        s.D[0] = s.F[0]; s.D[3] = s.F[3]; s.D[6] = s.F[6];
-        s.F[0] = t[0];    s.F[3] = t[1];    s.F[6] = t[2];
-      } else if (base === 'F') {
-        const t = [s.U[6], s.U[7], s.U[8]];
-        s.U[6] = s.L[8]; s.U[7] = s.L[5]; s.U[8] = s.L[2];
-        s.L[8] = s.D[2]; s.L[5] = s.D[1]; s.L[2] = s.D[0];
-        s.D[2] = s.R[0]; s.D[1] = s.R[3]; s.D[0] = s.R[6];
-        s.R[0] = t[0];    s.R[3] = t[1];    s.R[6] = t[2];
-      } else if (base === 'B') {
-        const t = [s.U[0], s.U[1], s.U[2]];
-        s.U[0] = s.R[2]; s.U[1] = s.R[5]; s.U[2] = s.R[8];
-        s.R[2] = s.D[8]; s.R[5] = s.D[7]; s.R[8] = s.D[6];
-        s.D[8] = s.L[6]; s.D[7] = s.L[3]; s.D[6] = s.L[0];
-        s.L[6] = t[0];    s.L[3] = t[1];    s.L[0] = t[2];
-      }
-    },
-
-    render() {
-      const faceMap = { U: 'top', D: 'bottom', F: 'front', B: 'back', L: 'left', R: 'right' };
-      for (const code of Object.keys(faceMap)) {
-        const el = document.querySelector(`.cube-face--${faceMap[code]}`);
-        if (!el) continue;
-        const tileEls = el.querySelectorAll('.cube-tile');
-        this.faces[code].forEach((colorCode, i) => {
-          if (tileEls[i]) {
-            tileEls[i].className = `cube-tile cube-tile--${this.colorMap[colorCode]}`;
-          }
-        });
-      }
-    },
-
-    updateHud(status, isSolved) {
-      const statusEl = document.getElementById('cube-status');
-      const movesEl = document.getElementById('cube-moves');
-      if (statusEl) {
-        statusEl.textContent = status;
-        statusEl.style.color = isSolved ? '#00f0e0' : '#facc15';
-      }
-      if (movesEl) {
-        movesEl.textContent = this.history.length;
-      }
-    },
-
-    runSeq(seq, label, done) {
-      let idx = 0;
-      const timer = setInterval(() => {
-        if (idx >= seq.length) {
-          clearInterval(timer);
-          if (done) done();
-          return;
-        }
-        this.applyMove(seq[idx], true);
-        this.updateHud(`${label} (${idx + 1}/${seq.length})`, false);
-        idx++;
-      }, 140);
-    },
-
-    applyCheckerboard() {
-      this.resetState();
-      const seq = ['U', 'U', 'D', 'D', 'F', 'F', 'B', 'B', 'L', 'L', 'R', 'R'];
-      this.runSeq(seq, 'CHECKERBOARD', () => {
-        this.updateHud('CHECKERBOARD PATTERN ✨', false);
-      });
-    },
-
-    applyFlower() {
-      this.resetState();
-      const seq = ["U", "D'", "R", "L'", "F", "B'", "U", "D'"];
-      this.runSeq(seq, 'FLOWER PATTERN', () => {
-        this.updateHud('FLOWER PATTERN 🌸', false);
-      });
-    },
-
-    scramble() {
-      const moves = ['U', "U'", 'D', "D'", 'L', "L'", 'R', "R'", 'F', "F'", 'B', "B'"];
-      const seq = [];
-      for (let i = 0; i < 15; i++) {
-        seq.push(moves[Math.floor(Math.random() * moves.length)]);
-      }
-      this.runSeq(seq, 'SCRAMBLING', () => {
-        this.updateHud('SCRAMBLED 🎲 (Click Auto-Solve)', false);
-      });
-    },
-
-    autoSolve() {
-      if (this.history.length === 0) {
-        this.updateHud('ALREADY SOLVED 🎉', true);
-        return;
-      }
-      const invert = (m) => m.endsWith("'") ? m.replace("'", "") : m + "'";
-      const reverseMoves = [...this.history].reverse().map(invert);
-      this.history = [];
-      this.runSeq(reverseMoves, 'AUTO-SOLVING', () => {
-        this.resetState();
-        this.render();
-        this.updateHud('SOLVED 🎉 100% MATCH', true);
-      });
+      this.loop();
     },
 
     bindEvents() {
-      const checker = document.getElementById('btn-checkerboard');
-      const flower = document.getElementById('btn-flower');
-      const scram = document.getElementById('btn-scramble');
-      const solve = document.getElementById('btn-solve');
-      const reset = document.getElementById('btn-reset');
-      const spin = document.getElementById('cube-spin-toggle');
-      const invert = document.getElementById('btn-turn-invert');
-
-      if (checker) checker.onclick = () => this.applyCheckerboard();
-      if (flower) flower.onclick = () => this.applyFlower();
-      if (scram) scram.onclick = () => this.scramble();
-      if (solve) solve.onclick = () => this.autoSolve();
-      if (reset) reset.onclick = () => { this.resetState(); this.render(); };
-
-      if (invert) {
-        invert.onclick = () => {
-          this.primeMode = !this.primeMode;
-          invert.classList.toggle('active', this.primeMode);
-          invert.textContent = this.primeMode ? "' Prime: ON" : "' Prime: OFF";
-        };
-      }
-
-      if (spin) {
-        spin.onclick = () => {
-          this.autoSpin = !this.autoSpin;
-          const w = document.getElementById('cube-wrapper');
-          if (w) w.classList.toggle('is-paused', !this.autoSpin);
-          spin.textContent = this.autoSpin ? '🔄 Spin: ON' : '⏸️ Spin: OFF';
-        };
-      }
-
-      document.querySelectorAll('.cube-turn-btn[data-move]').forEach(btn => {
-        btn.onclick = () => {
-          const base = btn.getAttribute('data-move');
-          this.applyMove(this.primeMode ? base + "'" : base, true);
-        };
-      });
-
-      const container = document.getElementById('cube-container');
-      const wrapper = document.getElementById('cube-wrapper');
-      if (!container || !wrapper) return;
-
-      const start = (x, y) => {
+      const onStart = (x, y) => {
         this.isDragging = true;
         this.startX = x;
         this.startY = y;
-        wrapper.classList.add('is-dragging');
+        this.lastX = x;
+        this.lastY = y;
+        this.velX = 0;
+        this.velY = 0;
       };
-      const move = (x, y) => {
+
+      const onMove = (x, y) => {
         if (!this.isDragging) return;
-        this.rotY += (x - this.startX) * 0.7;
-        this.rotX -= (y - this.startY) * 0.7;
-        wrapper.style.transform = `rotateX(${this.rotX}deg) rotateY(${this.rotY}deg)`;
-        this.startX = x;
-        this.startY = y;
+        const dx = x - this.lastX;
+        const dy = y - this.lastY;
+        this.rotY += dx * 0.75;
+        this.rotX -= dy * 0.75;
+        this.velX = dx * 0.45;
+        this.velY = dy * 0.45;
+        this.lastX = x;
+        this.lastY = y;
+        this.applyTransform();
       };
-      const end = () => { this.isDragging = false; };
 
-      container.addEventListener('mousedown', (e) => start(e.clientX, e.clientY));
-      window.addEventListener('mousemove', (e) => move(e.clientX, e.clientY));
-      window.addEventListener('mouseup', end);
+      const onEnd = () => {
+        this.isDragging = false;
+      };
 
-      container.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 1) start(e.touches[0].clientX, e.touches[0].clientY);
+      this.container.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
+      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', onEnd);
+
+      this.container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) onStart(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
       window.addEventListener('touchmove', (e) => {
-        if (e.touches.length === 1) move(e.touches[0].clientX, e.touches[0].clientY);
+        if (e.touches.length === 1) onMove(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
-      window.addEventListener('touchend', end);
+      window.addEventListener('touchend', onEnd);
+      window.addEventListener('touchcancel', onEnd);
+    },
+
+    applyTransform() {
+      if (this.wrapper) {
+        this.wrapper.style.transform = `rotateX(${this.rotX.toFixed(2)}deg) rotateY(${this.rotY.toFixed(2)}deg)`;
+      }
+    },
+
+    loop() {
+      if (!this.isDragging) {
+        // If release momentum exists, decelerate smoothly
+        if (Math.abs(this.velX) > 0.04 || Math.abs(this.velY) > 0.04) {
+          this.rotY += this.velX;
+          this.rotX -= this.velY;
+          this.velX *= 0.94;
+          this.velY *= 0.94;
+        } else {
+          // Continuous 3D auto-spin!
+          this.rotY += this.autoSpeedY;
+          this.rotX += this.autoSpeedX * Math.sin(Date.now() / 1400);
+        }
+        this.applyTransform();
+      }
+      requestAnimationFrame(() => this.loop());
     }
   };
 
   // ═══════════════════════════════════════════════
-  // CRICKET ARCADE GAME (GUARANTEED HITS & TOTAL USER CONTROL)
+  // CRICKET ARCADE GAME (GUARANTEED HITS & USER PACING)
   // ═══════════════════════════════════════════════
   const Cricket = {
     canvas: null,
@@ -3848,9 +3767,9 @@ label:focus-visible,
       this.waitingForBowl = false;
       this.ball = {
         x: 190 + (Math.random() * 20 - 10),
-        y: 20,
+        y: 25,
         radius: 4,
-        speedY: 2.3, // Enjoyable arcade pacing
+        speedY: 2.3,
         driftX: (Math.random() - 0.5) * 0.4,
         active: true,
         hit: false
@@ -3877,31 +3796,27 @@ label:focus-visible,
       AudioEngine.playBatHit(false);
 
       if (this.ball && this.ball.active && !this.ball.hit) {
-        // If ball is anywhere in lower pitch half, it connects!
         if (this.ball.y > 100) {
           this.ball.hit = true;
           const distFromCrease = Math.abs(this.ball.y - 190);
 
           if (distFromCrease < 26) {
-            // Sweet spot SIX!
             this.runs += 6;
             this.showBanner('SIX! 🚀', '110m Stratospheric Launch!');
             AudioEngine.playBatHit(true);
             this.addParticles(this.ball.x, this.ball.y, '#00f0e0', 25);
           } else if (distFromCrease < 55) {
-            // FOUR!
             this.runs += 4;
             this.showBanner('FOUR! ⚡', 'Rocket to the Boundary!');
             this.addParticles(this.ball.x, this.ball.y, '#facc15', 18);
           } else {
-            // 2 Runs!
             this.runs += 2;
             this.showBanner('2 RUNS! 🏃', 'Crisp shot into the gap!');
             this.addParticles(this.ball.x, this.ball.y, '#f472b6', 10);
           }
 
-          this.ball.speedY = -7;
-          this.ball.driftX = (Math.random() - 0.5) * 4;
+          this.ball.speedY = -5.8;
+          this.ball.driftX = (Math.random() - 0.5) * 3;
           this.balls++;
           this.updateHud();
         }
@@ -3964,7 +3879,6 @@ label:focus-visible,
         }
       }, { passive: true });
 
-      // Click / Touch anywhere on canvas: Bowls if waiting, Swings if in flight!
       this.canvas.addEventListener('mousedown', () => this.handleClick());
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -4005,6 +3919,13 @@ label:focus-visible,
         this.ball.y += this.ball.speedY;
         this.ball.radius = Math.min(10, 4 + (this.ball.y / 190) * 6);
 
+        // Clamped apex so ball never disappears off-screen
+        if (this.ball.hit && this.ball.y < 32) {
+          this.ball.y = 32;
+          this.ball.active = false;
+          this.finishBallDelivery();
+        }
+
         // If player didn't swing and ball passes crease
         if (!this.ball.hit && this.ball.y > 215) {
           this.ball.active = false;
@@ -4018,9 +3939,6 @@ label:focus-visible,
           } else {
             this.showBanner('DOT BALL', 'Left to keeper');
           }
-          this.finishBallDelivery();
-        } else if (this.ball.hit && this.ball.y < -30) {
-          this.ball.active = false;
           this.finishBallDelivery();
         }
       }
@@ -4053,7 +3971,7 @@ label:focus-visible,
       c.fillStyle = '#070b1a';
       c.fillRect(0, 0, 380, 240);
 
-      // 3D Perspective Pitch
+      // Perspective Pitch
       c.fillStyle = 'rgba(0, 212, 255, 0.05)';
       c.beginPath();
       c.moveTo(150, 20);
@@ -4065,7 +3983,7 @@ label:focus-visible,
       c.strokeStyle = 'rgba(0, 212, 255, 0.2)';
       c.stroke();
 
-      // Yellow Crease line (Sweet spot)
+      // Yellow Crease line
       c.strokeStyle = 'rgba(250, 204, 21, 0.75)';
       c.lineWidth = 2;
       c.beginPath();
@@ -4076,7 +3994,7 @@ label:focus-visible,
       // Bowler Drone at top
       c.fillStyle = '#a855f7';
       c.beginPath();
-      c.arc(190, 20, 7, 0, Math.PI * 2);
+      c.arc(190, 22, 7, 0, Math.PI * 2);
       c.fill();
 
       // 3 Neon Stumps
@@ -4140,7 +4058,7 @@ label:focus-visible,
         c.textAlign = 'center';
         c.fillStyle = '#facc15';
         c.font = 'bold 13px "JetBrains Mono", monospace';
-        c.fillText('🎯 CLICK ANYWHERE TO SWING!', 190, 45);
+        c.fillText('🎯 CLICK ANYWHERE TO SWING!', 190, 48);
         c.restore();
       }
 
@@ -4166,23 +4084,29 @@ label:focus-visible,
   };
 
   // ═══════════════════════════════════════════════
-  // BADMINTON ARCADE GAME (SUPER SMASH & AUTO RALLY)
+  // BADMINTON ARCADE GAME (AUTHENTIC SHUTTLECOCK, STRICT BOUNDARIES & WIN/LOSE)
+  // Shuttlecock never flies outside tile view; full point outcome on drops/net/out;
+  // Authentic 3D feathered birdie visual.
   // ═══════════════════════════════════════════════
   const Badminton = {
     canvas: null,
     ctx: null,
+    playerScore: 0,
+    aiScore: 0,
+    targetScore: 5,
     rally: 0,
     best: 0,
     speed: 0,
     racketX: 300,
-    racketY: 120,
-    aiY: 120,
+    racketY: 130,
+    aiY: 130,
     shuttle: null,
     particles: [],
     waitingForServe: true,
     isSmashing: false,
     banner: null,
     bannerTimer: 0,
+    pointResult: null, // { outcome: 'WIN' | 'LOSE', reason: string, sub: string }
 
     init() {
       this.canvas = document.getElementById('badminton-canvas');
@@ -4192,47 +4116,63 @@ label:focus-visible,
       document.getElementById('badminton-best').textContent = this.best;
 
       this.bindEvents();
-      this.resetGame();
+      this.resetMatch();
       this.loop();
     },
 
-    resetGame() {
+    resetMatch() {
+      this.playerScore = 0;
+      this.aiScore = 0;
       this.rally = 0;
       this.speed = 0;
       this.waitingForServe = true;
       this.shuttle = null;
       this.particles = [];
+      this.pointResult = null;
       this.updateHud();
       document.getElementById('badminton-end-screen').classList.remove('show');
       const serveBtn = document.getElementById('badminton-serve-btn');
       if (serveBtn) serveBtn.textContent = '⚡ Serve Shuttlecock';
     },
 
-    startRally() {
+    startPoint() {
+      if (this.playerScore >= this.targetScore || this.aiScore >= this.targetScore) {
+        this.resetMatch();
+        return;
+      }
       this.waitingForServe = false;
-      this.speed = 150;
+      this.pointResult = null;
+      this.speed = 145;
       this.updateHud();
       document.getElementById('badminton-end-screen').classList.remove('show');
 
+      // Serve from opponent side over the net towards player
       this.shuttle = {
-        x: 60,
-        y: 110,
-        vx: 3.5,
-        vy: -2.2,
-        active: true
+        x: 65,
+        y: 120,
+        vx: 3.8,
+        vy: -2.4,
+        active: true,
+        lastHitter: 'ai'
       };
       const serveBtn = document.getElementById('badminton-serve-btn');
       if (serveBtn) serveBtn.textContent = '🏸 Rally In Progress!';
+      AudioEngine.playClick();
     },
 
     updateHud() {
+      const pEl = document.getElementById('badminton-score-player');
+      const aiEl = document.getElementById('badminton-score-ai');
+      if (pEl) pEl.textContent = this.playerScore;
+      if (aiEl) aiEl.textContent = this.aiScore;
+
       document.getElementById('badminton-rally').textContent = this.rally;
       document.getElementById('badminton-speed').textContent = `${this.speed} km/h`;
     },
 
     handleClick() {
       if (this.waitingForServe || !this.shuttle || !this.shuttle.active) {
-        this.startRally();
+        this.startPoint();
       } else {
         this.smash();
       }
@@ -4244,18 +4184,71 @@ label:focus-visible,
       this.isSmashing = true;
       setTimeout(() => { this.isSmashing = false; }, 200);
 
-      // If shuttlecock is anywhere on player side, SMASH IT!
-      if (this.shuttle.x > 140) {
-        this.rally += 2;
+      // Power smash when shuttlecock is on player half
+      if (this.shuttle.x > 175) {
+        this.rally++;
         this.speed = 340 + Math.floor(Math.random() * 80);
         this.updateHud();
-        this.showBanner('SUPER SMASH! ⚡', `${this.speed} km/h Sonic Strike!`);
+        this.showBanner('POWER SMASH! ⚡', `${this.speed} km/h Sonic Strike!`);
         AudioEngine.playSmash();
         this.addShockwave(this.shuttle.x, this.shuttle.y, '#a855f7', 20);
 
-        this.shuttle.vx = -7.5;
-        this.shuttle.vy = (Math.random() - 0.5) * 3;
+        this.shuttle.vx = -6.8;
+        this.shuttle.vy = 1.2; // Steep downward smash trajectory
+        this.shuttle.lastHitter = 'player';
       }
+    },
+
+    endPoint(outcome, reason) {
+      if (!this.shuttle) return;
+      this.shuttle.active = false;
+      this.waitingForServe = true;
+
+      if (outcome === 'WIN') {
+        this.playerScore++;
+        AudioEngine.playPointWon();
+        this.pointResult = {
+          outcome: 'WIN',
+          title: 'YOU WON! 🏆',
+          sub: reason || 'Point awarded to You!'
+        };
+      } else {
+        this.aiScore++;
+        AudioEngine.playPointLost();
+        this.pointResult = {
+          outcome: 'LOSE',
+          title: 'YOU LOSE! ❌',
+          sub: reason || 'Point awarded to Opponent.'
+        };
+      }
+
+      if (this.rally > this.best) {
+        this.best = this.rally;
+        storage.set('jj_badminton_best', this.best);
+        document.getElementById('badminton-best').textContent = this.best;
+      }
+      this.updateHud();
+
+      const serveBtn = document.getElementById('badminton-serve-btn');
+      if (serveBtn) serveBtn.textContent = '⚡ Serve Next Point';
+
+      // Check Match Over (first to targetScore points)
+      if (this.playerScore >= this.targetScore || this.aiScore >= this.targetScore) {
+        setTimeout(() => this.showMatchEndScreen(), 900);
+      }
+    },
+
+    showMatchEndScreen() {
+      const isWinner = this.playerScore >= this.targetScore;
+      const title = document.getElementById('badminton-end-title');
+      if (title) {
+        title.textContent = isWinner ? 'MATCH WON! 🥇 CHAMPION!' : 'MATCH OVER! Opponent Won.';
+        title.style.color = isWinner ? '#00f0e0' : '#f43f5e';
+      }
+      document.getElementById('badminton-final-rally').textContent = `${this.playerScore} - ${this.aiScore}`;
+      document.getElementById('badminton-final-speed').textContent = `${this.speed} km/h`;
+      const screen = document.getElementById('badminton-end-screen');
+      if (screen) screen.classList.add('show');
     },
 
     showBanner(title, sub) {
@@ -4277,37 +4270,21 @@ label:focus-visible,
       }
     },
 
-    endRally() {
-      this.waitingForServe = true;
-      this.shuttle = null;
-      if (this.rally > this.best) {
-        this.best = this.rally;
-        storage.set('jj_badminton_best', this.best);
-        document.getElementById('badminton-best').textContent = this.best;
-      }
-      document.getElementById('badminton-final-rally').textContent = this.rally;
-      document.getElementById('badminton-final-speed').textContent = `${this.speed} km/h`;
-      const screen = document.getElementById('badminton-end-screen');
-      if (screen) screen.classList.add('show');
-      const serveBtn = document.getElementById('badminton-serve-btn');
-      if (serveBtn) serveBtn.textContent = '⚡ Serve Shuttlecock';
-    },
-
     bindEvents() {
       this.canvas.addEventListener('mousemove', (e) => {
         const rect = this.canvas.getBoundingClientRect();
-        this.racketX = Math.max(210, (e.clientX - rect.left) * (380 / rect.width));
-        this.racketY = (e.clientY - rect.top) * (240 / rect.height);
+        this.racketX = Math.max(215, Math.min(345, (e.clientX - rect.left) * (380 / rect.width)));
+        this.racketY = Math.max(50, Math.min(200, (e.clientY - rect.top) * (240 / rect.height)));
       });
       this.canvas.addEventListener('touchmove', (e) => {
         if (e.touches.length > 0) {
           const rect = this.canvas.getBoundingClientRect();
-          this.racketX = Math.max(210, (e.touches[0].clientX - rect.left) * (380 / rect.width));
-          this.racketY = (e.touches[0].clientY - rect.top) * (240 / rect.height);
+          this.racketX = Math.max(215, Math.min(345, (e.touches[0].clientX - rect.left) * (380 / rect.width)));
+          this.racketY = Math.max(50, Math.min(200, (e.touches[0].clientY - rect.top) * (240 / rect.height)));
         }
       }, { passive: true });
 
-      // Click anywhere on canvas: Serves if waiting, Smashes if rallying!
+      // Click anywhere on canvas: serves if waiting, smashes if rallying!
       this.canvas.addEventListener('mousedown', () => this.handleClick());
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -4318,10 +4295,10 @@ label:focus-visible,
       if (smashBtn) smashBtn.onclick = () => this.smash();
 
       const serveBtn = document.getElementById('badminton-serve-btn');
-      if (serveBtn) serveBtn.onclick = () => this.startRally();
+      if (serveBtn) serveBtn.onclick = () => this.startPoint();
 
       const restart = document.getElementById('badminton-restart-btn');
-      if (restart) restart.onclick = () => this.startRally();
+      if (restart) restart.onclick = () => this.resetMatch();
     },
 
     loop() {
@@ -4331,44 +4308,100 @@ label:focus-visible,
     },
 
     update() {
-      if (this.waitingForServe || !this.shuttle) return;
+      if (this.waitingForServe || !this.shuttle || !this.shuttle.active) return;
 
+      // Opponent AI smoothly tracks the shuttlecock vertically
       this.aiY += (this.shuttle.y - this.aiY) * 0.12;
 
+      // Flight step
       this.shuttle.x += this.shuttle.vx;
       this.shuttle.y += this.shuttle.vy;
-      this.shuttle.vy += 0.06; // Smooth gravity
+      this.shuttle.vy += 0.08; // Natural shuttlecock gravity
 
-      // Automatic volley return on player racket approach
-      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 32 && Math.abs(this.shuttle.y - this.racketY) < 45) {
-        this.shuttle.vx = -4.5;
-        this.shuttle.vy = (Math.random() - 0.5) * 3;
+      // 1. STRICT CEILING CLAMP: Shuttlecock NEVER flies outside top view!
+      if (this.shuttle.y < 32) {
+        this.shuttle.y = 32;
+        if (this.shuttle.vy < 0) this.shuttle.vy = 0.9; // Smooth arc downward
+      }
+
+      // 2. STRICT HORIZONTAL COURT BOUNDARIES:
+      if (this.shuttle.x <= 25) {
+        this.shuttle.x = 25;
+        if (this.shuttle.lastHitter === 'player') {
+          this.endPoint('LOSE', 'You hit shot out of bounds!');
+        } else {
+          this.endPoint('WIN', 'Opponent hit shot out!');
+        }
+        return;
+      }
+      if (this.shuttle.x >= 355) {
+        this.shuttle.x = 355;
+        if (this.shuttle.lastHitter === 'ai') {
+          this.endPoint('WIN', 'Opponent hit shot out of bounds!');
+        } else {
+          this.endPoint('LOSE', 'You hit shot out!');
+        }
+        return;
+      }
+
+      // 3. NET COLLISION (Net is at x=190, from y=145 down to floor 205):
+      if (Math.abs(this.shuttle.x - 190) < 6 && this.shuttle.y >= 145) {
+        this.shuttle.y = Math.min(204, this.shuttle.y + 12);
+        if (this.shuttle.lastHitter === 'player') {
+          this.endPoint('LOSE', 'You hit into the net!');
+        } else {
+          this.endPoint('WIN', 'Opponent hit into the net!');
+        }
+        return;
+      }
+
+      // 4. FLOOR DROP (Floor is at y=204):
+      if (this.shuttle.y >= 204) {
+        this.shuttle.y = 204;
+        if (this.shuttle.x < 190) {
+          // Dropped on opponent court!
+          this.endPoint('WIN', 'Shuttle dropped on opponent side! Point to You!');
+        } else {
+          // Dropped on player court!
+          this.endPoint('LOSE', 'Shuttle dropped on your court! Point to Opponent.');
+        }
+        return;
+      }
+
+      // 5. PLAYER RACKET VOLLEY RETURN:
+      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 32 && Math.abs(this.shuttle.y - this.racketY) < 42) {
+        this.shuttle.vx = -4.2 - (Math.random() * 0.4);
+        this.shuttle.vy = -2.6 - (Math.random() * 0.6);
+        this.shuttle.lastHitter = 'player';
         this.rally++;
-        this.speed = 180 + Math.floor(Math.random() * 40);
+        this.speed = 175 + Math.floor(Math.random() * 45);
         this.updateHud();
         AudioEngine.playClick();
-        this.addShockwave(this.shuttle.x, this.shuttle.y, '#00f0e0', 8);
+        this.addShockwave(this.shuttle.x, this.shuttle.y, '#00f0e0', 10);
       }
 
-      // AI Opponent Return
-      if (this.shuttle.vx < 0 && this.shuttle.x < 70) {
-        this.shuttle.vx = 4.2;
-        this.shuttle.vy = -2.2 + (Math.random() - 0.5);
-        this.speed = 160 + Math.floor(Math.random() * 30);
+      // 6. OPPONENT BOT RETURN:
+      if (this.shuttle.vx < 0 && this.shuttle.x < 65 && this.shuttle.y > 60) {
+        // High smash defense: 25% chance bot misses a 340+ km/h smash!
+        if (this.speed > 320 && Math.random() < 0.3) {
+          // Bot misses smash! Shuttlecock lands on opponent side!
+          return;
+        }
+        this.shuttle.vx = 4.0 + (Math.random() * 0.5);
+        this.shuttle.vy = -2.6 - (Math.random() * 0.7);
+        this.shuttle.lastHitter = 'ai';
+        this.speed = 160 + Math.floor(Math.random() * 35);
         this.updateHud();
         AudioEngine.playClick();
+        this.addShockwave(this.shuttle.x, this.shuttle.y, '#f43f5e', 8);
       }
 
-      // Miss conditions
-      if (this.shuttle.x > 380 || this.shuttle.y > 235 || this.shuttle.x < 10) {
-        this.endRally();
-      }
-
+      // Particles update
       for (let i = this.particles.length - 1; i >= 0; i--) {
         const p = this.particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.alpha -= 0.03;
+        p.alpha -= 0.035;
         if (p.alpha <= 0) this.particles.splice(i, 1);
       }
     },
@@ -4377,71 +4410,128 @@ label:focus-visible,
       const c = this.ctx;
       c.clearRect(0, 0, 380, 240);
 
-      // Court floor
+      // Court floor background
       c.fillStyle = '#070b1a';
       c.fillRect(0, 0, 380, 240);
 
-      // Court Lines
-      c.strokeStyle = 'rgba(0, 240, 224, 0.2)';
+      // Court Boundary Lines
+      c.strokeStyle = 'rgba(0, 240, 224, 0.22)';
       c.lineWidth = 1.5;
-      c.strokeRect(20, 30, 340, 180);
+      c.strokeRect(25, 35, 330, 170);
 
-      // Center Net
+      // Court Center Line
+      c.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      c.beginPath();
+      c.moveTo(25, 120);
+      c.lineTo(355, 120);
+      c.stroke();
+
+      // Center Net (from y=145 down to 205)
       c.strokeStyle = '#00f0e0';
       c.lineWidth = 3;
       c.beginPath();
-      c.moveTo(190, 30);
-      c.lineTo(190, 210);
+      c.moveTo(190, 145);
+      c.lineTo(190, 205);
       c.stroke();
 
-      // Net Mesh
-      c.strokeStyle = 'rgba(0, 240, 224, 0.3)';
+      // Net Mesh Pattern
+      c.strokeStyle = 'rgba(0, 240, 224, 0.4)';
       c.lineWidth = 1;
-      for (let y = 35; y < 210; y += 15) {
+      for (let y = 148; y < 205; y += 12) {
         c.beginPath();
         c.moveTo(186, y);
         c.lineTo(194, y);
         c.stroke();
       }
 
-      // Opponent Bot Racket
+      // Opponent Bot Racket (Left Court)
+      c.save();
       c.fillStyle = '#f43f5e';
       c.shadowColor = '#f43f5e';
       c.shadowBlur = 10;
       c.beginPath();
-      c.arc(50, this.aiY, 14, 0, Math.PI * 2);
+      c.arc(52, this.aiY, 13, 0, Math.PI * 2);
       c.fill();
-      c.fillRect(30, this.aiY - 3, 20, 6);
+      c.fillRect(32, this.aiY - 3, 20, 6);
+      c.restore();
 
-      // Player Racket
+      // Player Racket (Right Court)
       c.save();
       c.fillStyle = this.isSmashing ? '#facc15' : '#a855f7';
       c.shadowColor = this.isSmashing ? '#facc15' : '#a855f7';
-      c.shadowBlur = this.isSmashing ? 20 : 12;
+      c.shadowBlur = this.isSmashing ? 22 : 12;
       c.beginPath();
       c.arc(this.racketX, this.racketY, 15, 0, Math.PI * 2);
       c.fill();
       c.fillRect(this.racketX, this.racketY - 3, 22, 6);
       c.restore();
 
-      // Shuttlecock
-      if (this.shuttle && this.shuttle.active) {
+      // ═══════════════════════════════════════════════
+      // AUTHENTIC 3D SHUTTLECOCK (BIRDIE)
+      // ═══════════════════════════════════════════════
+      if (this.shuttle) {
         c.save();
-        c.fillStyle = '#ffffff';
-        c.shadowColor = '#00f0e0';
-        c.shadowBlur = 12;
-        c.beginPath();
-        c.arc(this.shuttle.x, this.shuttle.y, 4, 0, Math.PI * 2);
-        c.fill();
+        c.translate(this.shuttle.x, this.shuttle.y);
 
-        // Feathers trailing
-        const angle = Math.atan2(this.shuttle.vy, this.shuttle.vx) + Math.PI;
-        c.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-        c.lineWidth = 1.5;
+        // Align with velocity angle if moving, or tilt on floor
+        let angle = 0;
+        if (this.shuttle.active && (Math.abs(this.shuttle.vx) > 0.1 || Math.abs(this.shuttle.vy) > 0.1)) {
+          angle = Math.atan2(this.shuttle.vy, this.shuttle.vx);
+        } else {
+          // Resting on court floor
+          angle = this.shuttle.x < 190 ? -0.4 : 0.4;
+        }
+        c.rotate(angle);
+
+        // 1. Feather Skirt Cone (flares outward behind cork)
         c.beginPath();
-        c.moveTo(this.shuttle.x, this.shuttle.y);
-        c.lineTo(this.shuttle.x + Math.cos(angle) * 9, this.shuttle.y + Math.sin(angle) * 9);
+        c.moveTo(-3, -3.5);
+        c.lineTo(-17, -9.5); // Top flare
+        c.lineTo(-15, 0);    // Inner scallop
+        c.lineTo(-17, 9.5);  // Bottom flare
+        c.lineTo(-3, 3.5);
+        c.closePath();
+        c.fillStyle = 'rgba(255, 255, 255, 0.96)';
+        c.shadowColor = '#00f0e0';
+        c.shadowBlur = 8;
+        c.fill();
+        c.strokeStyle = '#cbd5e1';
+        c.lineWidth = 1;
         c.stroke();
+
+        // 2. Feather Shaft Quills
+        c.strokeStyle = 'rgba(148, 163, 184, 0.7)';
+        c.lineWidth = 0.8;
+        for (let offset = -7; offset <= 7; offset += 3.5) {
+          c.beginPath();
+          c.moveTo(-3, offset * 0.35);
+          c.lineTo(-16, offset);
+          c.stroke();
+        }
+
+        // 3. Transverse Thread / Ribbing Rings
+        c.strokeStyle = 'rgba(56, 189, 248, 0.85)';
+        c.lineWidth = 0.9;
+        c.beginPath();
+        c.arc(-10, 0, 6.5, -Math.PI / 2, Math.PI / 2);
+        c.stroke();
+
+        // 4. Dark Collar Tape Ring
+        c.fillStyle = '#0284c7';
+        c.fillRect(-3.5, -4, 2.5, 8);
+
+        // 5. Cork Head (Rounded Dome at Front)
+        c.fillStyle = '#fef08a';
+        c.shadowColor = '#facc15';
+        c.shadowBlur = 6;
+        c.beginPath();
+        c.arc(0, 0, 4.2, -Math.PI / 2, Math.PI / 2);
+        c.closePath();
+        c.fill();
+        c.strokeStyle = '#eab308';
+        c.lineWidth = 0.8;
+        c.stroke();
+
         c.restore();
       }
 
@@ -4458,22 +4548,48 @@ label:focus-visible,
         c.restore();
       }
 
-      // Canvas Prompts
-      if (this.waitingForServe) {
+      // Prompts & Point Result Overlay
+      if (this.waitingForServe && !this.pointResult) {
         c.save();
         const pulse = Math.sin(Date.now() / 250) * 0.15 + 0.85;
         c.textAlign = 'center';
         c.fillStyle = `rgba(0, 240, 224, ${pulse})`;
         c.font = 'bold 14px "JetBrains Mono", monospace';
-        c.fillText('🏸 CLICK TO SERVE', 190, 105);
+        c.fillText('🏸 CLICK ANYWHERE TO SERVE', 190, 105);
         c.font = '11px "Inter", sans-serif';
         c.fillStyle = 'rgba(255, 255, 255, 0.65)';
-        c.fillText('Move mouse to return • Click anywhere to SMASH!', 190, 126);
+        c.fillText('Move mouse to return • Click anywhere to POWER SMASH!', 190, 126);
         c.restore();
       }
 
-      // Banner Notification
-      if (this.bannerTimer > 0 && this.banner) {
+      // Point Outcome Banner (YOU WON / YOU LOSE)
+      if (this.pointResult) {
+        c.save();
+        c.textAlign = 'center';
+        const isWin = this.pointResult.outcome === 'WIN';
+        c.fillStyle = isWin ? 'rgba(6, 78, 59, 0.92)' : 'rgba(127, 29, 29, 0.92)';
+        c.fillRect(45, 70, 290, 68);
+        c.strokeStyle = isWin ? '#34d399' : '#f87171';
+        c.lineWidth = 1.5;
+        c.strokeRect(45, 70, 290, 68);
+
+        c.fillStyle = isWin ? '#34d399' : '#f87171';
+        c.font = 'bold 16px "JetBrains Mono", monospace';
+        c.fillText(this.pointResult.title, 190, 94);
+
+        c.fillStyle = '#ffffff';
+        c.font = '11px "Inter", sans-serif';
+        c.fillText(this.pointResult.sub, 190, 112);
+
+        const pulse = Math.sin(Date.now() / 200) * 0.2 + 0.8;
+        c.fillStyle = `rgba(250, 204, 21, ${pulse})`;
+        c.font = 'bold 11px "JetBrains Mono", monospace';
+        c.fillText('⚡ Click anywhere to serve next point', 190, 128);
+        c.restore();
+      }
+
+      // Action Banner (e.g. POWER SMASH)
+      if (this.bannerTimer > 0 && this.banner && !this.pointResult) {
         c.save();
         c.textAlign = 'center';
         c.fillStyle = 'rgba(15, 23, 42, 0.85)';
