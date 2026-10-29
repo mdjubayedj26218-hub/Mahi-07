@@ -83,43 +83,117 @@ body {
   position: relative;
 }
 
-/* Custom cursor — desktop only */
-@media (pointer: fine) {
-  .page-wrapper { cursor: none; }
-  .page-wrapper a, .page-wrapper label { cursor: none; }
-
-  .cursor-dot, .cursor-ring {
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    top: 50%;
-    left: 50%;
-  }
-  .cursor-dot {
-    width: 6px; height: 6px;
-    background: var(--neon-cyan);
-    box-shadow: 0 0 10px var(--neon-cyan);
-    margin: -3px 0 0 -3px;
-    animation: cursorPulse 1.6s ease-in-out infinite;
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1.5px solid rgba(0, 212, 255, 0.35);
-    margin: -18px 0 0 -18px;
-    animation: cursorRingSpin 6s linear infinite;
-  }
+/* ═══════════════════════════════════════════════
+   CUSTOM CYBER CURSOR (Fixed & Interactive)
+   ═══════════════════════════════════════════════ */
+.cursor-dot, .cursor-ring {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0);
+  transition: opacity 0.25s ease;
+  will-change: transform;
 }
+
+body.has-custom-cursor {
+  cursor: none;
+}
+body.has-custom-cursor .page-wrapper,
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor label,
+body.has-custom-cursor input {
+  cursor: none;
+}
+
+body.has-custom-cursor .cursor-dot,
+body.has-custom-cursor .cursor-ring {
+  opacity: 1;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 14px var(--neon-cyan), 0 0 4px #ffffff;
+  margin: -4px 0 0 -4px;
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), background 0.2s, box-shadow 0.2s;
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(0, 212, 255, 0.65);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.35);
+  margin: -18px 0 0 -18px;
+  transition: width 0.22s cubic-bezier(0.2, 0, 0.2, 1),
+              height 0.22s cubic-bezier(0.2, 0, 0.2, 1),
+              margin 0.22s cubic-bezier(0.2, 0, 0.2, 1),
+              border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+/* Sci-fi targeting reticle crosshairs */
+.cursor-ring::before,
+.cursor-ring::after {
+  content: '';
+  position: absolute;
+  background: var(--neon-cyan);
+  pointer-events: none;
+  transition: background 0.2s;
+}
+.cursor-ring::before {
+  top: -4px; left: 50%;
+  width: 2px; height: 4px;
+  transform: translateX(-50%);
+}
+.cursor-ring::after {
+  bottom: -4px; left: 50%;
+  width: 2px; height: 4px;
+  transform: translateX(-50%);
+}
+
+/* Hovering interactive elements */
+body.cursor-hover .cursor-ring {
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 -26px;
+  border-color: var(--neon-pink);
+  background: rgba(244, 114, 182, 0.08);
+  box-shadow: 0 0 24px rgba(244, 114, 182, 0.5);
+}
+body.cursor-hover .cursor-ring::before,
+body.cursor-hover .cursor-ring::after {
+  background: var(--neon-pink);
+}
+body.cursor-hover .cursor-dot {
+  transform: scale(1.6);
+  background: #ffffff;
+  box-shadow: 0 0 16px var(--neon-pink);
+}
+
+/* Clicking / Active state */
+body.cursor-click .cursor-ring {
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-color: #ffffff;
+  background: rgba(0, 240, 224, 0.35);
+  box-shadow: 0 0 20px rgba(0, 240, 224, 0.8);
+}
+
 @media (pointer: coarse) {
-  .cursor-dot, .cursor-ring { display: none; }
-}
-
-@keyframes cursorPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.8); opacity: 0.6; }
-}
-@keyframes cursorRingSpin {
-  to { transform: rotate(360deg); }
+  .cursor-dot, .cursor-ring { display: none !important; }
+  body.has-custom-cursor { cursor: auto !important; }
+  body.has-custom-cursor .page-wrapper,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor label {
+    cursor: auto !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -937,21 +1011,34 @@ section {
   align-items: start;
 }
 
-/* --- 3D Rubik's-style Cube --- */
+/* --- 3D Rubik's-style Cube (Interactive & Playable) --- */
 .cube-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem;
-  perspective: 600px;
+  padding: 2rem 1rem 1.5rem;
+  perspective: 700px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.cube-container:active {
+  cursor: grabbing;
 }
 
 .cube-wrapper {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   position: relative;
   transform-style: preserve-3d;
-  animation: cubeRotate 12s linear infinite;
+  animation: cubeRotate 14s linear infinite;
+  transition: transform 0.05s linear;
+}
+.cube-wrapper.is-paused {
+  animation-play-state: paused;
+}
+.cube-wrapper.is-dragging {
+  animation: none !important;
 }
 
 @keyframes cubeRotate {
@@ -964,38 +1051,238 @@ section {
 
 .cube-face {
   position: absolute;
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
-  padding: 3px;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(10, 14, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
   backface-visibility: visible;
 }
 
-.cube-face--front  { transform: translateZ(60px); }
-.cube-face--back   { transform: rotateY(180deg) translateZ(60px); }
-.cube-face--left   { transform: rotateY(-90deg) translateZ(60px); }
-.cube-face--right  { transform: rotateY(90deg)  translateZ(60px); }
-.cube-face--top    { transform: rotateX(90deg)  translateZ(60px); }
-.cube-face--bottom { transform: rotateX(-90deg) translateZ(60px); }
+.cube-face--front  { transform: translateZ(65px); }
+.cube-face--back   { transform: rotateY(180deg) translateZ(65px); }
+.cube-face--left   { transform: rotateY(-90deg) translateZ(65px); }
+.cube-face--right  { transform: rotateY(90deg)  translateZ(65px); }
+.cube-face--top    { transform: rotateX(90deg)  translateZ(65px); }
+.cube-face--bottom { transform: rotateX(-90deg) translateZ(65px); }
 
 .cube-tile {
-  border-radius: 3px;
-  transition: transform 0.3s;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  user-select: none;
+}
+/* Sticker colors */
+.cube-tile.c-F, .cube-face--front .cube-tile:not([class*="c-"]) {
+  background: var(--neon-cyan);
+  box-shadow: inset 0 0 8px rgba(0, 240, 224, 0.7), 0 0 4px rgba(0, 240, 224, 0.3);
+}
+.cube-tile.c-B, .cube-face--back .cube-tile:not([class*="c-"]) {
+  background: var(--neon-violet);
+  box-shadow: inset 0 0 8px rgba(168, 85, 247, 0.7), 0 0 4px rgba(168, 85, 247, 0.3);
+}
+.cube-tile.c-L, .cube-face--left .cube-tile:not([class*="c-"]) {
+  background: var(--neon-pink);
+  box-shadow: inset 0 0 8px rgba(244, 114, 182, 0.7), 0 0 4px rgba(244, 114, 182, 0.3);
+}
+.cube-tile.c-R, .cube-face--right .cube-tile:not([class*="c-"]) {
+  background: var(--neon-blue);
+  box-shadow: inset 0 0 8px rgba(0, 212, 255, 0.7), 0 0 4px rgba(0, 212, 255, 0.3);
+}
+.cube-tile.c-U, .cube-face--top .cube-tile:not([class*="c-"]) {
+  background: #facc15;
+  box-shadow: inset 0 0 8px rgba(250, 204, 21, 0.7), 0 0 4px rgba(250, 204, 21, 0.3);
+}
+.cube-tile.c-D, .cube-face--bottom .cube-tile:not([class*="c-"]) {
+  background: #f1f5f9;
+  box-shadow: inset 0 0 8px rgba(241, 245, 249, 0.6), 0 0 4px rgba(255, 255, 255, 0.3);
 }
 
-/* Neon cube colors */
-.cube-face--front  .cube-tile { background: var(--neon-blue);   box-shadow: inset 0 0 8px rgba(0,212,255,0.5); }
-.cube-face--back   .cube-tile { background: var(--neon-violet); box-shadow: inset 0 0 8px rgba(168,85,247,0.5); }
-.cube-face--left   .cube-tile { background: var(--neon-pink);   box-shadow: inset 0 0 8px rgba(244,114,182,0.5); }
-.cube-face--right  .cube-tile { background: var(--neon-cyan);   box-shadow: inset 0 0 8px rgba(0,240,224,0.5); }
-.cube-face--top    .cube-tile { background: #facc15;            box-shadow: inset 0 0 8px rgba(250,204,21,0.5); }
-.cube-face--bottom .cube-tile { background: #f87171;            box-shadow: inset 0 0 8px rgba(248,113,113,0.5); }
+/* Cube HUD Controls */
+.cube-hud {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.cube-status-line {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cube-status-pill, .cube-moves-pill {
+  font-size: 0.78rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  font-family: monospace;
+  letter-spacing: 0.05em;
+}
+
+.cube-status-pill {
+  color: var(--neon-cyan);
+  border-color: rgba(0, 240, 224, 0.3);
+}
+
+.cube-status-pill.solved {
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.4);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
+}
+
+.cube-tool-btn {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 14px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: var(--neon-cyan);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cube-tool-btn:hover {
+  background: rgba(0, 212, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.cube-drag-hint {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.cube-patterns-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.2rem;
+}
+
+.cube-btn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.cube-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.cube-btn--pattern {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.35);
+  color: var(--neon-violet);
+}
+.cube-btn--pattern:hover {
+  background: rgba(168, 85, 247, 0.25);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+.cube-btn--action {
+  background: rgba(244, 114, 182, 0.12);
+  border-color: rgba(244, 114, 182, 0.35);
+  color: var(--neon-pink);
+}
+.cube-btn--action:hover {
+  background: rgba(244, 114, 182, 0.25);
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.3);
+}
+
+.cube-btn--solve {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(52, 211, 153, 0.2));
+  border-color: rgba(52, 211, 153, 0.5);
+  color: #34d399;
+  font-weight: 700;
+}
+.cube-btn--solve:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.35), rgba(52, 211, 153, 0.35));
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.4);
+}
+
+.cube-btn--reset {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+}
+
+.cube-turns-bar {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+}
+
+.cube-turns-label {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.cube-turn-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  background: rgba(0, 212, 255, 0.08);
+  color: var(--neon-cyan);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.cube-turn-btn:hover {
+  background: rgba(0, 212, 255, 0.25);
+  transform: translateY(-1px);
+}
+.cube-turn-btn:active {
+  transform: scale(0.92);
+}
+
+.cube-turn-invert {
+  width: auto;
+  padding: 0 8px;
+  font-size: 0.72rem;
+  border-color: rgba(244, 114, 182, 0.3);
+  background: rgba(244, 114, 182, 0.08);
+  color: var(--neon-pink);
+}
+.cube-turn-invert.active {
+  background: rgba(244, 114, 182, 0.3);
+  border-color: var(--neon-pink);
+  box-shadow: 0 0 8px rgba(244, 114, 182, 0.4);
+}
 
 .cube-label {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-secondary);
@@ -1686,6 +1973,476 @@ label:focus-visible,
   0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
   50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.5); }
 }
+
+/* ═══════════════════════════════════════════════
+   SPORTS MINI-GAMES (Cricket & Badminton)
+   ═══════════════════════════════════════════════ */
+.sport-card {
+  padding: 1.8rem 1.4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sport-mode-nav {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid var(--glass-border);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sport-mode-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.sport-mode-btn.active {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+.sport-content-pane {
+  display: none;
+}
+.sport-content-pane.active {
+  display: block;
+  animation: fadeInPane 0.35s ease-out;
+}
+
+@keyframes fadeInPane {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Game Arena Styles */
+.game-arena {
+  background: rgba(6, 9, 20, 0.85);
+  border: 1px solid rgba(0, 212, 255, 0.22);
+  border-radius: 14px;
+  padding: 0.8rem;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.game-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.6rem;
+  font-family: monospace;
+  font-size: 0.76rem;
+}
+
+.game-hud-stat {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.game-hud-label {
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.game-hud-val {
+  color: var(--neon-cyan);
+  font-weight: 700;
+}
+.game-hud-val--violet {
+  color: var(--neon-violet);
+}
+.game-hud-val--pink {
+  color: var(--neon-pink);
+}
+
+.game-canvas-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 380 / 250;
+  max-height: 260px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #050811;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+.game-overlay-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(6, 8, 15, 0.94);
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 30px rgba(0, 240, 224, 0.7);
+  border-radius: 12px;
+  padding: 0.8rem 1.4rem;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+  transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.game-overlay-banner.show {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.game-banner-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.2rem;
+}
+
+.game-banner-sub {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+}
+
+.game-end-screen {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 9, 20, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  z-index: 15;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.game-end-screen.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.game-end-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game-end-stats {
+  display: flex;
+  gap: 0.8rem;
+  margin: 0.6rem 0;
+  font-family: monospace;
+}
+.game-end-stat-box {
+  text-align: center;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+}
+.game-end-stat-box .num {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+}
+.game-end-stat-box .lbl {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.game-restart-btn {
+  margin-top: 0.5rem;
+  padding: 8px 22px;
+  border-radius: 30px;
+  background: var(--accent-gradient);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.game-restart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.game-hint {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ═══════════════════════════════════════════════
+   FUTURISTIC FEATURES (Terminal, HUD, SFX)
+   ═══════════════════════════════════════════════ */
+
+/* Audio FX Toggle in Navbar */
+.cyber-nav-btn {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  color: var(--neon-cyan);
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.06em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.cyber-nav-btn:hover {
+  background: rgba(0, 212, 255, 0.22);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.35);
+  transform: translateY(-1px);
+}
+.cyber-nav-btn.muted {
+  opacity: 0.6;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-dim);
+}
+
+/* Cyber Telemetry Badge in Hero */
+.cyber-telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 5px 14px;
+  border-radius: 30px;
+  background: rgba(14, 18, 36, 0.6);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--neon-cyan);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.2rem;
+  backdrop-filter: blur(8px);
+}
+.cyber-telemetry-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  animation: telemetryPulse 1.8s infinite;
+}
+@keyframes telemetryPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+.cyber-telemetry-sep {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* Floating Cyber Terminal Button */
+.cyber-terminal-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 8000;
+  background: rgba(10, 14, 28, 0.9);
+  border: 1px solid rgba(0, 240, 224, 0.45);
+  color: var(--neon-cyan);
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-family: monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 16px rgba(0, 240, 224, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+.cyber-terminal-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 224, 0.5);
+  border-color: var(--neon-cyan);
+}
+
+/* Holographic Cyber Terminal Modal */
+.cyber-terminal-modal {
+  position: fixed;
+  bottom: 76px;
+  left: 24px;
+  width: min(520px, calc(100vw - 48px));
+  height: 380px;
+  background: rgba(8, 12, 24, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 240, 224, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 224, 0.25);
+  z-index: 8500;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.2, 0, 0.2, 1);
+}
+.cyber-terminal-modal.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.terminal-header {
+  padding: 10px 14px;
+  background: rgba(0, 240, 224, 0.08);
+  border-bottom: 1px solid rgba(0, 240, 224, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: monospace;
+  font-size: 0.74rem;
+  color: var(--neon-cyan);
+  letter-spacing: 0.06em;
+}
+
+.terminal-controls {
+  display: flex;
+  gap: 6px;
+}
+.terminal-ctrl-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+.terminal-ctrl-close { background: #ef4444; }
+.terminal-ctrl-min { background: #facc15; }
+
+.terminal-body {
+  flex: 1;
+  padding: 12px 14px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.terminal-log-line {
+  word-break: break-word;
+}
+.terminal-log-line.cyan { color: var(--neon-cyan); }
+.terminal-log-line.green { color: #34d399; }
+.terminal-log-line.pink { color: var(--neon-pink); }
+.terminal-log-line.dim { color: var(--text-dim); }
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.4);
+}
+.terminal-prompt {
+  color: var(--neon-cyan);
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: monospace;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.terminal-chips {
+  display: flex;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-x: auto;
+}
+.terminal-chip {
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  color: var(--neon-cyan);
+  font-family: monospace;
+  font-size: 0.7rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+.terminal-chip:hover {
+  background: rgba(0, 212, 255, 0.25);
+}
+
+/* Fullscreen Matrix Rain Canvas */
+.matrix-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.matrix-canvas.active {
+  opacity: 0.24;
+}
+
 </style>
 </head>
 <body>
@@ -1739,6 +2496,7 @@ label:focus-visible,
   <!-- ═══════ NAVIGATION ═══════ -->
   <nav class="navbar" aria-label="Main navigation">
     <a href="#hero" class="nav-logo" aria-label="Home">JJ</a>
+    <button id="sfx-toggle" class="cyber-nav-btn" title="Toggle Cyber Audio FX" aria-label="Toggle Sound FX">🔊 FX: ON</button>
     <label for="theme-toggle" class="theme-toggle-label" title="Toggle theme" tabindex="0" role="switch" aria-label="Toggle light and dark theme"></label>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
@@ -1756,6 +2514,14 @@ label:focus-visible,
   <section class="hero" id="hero">
     <div class="hero-content">
       <p class="hero-eyebrow">Welcome to My Universe</p>
+      <div class="cyber-telemetry-badge">
+        <span class="cyber-telemetry-dot"></span>
+        <span>CORE: OPTIMAL</span>
+        <span class="cyber-telemetry-sep">|</span>
+        <span>QUANTUM SPEED</span>
+        <span class="cyber-telemetry-sep">|</span>
+        <span id="session-clock">2026.10</span>
+      </div>
       <h1 class="hero-name">MD JUBAYED<br>JAMAN</h1>
       <p class="hero-tagline">Curious Mind. Future Creator. Kind Human.</p>
       <a href="#about" class="hero-cta">Explore My World ↓</a>
@@ -1905,49 +2671,75 @@ label:focus-visible,
         <p class="section-subtitle">The things that keep me inspired and energized.</p>
       </div>
       <div class="hobbies-grid reveal stagger-2">
-        <!-- 3D Rubik's Cube -->
-        <div class="glass-card glow-border">
-          <div class="cube-container">
-            <div class="cube-wrapper" aria-label="Animated Rubik's Cube">
+        <!-- 3D Rubik's Cube (Interactive & Playable) -->
+        <div class="glass-card glow-border" id="cube-card">
+          <div class="cube-container" id="cube-container" title="Drag to rotate in 3D">
+            <div class="cube-wrapper" id="cube-wrapper" aria-label="Interactive Rubik's Cube">
               <!-- Front face -->
-              <div class="cube-face cube-face--front">
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
+              <div class="cube-face cube-face--front" data-face="F">
+                <div class="cube-tile" data-idx="0"></div><div class="cube-tile" data-idx="1"></div><div class="cube-tile" data-idx="2"></div>
+                <div class="cube-tile" data-idx="3"></div><div class="cube-tile" data-idx="4"></div><div class="cube-tile" data-idx="5"></div>
+                <div class="cube-tile" data-idx="6"></div><div class="cube-tile" data-idx="7"></div><div class="cube-tile" data-idx="8"></div>
               </div>
               <!-- Back face -->
-              <div class="cube-face cube-face--back">
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
+              <div class="cube-face cube-face--back" data-face="B">
+                <div class="cube-tile" data-idx="0"></div><div class="cube-tile" data-idx="1"></div><div class="cube-tile" data-idx="2"></div>
+                <div class="cube-tile" data-idx="3"></div><div class="cube-tile" data-idx="4"></div><div class="cube-tile" data-idx="5"></div>
+                <div class="cube-tile" data-idx="6"></div><div class="cube-tile" data-idx="7"></div><div class="cube-tile" data-idx="8"></div>
               </div>
               <!-- Left face -->
-              <div class="cube-face cube-face--left">
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
+              <div class="cube-face cube-face--left" data-face="L">
+                <div class="cube-tile" data-idx="0"></div><div class="cube-tile" data-idx="1"></div><div class="cube-tile" data-idx="2"></div>
+                <div class="cube-tile" data-idx="3"></div><div class="cube-tile" data-idx="4"></div><div class="cube-tile" data-idx="5"></div>
+                <div class="cube-tile" data-idx="6"></div><div class="cube-tile" data-idx="7"></div><div class="cube-tile" data-idx="8"></div>
               </div>
               <!-- Right face -->
-              <div class="cube-face cube-face--right">
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
+              <div class="cube-face cube-face--right" data-face="R">
+                <div class="cube-tile" data-idx="0"></div><div class="cube-tile" data-idx="1"></div><div class="cube-tile" data-idx="2"></div>
+                <div class="cube-tile" data-idx="3"></div><div class="cube-tile" data-idx="4"></div><div class="cube-tile" data-idx="5"></div>
+                <div class="cube-tile" data-idx="6"></div><div class="cube-tile" data-idx="7"></div><div class="cube-tile" data-idx="8"></div>
               </div>
               <!-- Top face -->
-              <div class="cube-face cube-face--top">
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
+              <div class="cube-face cube-face--top" data-face="U">
+                <div class="cube-tile" data-idx="0"></div><div class="cube-tile" data-idx="1"></div><div class="cube-tile" data-idx="2"></div>
+                <div class="cube-tile" data-idx="3"></div><div class="cube-tile" data-idx="4"></div><div class="cube-tile" data-idx="5"></div>
+                <div class="cube-tile" data-idx="6"></div><div class="cube-tile" data-idx="7"></div><div class="cube-tile" data-idx="8"></div>
               </div>
               <!-- Bottom face -->
-              <div class="cube-face cube-face--bottom">
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
-                <div class="cube-tile"></div><div class="cube-tile"></div><div class="cube-tile"></div>
+              <div class="cube-face cube-face--bottom" data-face="D">
+                <div class="cube-tile" data-idx="0"></div><div class="cube-tile" data-idx="1"></div><div class="cube-tile" data-idx="2"></div>
+                <div class="cube-tile" data-idx="3"></div><div class="cube-tile" data-idx="4"></div><div class="cube-tile" data-idx="5"></div>
+                <div class="cube-tile" data-idx="6"></div><div class="cube-tile" data-idx="7"></div><div class="cube-tile" data-idx="8"></div>
               </div>
             </div>
           </div>
-          <p class="cube-label">🧊 Cube Solving</p>
+          
+          <div class="cube-hud">
+            <div class="cube-status-line">
+              <span id="cube-status" class="cube-status-pill solved">Status: Solved ✨</span>
+              <span id="cube-moves" class="cube-moves-pill">Moves: 0</span>
+              <button id="cube-spin-toggle" class="cube-tool-btn" title="Toggle 3D Auto-Spin">🔄 Spin: ON</button>
+            </div>
+            <p class="cube-drag-hint">🖱️ Drag cube in 3D • Click patterns to transform or solve</p>
+            <div class="cube-patterns-bar">
+              <button class="cube-btn cube-btn--pattern" id="btn-checkerboard" title="Apply classic Checkerboard Pattern (U2 D2 F2 B2 L2 R2)">🏁 Checkerboard</button>
+              <button class="cube-btn cube-btn--pattern" id="btn-flower" title="Apply Center Flower Pattern">🌸 Flower</button>
+              <button class="cube-btn cube-btn--action" id="btn-scramble" title="Random Scramble">🔀 Scramble</button>
+              <button class="cube-btn cube-btn--solve" id="btn-solve" title="Animated step-by-step Auto-Solve!">⚡ Auto-Solve</button>
+              <button class="cube-btn cube-btn--reset" id="btn-reset" title="Instant Reset">🔄 Reset</button>
+            </div>
+            <div class="cube-turns-bar">
+              <span class="cube-turns-label">Turns:</span>
+              <button class="cube-turn-btn" data-move="U" title="Turn Up face">U</button>
+              <button class="cube-turn-btn" data-move="D" title="Turn Down face">D</button>
+              <button class="cube-turn-btn" data-move="L" title="Turn Left face">L</button>
+              <button class="cube-turn-btn" data-move="R" title="Turn Right face">R</button>
+              <button class="cube-turn-btn" data-move="F" title="Turn Front face">F</button>
+              <button class="cube-turn-btn" data-move="B" title="Turn Back face">B</button>
+              <button class="cube-turn-btn cube-turn-invert" id="btn-turn-invert" title="Toggle Counter-Clockwise (Prime)">' Prime: OFF</button>
+            </div>
+          </div>
+          <p class="cube-label">🧊 Cube Solving &amp; Algorithmic Thinking</p>
           <p style="text-align:center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
             There's nothing like the satisfying click of a final turn. Cubes teach patience, pattern recognition, and the joy of solving.
           </p>
@@ -1986,48 +2778,154 @@ label:focus-visible,
         <p class="section-subtitle">Competition, teamwork, and the thrill of the game.</p>
       </div>
       <div class="sports-grid reveal stagger-2">
-        <!-- Cricket -->
-        <div class="glass-card glow-border sport-card">
-          <div class="sport-visual sport-visual--cricket" aria-hidden="true">
-            <div class="cricket-ball">
-              <div class="cricket-seam"></div>
-            </div>
+        <!-- Cricket Card (Playable & Overview) -->
+        <div class="glass-card glow-border sport-card" id="cricket-card">
+          <div class="sport-mode-nav">
+            <button class="sport-mode-btn active" data-sport="cricket" data-mode="game">🎮 Play Match</button>
+            <button class="sport-mode-btn" data-sport="cricket" data-mode="story">📖 Story</button>
           </div>
-          <div class="sport-icon">🏏</div>
-          <h3 class="sport-title sport-title--cricket">Cricket</h3>
-          <p class="sport-desc">
-            The sound of leather on willow, the tension of a last-over chase — cricket
-            is more than a sport, it's a way of life. It teaches patience, strategy,
-            and the art of staying calm under pressure.
-          </p>
-          <div class="sport-tags">
-            <span class="sport-tag sport-tag--cyan">Batting</span>
-            <span class="sport-tag sport-tag--violet">Bowling</span>
-            <span class="sport-tag sport-tag--pink">Strategy</span>
+
+          <!-- Playable Cricket Mini-Game Arena -->
+          <div class="sport-content-pane active" id="cricket-pane-game">
+            <div class="game-arena">
+              <div class="game-hud">
+                <div class="game-hud-stat">
+                  <span class="game-hud-label">RUNS:</span>
+                  <span class="game-hud-val" id="cricket-runs">0</span>
+                  <span class="game-hud-label">/ TGT:</span>
+                  <span class="game-hud-val--violet">20</span>
+                </div>
+                <div class="game-hud-stat">
+                  <span class="game-hud-label">BALLS:</span>
+                  <span class="game-hud-val--pink" id="cricket-balls">0/6</span>
+                </div>
+                <div class="game-hud-stat">
+                  <span class="game-hud-label">BEST:</span>
+                  <span class="game-hud-val" id="cricket-best">0</span>
+                </div>
+              </div>
+
+              <div class="game-canvas-wrap">
+                <canvas id="cricket-canvas" class="game-canvas" width="380" height="250"></canvas>
+                <div class="game-overlay-banner" id="cricket-banner">
+                  <div class="game-banner-title" id="cricket-banner-title">SIX! 🚀</div>
+                  <div class="game-banner-sub" id="cricket-banner-sub">108m Stratospheric Launch!</div>
+                </div>
+                <div class="game-end-screen" id="cricket-end-screen">
+                  <div class="game-end-title" id="cricket-end-title">MATCH COMPLETED</div>
+                  <div class="game-end-stats">
+                    <div class="game-end-stat-box">
+                      <div class="num" id="cricket-final-runs">0</div>
+                      <div class="lbl">Runs</div>
+                    </div>
+                    <div class="game-end-stat-box">
+                      <div class="num" id="cricket-final-sr">0.0</div>
+                      <div class="lbl">Strike Rate</div>
+                    </div>
+                  </div>
+                  <button class="game-restart-btn" id="cricket-restart-btn">Play Another Over ⚡</button>
+                </div>
+              </div>
+              <p class="game-hint">🖱️ Move mouse to aim bat • Click / Space to swing! • 6-Ball Super Over</p>
+            </div>
+            <h3 class="sport-title sport-title--cricket" style="margin-top: 1rem;">🏏 Cyber Cricket: 1-Over Chase</h3>
+          </div>
+
+          <!-- Story View -->
+          <div class="sport-content-pane" id="cricket-pane-story">
+            <div class="sport-visual sport-visual--cricket" aria-hidden="true">
+              <div class="cricket-ball">
+                <div class="cricket-seam"></div>
+              </div>
+            </div>
+            <div class="sport-icon">🏏</div>
+            <h3 class="sport-title sport-title--cricket">Cricket</h3>
+            <p class="sport-desc">
+              The sound of leather on willow, the tension of a last-over chase — cricket
+              is more than a sport, it's a way of life. It teaches patience, strategy,
+              and the art of staying calm under pressure.
+            </p>
+            <div class="sport-tags">
+              <span class="sport-tag sport-tag--cyan">Batting</span>
+              <span class="sport-tag sport-tag--violet">Bowling</span>
+              <span class="sport-tag sport-tag--pink">Strategy</span>
+            </div>
           </div>
         </div>
 
-        <!-- Badminton -->
-        <div class="glass-card glow-border sport-card">
-          <div class="sport-visual sport-visual--badminton" aria-hidden="true">
-            <div class="shuttle">
-              <div class="shuttle-cork"></div>
-              <div class="shuttle-feather shuttle-feather-1"></div>
-              <div class="shuttle-feather shuttle-feather-2"></div>
-              <div class="shuttle-feather shuttle-feather-3"></div>
-            </div>
+        <!-- Badminton Card (Playable & Overview) -->
+        <div class="glass-card glow-border sport-card" id="badminton-card">
+          <div class="sport-mode-nav">
+            <button class="sport-mode-btn active" data-sport="badminton" data-mode="game">🎮 Play Rally</button>
+            <button class="sport-mode-btn" data-sport="badminton" data-mode="story">📖 Story</button>
           </div>
-          <div class="sport-icon">🏸</div>
-          <h3 class="sport-title sport-title--badminton">Badminton</h3>
-          <p class="sport-desc">
-            Lightning reflexes, explosive smashes, and razor-sharp focus — badminton
-            is a fast-paced game that sharpens both body and mind. Every rally is a
-            mini battle of wits and agility.
-          </p>
-          <div class="sport-tags">
-            <span class="sport-tag sport-tag--cyan">Agility</span>
-            <span class="sport-tag sport-tag--violet">Reflexes</span>
-            <span class="sport-tag sport-tag--pink">Endurance</span>
+
+          <!-- Playable Badminton Mini-Game Arena -->
+          <div class="sport-content-pane active" id="badminton-pane-game">
+            <div class="game-arena">
+              <div class="game-hud">
+                <div class="game-hud-stat">
+                  <span class="game-hud-label">RALLY:</span>
+                  <span class="game-hud-val" id="badminton-rally">0</span>
+                </div>
+                <div class="game-hud-stat">
+                  <span class="game-hud-label">SPEED:</span>
+                  <span class="game-hud-val--violet" id="badminton-speed">0 km/h</span>
+                </div>
+                <div class="game-hud-stat">
+                  <span class="game-hud-label">BEST:</span>
+                  <span class="game-hud-val--pink" id="badminton-best">0</span>
+                </div>
+              </div>
+
+              <div class="game-canvas-wrap">
+                <canvas id="badminton-canvas" class="game-canvas" width="380" height="250"></canvas>
+                <div class="game-overlay-banner" id="badminton-banner">
+                  <div class="game-banner-title" id="badminton-banner-title">POWER SMASH! ⚡</div>
+                  <div class="game-banner-sub" id="badminton-banner-sub">342 km/h Sonic Boom!</div>
+                </div>
+                <div class="game-end-screen" id="badminton-end-screen">
+                  <div class="game-end-title" id="badminton-end-title">RALLY ENDED</div>
+                  <div class="game-end-stats">
+                    <div class="game-end-stat-box">
+                      <div class="num" id="badminton-final-rally">0</div>
+                      <div class="lbl">Hits</div>
+                    </div>
+                    <div class="game-end-stat-box">
+                      <div class="num" id="badminton-final-speed">0</div>
+                      <div class="lbl">Max km/h</div>
+                    </div>
+                  </div>
+                  <button class="game-restart-btn" id="badminton-restart-btn">Rally Again 🏸</button>
+                </div>
+              </div>
+              <p class="game-hint">🖱️ Move mouse to return • Click when high for POWER SMASH!</p>
+            </div>
+            <h3 class="sport-title sport-title--badminton" style="margin-top: 1rem;">🏸 Cyber Badminton: Smash Blitz</h3>
+          </div>
+
+          <!-- Story View -->
+          <div class="sport-content-pane" id="badminton-pane-story">
+            <div class="sport-visual sport-visual--badminton" aria-hidden="true">
+              <div class="shuttle">
+                <div class="shuttle-cork"></div>
+                <div class="shuttle-feather shuttle-feather-1"></div>
+                <div class="shuttle-feather shuttle-feather-2"></div>
+                <div class="shuttle-feather shuttle-feather-3"></div>
+              </div>
+            </div>
+            <div class="sport-icon">🏸</div>
+            <h3 class="sport-title sport-title--badminton">Badminton</h3>
+            <p class="sport-desc">
+              Lightning reflexes, explosive smashes, and razor-sharp focus — badminton
+              is a fast-paced game that sharpens both body and mind. Every rally is a
+              mini battle of wits and agility.
+            </p>
+            <div class="sport-tags">
+              <span class="sport-tag sport-tag--cyan">Agility</span>
+              <span class="sport-tag sport-tag--violet">Reflexes</span>
+              <span class="sport-tag sport-tag--pink">Endurance</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2138,7 +3036,1473 @@ label:focus-visible,
     </div>
   </footer>
 
+
+<!-- Fullscreen Cyber Matrix Rain Canvas -->
+<canvas id="matrix-canvas" class="matrix-canvas" aria-hidden="true"></canvas>
+
+<!-- Floating Cyber Terminal Launcher -->
+<button id="cyber-terminal-btn" class="cyber-terminal-btn" title="Open Cyber Terminal (Press `~`)">
+  <span>⚡</span> JJ-OS TERMINAL
+</button>
+
+<!-- Holographic Cyber Terminal Modal -->
+<div id="cyber-terminal-modal" class="cyber-terminal-modal" role="dialog" aria-label="Cyber Terminal">
+  <div class="terminal-header">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span style="color:#34d399;">●</span>
+      <span>JUBAYED-OS v2.6.4 [QUANTUM CORE]</span>
+    </div>
+    <div class="terminal-controls">
+      <button class="terminal-ctrl-btn terminal-ctrl-close" id="terminal-close-btn" title="Close"></button>
+    </div>
+  </div>
+  <div class="terminal-body" id="terminal-body">
+    <div class="terminal-log-line cyan">=== JUBAYED CYBER-PORTFOLIO TERMINAL ===</div>
+    <div class="terminal-log-line dim">Session: ONLINE • Quantum Latency: 12ms</div>
+    <div class="terminal-log-line">Type <span class="cyan">"help"</span> for commands or click quick directives below:</div>
+  </div>
+  <div class="terminal-chips">
+    <button class="terminal-chip" data-cmd="cricket">🏏 Play Cricket</button>
+    <button class="terminal-chip" data-cmd="badminton">🏸 Play Badminton</button>
+    <button class="terminal-chip" data-cmd="cube">🧊 Solve Cube</button>
+    <button class="terminal-chip" data-cmd="checkerboard">🏁 Checkerboard</button>
+    <button class="terminal-chip" data-cmd="matrix">💻 Matrix Rain</button>
+    <button class="terminal-chip" data-cmd="theme">🌓 Toggle Theme</button>
+    <button class="terminal-chip" data-cmd="help">❓ Help</button>
+  </div>
+  <div class="terminal-input-row">
+    <span class="terminal-prompt">visitor@jj:~$</span>
+    <input type="text" id="terminal-input" class="terminal-input" placeholder="Type command..." autocomplete="off" spellcheck="false">
+  </div>
+</div>
+
 </div><!-- .page-wrapper -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   JUBAYED PORTFOLIO — INTERACTIVE CYBER ENGINE (2026)
+   - Custom Cursor (Fixed, smooth tracking, reactive states)
+   - Cyber Web Audio Synthesizer (Zero-latency pure synthesis)
+   - 3D Rubik's Cube Simulator (Checkerboard, Flower, Scramble, Solve)
+   - Playable Cyber Cricket (1-Over Chase Mini-Game)
+   - Playable Cyber Badminton (Smash & Rally Blitz Mini-Game)
+   - Cyber Terminal Console & Fullscreen Matrix Rain
+   - Holographic Card Spotlight & Instant Intersection Reveals
+   ═══════════════════════════════════════════════════════════════ */
+
+(function() {
+  'use strict';
+
+  /* ─────────────────────────────────────────────────────────────
+     1. CYBER WEB AUDIO SYNTHESIZER
+     ───────────────────────────────────────────────────────────── */
+  const CyberAudio = {
+    ctx: null,
+    enabled: true,
+
+    init() {
+      if (!this.ctx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) this.ctx = new AudioCtx();
+      }
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+    },
+
+    toggle() {
+      this.enabled = !this.enabled;
+      const btn = document.getElementById('sfx-toggle');
+      if (btn) {
+        btn.textContent = this.enabled ? '🔊 FX: ON' : '🔇 FX: OFF';
+        btn.classList.toggle('muted', !this.enabled);
+      }
+      if (this.enabled) this.playBeep(800, 0.08);
+      return this.enabled;
+    },
+
+    playBeep(freq = 600, duration = 0.05, type = 'sine') {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + duration);
+      } catch (e) {}
+    },
+
+    playHover() {
+      this.playBeep(1200, 0.03, 'sine');
+    },
+
+    playClick() {
+      this.playBeep(700, 0.05, 'triangle');
+    },
+
+    playCricketHit(isSix) {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const t = this.ctx.currentTime;
+        // Wood contact pop
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(isSix ? 280 : 360, t);
+        osc.frequency.exponentialRampToValueAtTime(80, t + (isSix ? 0.25 : 0.12));
+        gain.gain.setValueAtTime(0.3, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + (isSix ? 0.25 : 0.12));
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.3);
+
+        if (isSix) {
+          // Crowd cheering synth
+          setTimeout(() => {
+            this.playFanfare();
+          }, 60);
+        }
+      } catch(e) {}
+    },
+
+    playBowled() {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, t);
+        osc.frequency.exponentialRampToValueAtTime(40, t + 0.35);
+        gain.gain.setValueAtTime(0.25, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.4);
+      } catch(e) {}
+    },
+
+    playBadmintonHit(isSmash) {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = isSmash ? 'square' : 'sine';
+        osc.frequency.setValueAtTime(isSmash ? 900 : 1600, t);
+        osc.frequency.exponentialRampToValueAtTime(isSmash ? 120 : 400, t + (isSmash ? 0.18 : 0.05));
+        gain.gain.setValueAtTime(isSmash ? 0.25 : 0.12, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + (isSmash ? 0.2 : 0.06));
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.25);
+      } catch(e) {}
+    },
+
+    playCubeTurn() {
+      this.playBeep(450, 0.04, 'triangle');
+    },
+
+    playFanfare() {
+      if (!this.enabled) return;
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+      notes.forEach((freq, idx) => {
+        setTimeout(() => {
+          this.playBeep(freq, 0.15, 'sine');
+        }, idx * 70);
+      });
+    }
+  };
+
+  /* ─────────────────────────────────────────────────────────────
+     2. FIXED & INTERACTIVE CUSTOM CURSOR ENGINE
+     ───────────────────────────────────────────────────────────── */
+  const CursorEngine = {
+    dot: null,
+    ring: null,
+    targetX: -100,
+    targetY: -100,
+    ringX: -100,
+    ringY: -100,
+    active: false,
+
+    init() {
+      this.dot = document.querySelector('.cursor-dot');
+      this.ring = document.querySelector('.cursor-ring');
+      if (!this.dot || !this.ring) return;
+
+      const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+      if (!isFinePointer) return;
+
+      window.addEventListener('mousemove', (e) => {
+        this.targetX = e.clientX;
+        this.targetY = e.clientY;
+        if (!this.active) {
+          this.active = true;
+          document.body.classList.add('has-custom-cursor');
+          this.ringX = this.targetX;
+          this.ringY = this.targetY;
+        }
+        this.dot.style.transform = `translate3d(${this.targetX}px, ${this.targetY}px, 0)`;
+      }, { passive: true });
+
+      // Smooth lag loop for targeting ring
+      const render = () => {
+        if (this.active) {
+          this.ringX += (this.targetX - this.ringX) * 0.22;
+          this.ringY += (this.targetY - this.ringY) * 0.22;
+          this.ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0)`;
+        }
+        requestAnimationFrame(render);
+      };
+      requestAnimationFrame(render);
+
+      // Interactive hover states
+      const interactiveSelector = 'a, button, input, label, select, .cube-btn, .cube-turn-btn, .sport-mode-btn, canvas, .glass-card, [role="button"]';
+      document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(interactiveSelector)) {
+          document.body.classList.add('cursor-hover');
+        }
+      });
+      document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(interactiveSelector)) {
+          document.body.classList.remove('cursor-hover');
+        }
+      });
+
+      // Click pulse
+      window.addEventListener('mousedown', () => {
+        document.body.classList.add('cursor-click');
+        CyberAudio.init();
+      });
+      window.addEventListener('mouseup', () => {
+        document.body.classList.remove('cursor-click');
+      });
+
+      // Window blur/focus
+      document.addEventListener('mouseleave', () => {
+        if (this.dot && this.ring) {
+          this.dot.style.opacity = '0';
+          this.ring.style.opacity = '0';
+        }
+      });
+      document.addEventListener('mouseenter', () => {
+        if (this.dot && this.ring && this.active) {
+          this.dot.style.opacity = '1';
+          this.ring.style.opacity = '1';
+        }
+      });
+    }
+  };
+
+  /* ─────────────────────────────────────────────────────────────
+     3. INTERACTIVE 3D RUBIK'S CUBE (SOLVER & PATTERNS)
+     ───────────────────────────────────────────────────────────── */
+  const RubiksCube = {
+    // 6 faces: F, B, L, R, U, D (9 stickers each)
+    faces: {},
+    history: [],
+    movesCount: 0,
+    primeMode: false,
+    autoSpin: true,
+    rotX: -25,
+    rotY: 25,
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+
+    init() {
+      this.resetState();
+      this.bindControls();
+      this.bindDrag();
+      this.render();
+    },
+
+    resetState() {
+      this.faces = {
+        F: Array(9).fill('F'),
+        B: Array(9).fill('B'),
+        L: Array(9).fill('L'),
+        R: Array(9).fill('R'),
+        U: Array(9).fill('U'),
+        D: Array(9).fill('D')
+      };
+      this.history = [];
+      this.movesCount = 0;
+      this.updateHud('Status: Solved ✨', true);
+    },
+
+    rotCW(face) {
+      return [
+        face[6], face[3], face[0],
+        face[7], face[4], face[1],
+        face[8], face[5], face[2]
+      ];
+    },
+
+    applyMove(move, record = true) {
+      const isPrime = move.endsWith("'");
+      const base = move.replace("'", "");
+      const count = isPrime ? 3 : 1;
+
+      for (let i = 0; i < count; i++) {
+        this.rawMove(base);
+      }
+
+      if (record) {
+        this.history.push(move);
+        this.movesCount++;
+        this.updateHud(`Moved: ${move}`, false);
+        CyberAudio.playCubeTurn();
+      }
+      this.render();
+    },
+
+    rawMove(base) {
+      const s = this.faces;
+      if (base === 'U') {
+        s.U = this.rotCW(s.U);
+        const t = [s.F[0], s.F[1], s.F[2]];
+        s.F[0] = s.R[0]; s.F[1] = s.R[1]; s.F[2] = s.R[2];
+        s.R[0] = s.B[0]; s.R[1] = s.B[1]; s.R[2] = s.B[2];
+        s.B[0] = s.L[0]; s.B[1] = s.L[1]; s.B[2] = s.L[2];
+        s.L[0] = t[0]; s.L[1] = t[1]; s.L[2] = t[2];
+      } else if (base === 'D') {
+        s.D = this.rotCW(s.D);
+        const t = [s.F[6], s.F[7], s.F[8]];
+        s.F[6] = s.L[6]; s.F[7] = s.L[7]; s.F[8] = s.L[8];
+        s.L[6] = s.B[6]; s.L[7] = s.B[7]; s.L[8] = s.B[8];
+        s.B[6] = s.R[6]; s.B[7] = s.R[7]; s.B[8] = s.R[8];
+        s.R[6] = t[0]; s.R[7] = t[1]; s.R[8] = t[2];
+      } else if (base === 'R') {
+        s.R = this.rotCW(s.R);
+        const t = [s.U[2], s.U[5], s.U[8]];
+        s.U[2] = s.F[2]; s.U[5] = s.F[5]; s.U[8] = s.F[8];
+        s.F[2] = s.D[2]; s.F[5] = s.D[5]; s.F[8] = s.D[8];
+        s.D[2] = s.B[6]; s.D[5] = s.B[3]; s.D[8] = s.B[0];
+        s.B[6] = t[0]; s.B[3] = t[1]; s.B[0] = t[2];
+      } else if (base === 'L') {
+        s.L = this.rotCW(s.L);
+        const t = [s.U[0], s.U[3], s.U[6]];
+        s.U[0] = s.B[8]; s.U[3] = s.B[5]; s.U[6] = s.B[2];
+        s.B[8] = s.D[0]; s.B[5] = s.D[3]; s.B[2] = s.D[6];
+        s.D[0] = s.F[0]; s.D[3] = s.F[3]; s.D[6] = s.F[6];
+        s.F[0] = t[0]; s.F[3] = t[1]; s.F[6] = t[2];
+      } else if (base === 'F') {
+        s.F = this.rotCW(s.F);
+        const t = [s.U[6], s.U[7], s.U[8]];
+        s.U[6] = s.L[8]; s.U[7] = s.L[5]; s.U[8] = s.L[2];
+        s.L[2] = s.D[0]; s.L[5] = s.D[1]; s.L[8] = s.D[2];
+        s.D[0] = s.R[6]; s.D[1] = s.R[3]; s.D[2] = s.R[0];
+        s.R[0] = t[0]; s.R[3] = t[1]; s.R[6] = t[2];
+      } else if (base === 'B') {
+        s.B = this.rotCW(s.B);
+        const t = [s.U[0], s.U[1], s.U[2]];
+        s.U[0] = s.R[2]; s.U[1] = s.R[5]; s.U[2] = s.R[8];
+        s.R[2] = s.D[8]; s.R[5] = s.D[7]; s.R[8] = s.D[6];
+        s.D[8] = s.L[6]; s.D[7] = s.L[3]; s.D[6] = s.L[0];
+        s.L[0] = t[2]; s.L[3] = t[1]; s.L[6] = t[0];
+      }
+    },
+
+    render() {
+      for (const [faceName, tiles] of Object.entries(this.faces)) {
+        const faceEl = document.querySelector(`.cube-face--${this.getFaceClassName(faceName)}`);
+        if (!faceEl) continue;
+        const tileEls = faceEl.querySelectorAll('.cube-tile');
+        tiles.forEach((color, idx) => {
+          if (tileEls[idx]) {
+            tileEls[idx].className = `cube-tile c-${color}`;
+          }
+        });
+      }
+    },
+
+    getFaceClassName(code) {
+      const map = { F: 'front', B: 'back', L: 'left', R: 'right', U: 'top', D: 'bottom' };
+      return map[code] || 'front';
+    },
+
+    updateHud(status, isSolved) {
+      const statusEl = document.getElementById('cube-status');
+      const movesEl = document.getElementById('cube-moves');
+      if (statusEl) {
+        statusEl.textContent = status;
+        statusEl.classList.toggle('solved', !!isSolved);
+      }
+      if (movesEl) {
+        movesEl.textContent = `Moves: ${this.movesCount}`;
+      }
+    },
+
+    runSequence(moves, statusMsg, onComplete) {
+      let idx = 0;
+      const interval = setInterval(() => {
+        if (idx >= moves.length) {
+          clearInterval(interval);
+          if (onComplete) onComplete();
+          return;
+        }
+        this.applyMove(moves[idx], true);
+        this.updateHud(`${statusMsg} (${idx + 1}/${moves.length})`, false);
+        idx++;
+      }, 130);
+    },
+
+    // Classic Rubik's Patterns
+    applyCheckerboard() {
+      const seq = ['U', 'U', 'D', 'D', 'F', 'F', 'B', 'B', 'L', 'L', 'R', 'R'];
+      this.runSequence(seq, 'Checkerboard', () => {
+        this.updateHud('Pattern: Checkerboard 🏁', false);
+        CyberAudio.playFanfare();
+      });
+    },
+
+    applyFlower() {
+      const seq = ["U", "D'", "R", "L'", "F", "B'", "U", "D'"];
+      this.runSequence(seq, 'Flower Dot', () => {
+        this.updateHud('Pattern: Flower Center 🌸', false);
+        CyberAudio.playFanfare();
+      });
+    },
+
+    scramble() {
+      const possible = ['U', 'D', 'L', 'R', 'F', 'B', "U'", "D'", "L'", "R'", "F'", "B'"];
+      const seq = [];
+      for (let i = 0; i < 12; i++) {
+        seq.push(possible[Math.floor(Math.random() * possible.length)]);
+      }
+      this.runSequence(seq, 'Scrambling', () => {
+        this.updateHud('Scrambled 🎲 (Ready to solve)', false);
+      });
+    },
+
+    autoSolve() {
+      if (this.history.length === 0) {
+        this.resetState();
+        this.render();
+        CyberAudio.playFanfare();
+        return;
+      }
+      // Invert history stack
+      const invertMove = (m) => m.endsWith("'") ? m.replace("'", "") : m + "'";
+      const reverseMoves = [...this.history].reverse().map(invertMove);
+      this.history = []; // Clear for next
+
+      this.runSequence(reverseMoves, 'Solving', () => {
+        this.movesCount = 0;
+        this.updateHud('✨ SOLVED! 🎉', true);
+        CyberAudio.playFanfare();
+      });
+    },
+
+    bindControls() {
+      const btnChecker = document.getElementById('btn-checkerboard');
+      const btnFlower = document.getElementById('btn-flower');
+      const btnScramble = document.getElementById('btn-scramble');
+      const btnSolve = document.getElementById('btn-solve');
+      const btnReset = document.getElementById('btn-reset');
+      const btnSpin = document.getElementById('cube-spin-toggle');
+      const btnInvert = document.getElementById('btn-turn-invert');
+
+      if (btnChecker) btnChecker.addEventListener('click', () => this.applyCheckerboard());
+      if (btnFlower) btnFlower.addEventListener('click', () => this.applyFlower());
+      if (btnScramble) btnScramble.addEventListener('click', () => this.scramble());
+      if (btnSolve) btnSolve.addEventListener('click', () => this.autoSolve());
+      if (btnReset) btnReset.addEventListener('click', () => {
+        this.resetState();
+        this.render();
+        CyberAudio.playClick();
+      });
+
+      if (btnInvert) {
+        btnInvert.addEventListener('click', () => {
+          this.primeMode = !this.primeMode;
+          btnInvert.classList.toggle('active', this.primeMode);
+          btnInvert.textContent = this.primeMode ? "' Prime: ON" : "' Prime: OFF";
+          CyberAudio.playClick();
+        });
+      }
+
+      if (btnSpin) {
+        btnSpin.addEventListener('click', () => {
+          this.autoSpin = !this.autoSpin;
+          const wrapper = document.getElementById('cube-wrapper');
+          if (wrapper) wrapper.classList.toggle('is-paused', !this.autoSpin);
+          btnSpin.textContent = this.autoSpin ? '🔄 Spin: ON' : '⏸️ Spin: OFF';
+          CyberAudio.playClick();
+        });
+      }
+
+      // Manual Turn Buttons
+      document.querySelectorAll('.cube-turn-btn[data-move]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const base = btn.getAttribute('data-move');
+          const move = this.primeMode ? base + "'" : base;
+          this.applyMove(move, true);
+        });
+      });
+    },
+
+    bindDrag() {
+      const container = document.getElementById('cube-container');
+      const wrapper = document.getElementById('cube-wrapper');
+      if (!container || !wrapper) return;
+
+      const onStart = (clientX, clientY) => {
+        this.isDragging = true;
+        this.startX = clientX;
+        this.startY = clientY;
+        wrapper.classList.add('is-dragging');
+      };
+
+      const onMove = (clientX, clientY) => {
+        if (!this.isDragging) return;
+        const dx = clientX - this.startX;
+        const dy = clientY - this.startY;
+        this.rotY += dx * 0.7;
+        this.rotX -= dy * 0.7;
+        wrapper.style.transform = `rotateX(${this.rotX}deg) rotateY(${this.rotY}deg)`;
+        this.startX = clientX;
+        this.startY = clientY;
+      };
+
+      const onEnd = () => {
+        this.isDragging = false;
+      };
+
+      container.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
+      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', onEnd);
+
+      container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) onStart(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) onMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', onEnd);
+    }
+  };
+
+  /* ─────────────────────────────────────────────────────────────
+     4. PLAYABLE CYBER CRICKET MINI-GAME (1-OVER CHASE)
+     ───────────────────────────────────────────────────────────── */
+  const CricketGame = {
+    canvas: null,
+    ctx: null,
+    width: 380,
+    height: 250,
+    runs: 0,
+    balls: 0,
+    maxBalls: 6,
+    target: 20,
+    best: 0,
+    batX: 190,
+    isSwinging: false,
+    swingProgress: 0,
+    ball: null,
+    deliveryTimer: null,
+    particles: [],
+
+    init() {
+      this.canvas = document.getElementById('cricket-canvas');
+      if (!this.canvas) return;
+      this.ctx = this.canvas.getContext('2d');
+      this.best = parseInt(localStorage.getItem('jj_cricket_best') || '0', 10);
+      document.getElementById('cricket-best').textContent = this.best;
+
+      this.bindInputs();
+      this.startOver();
+      this.loop();
+    },
+
+    startOver() {
+      this.runs = 0;
+      this.balls = 0;
+      this.particles = [];
+      this.updateHud();
+      document.getElementById('cricket-end-screen').classList.remove('show');
+      this.scheduleBall(1000);
+    },
+
+    updateHud() {
+      document.getElementById('cricket-runs').textContent = this.runs;
+      document.getElementById('cricket-balls').textContent = `${this.balls}/${this.maxBalls}`;
+    },
+
+    scheduleBall(delay = 1200) {
+      if (this.balls >= this.maxBalls) {
+        this.endMatch();
+        return;
+      }
+      clearTimeout(this.deliveryTimer);
+      this.deliveryTimer = setTimeout(() => {
+        this.bowlBall();
+      }, delay);
+    },
+
+    bowlBall() {
+      // Variations: Yorker, Outswinger, Inswinger, Bouncer, Slower
+      const types = ['yorker', 'outswing', 'inswing', 'bouncer', 'thunderbolt'];
+      const type = types[this.balls % types.length];
+      
+      this.ball = {
+        x: 190 + (Math.random() * 20 - 10),
+        y: 20,
+        radius: 4,
+        speedY: type === 'thunderbolt' ? 5.2 : type === 'bouncer' ? 4.5 : 3.8,
+        driftX: type === 'outswing' ? 0.6 : type === 'inswing' ? -0.6 : (Math.random() - 0.5) * 0.4,
+        type: type,
+        active: true,
+        hit: false
+      };
+    },
+
+    swingBat() {
+      if (this.isSwinging) return;
+      this.isSwinging = true;
+      this.swingProgress = 0;
+      CyberAudio.playHover();
+
+      // Check collision
+      if (this.ball && this.ball.active && !this.ball.hit) {
+        const distY = Math.abs(this.ball.y - 200);
+        const distX = Math.abs(this.ball.x - this.batX);
+
+        if (distY < 35 && distX < 40) {
+          this.ball.hit = true;
+          if (distY < 14 && distX < 22) {
+            // SIX!
+            this.runs += 6;
+            this.showBanner('SIX! 🚀', '108m Stratospheric Launch!');
+            CyberAudio.playCricketHit(true);
+            this.createExplosion(this.ball.x, this.ball.y, '#00f0e0', 30);
+          } else if (distY < 24) {
+            // FOUR!
+            this.runs += 4;
+            this.showBanner('FOUR! 🎯', 'Rocket Grounder to Ropes!');
+            CyberAudio.playCricketHit(false);
+            this.createExplosion(this.ball.x, this.ball.y, '#a855f7', 18);
+          } else {
+            // 2 RUNS
+            this.runs += 2;
+            this.showBanner('2 RUNS ⚡', 'Quick Running!');
+            CyberAudio.playCricketHit(false);
+            this.createExplosion(this.ball.x, this.ball.y, '#f472b6', 10);
+          }
+          this.ball.speedY = -7;
+          this.ball.driftX = (Math.random() - 0.5) * 4;
+          this.balls++;
+          this.updateHud();
+          this.scheduleBall(1400);
+        }
+      }
+    },
+
+    showBanner(title, sub) {
+      const banner = document.getElementById('cricket-banner');
+      const titleEl = document.getElementById('cricket-banner-title');
+      const subEl = document.getElementById('cricket-banner-sub');
+      if (!banner) return;
+      titleEl.textContent = title;
+      subEl.textContent = sub;
+      banner.classList.add('show');
+      setTimeout(() => banner.classList.remove('show'), 900);
+    },
+
+    createExplosion(x, y, color, count = 20) {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const spd = Math.random() * 5 + 2;
+        this.particles.push({
+          x, y,
+          vx: Math.cos(angle) * spd,
+          vy: Math.sin(angle) * spd,
+          color,
+          alpha: 1,
+          size: Math.random() * 3 + 2
+        });
+      }
+    },
+
+    endMatch() {
+      const screen = document.getElementById('cricket-end-screen');
+      const finalRuns = document.getElementById('cricket-final-runs');
+      const finalSr = document.getElementById('cricket-final-sr');
+      const title = document.getElementById('cricket-end-title');
+
+      finalRuns.textContent = this.runs;
+      finalSr.textContent = ((this.runs / 6) * 100).toFixed(1);
+
+      if (this.runs >= this.target) {
+        title.textContent = 'CHASE MASTER 🏆 VICTORY!';
+        CyberAudio.playFanfare();
+      } else {
+        title.textContent = 'OVER COMPLETED 🏏';
+      }
+
+      if (this.runs > this.best) {
+        this.best = this.runs;
+        localStorage.setItem('jj_cricket_best', this.best.toString());
+        document.getElementById('cricket-best').textContent = this.best;
+      }
+
+      screen.classList.add('show');
+    },
+
+    bindInputs() {
+      this.canvas.addEventListener('mousemove', (e) => {
+        const rect = this.canvas.getBoundingClientRect();
+        const scaleX = this.width / rect.width;
+        this.batX = (e.clientX - rect.left) * scaleX;
+      });
+
+      this.canvas.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+          const rect = this.canvas.getBoundingClientRect();
+          const scaleX = this.width / rect.width;
+          this.batX = (e.touches[0].clientX - rect.left) * scaleX;
+        }
+      }, { passive: true });
+
+      this.canvas.addEventListener('mousedown', () => this.swingBat());
+      this.canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        this.swingBat();
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && document.getElementById('cricket-pane-game').classList.contains('active')) {
+          e.preventDefault();
+          this.swingBat();
+        }
+      });
+
+      document.getElementById('cricket-restart-btn').addEventListener('click', () => {
+        this.startOver();
+        CyberAudio.playClick();
+      });
+    },
+
+    loop() {
+      this.update();
+      this.draw();
+      requestAnimationFrame(() => this.loop());
+    },
+
+    update() {
+      // Swing animation
+      if (this.isSwinging) {
+        this.swingProgress += 0.14;
+        if (this.swingProgress >= 1) {
+          this.isSwinging = false;
+          this.swingProgress = 0;
+        }
+      }
+
+      // Ball physics
+      if (this.ball && this.ball.active) {
+        this.ball.x += this.ball.driftX;
+        this.ball.y += this.ball.speedY;
+        this.ball.radius = Math.min(10, 4 + (this.ball.y / 200) * 6);
+
+        // Check wicket or pass
+        if (!this.ball.hit && this.ball.y > 220) {
+          this.ball.active = false;
+          this.balls++;
+          this.updateHud();
+
+          // Check if clean bowled
+          if (Math.abs(this.ball.x - 190) < 18) {
+            this.showBanner('BOWLED! 💥', 'Stumps Shattered!');
+            CyberAudio.playBowled();
+            this.createExplosion(190, 210, '#ef4444', 35);
+          } else {
+            this.showBanner('DOT BALL', 'Left to keeper');
+          }
+          this.scheduleBall(1400);
+        } else if (this.ball.hit && this.ball.y < -30) {
+          this.ball.active = false;
+        }
+      }
+
+      // Particles
+      for (let i = this.particles.length - 1; i >= 0; i--) {
+        const p = this.particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.025;
+        if (p.alpha <= 0) this.particles.splice(i, 1);
+      }
+    },
+
+    draw() {
+      const c = this.ctx;
+      c.clearRect(0, 0, this.width, this.height);
+
+      // Pitch background
+      c.fillStyle = '#081026';
+      c.fillRect(0, 0, this.width, this.height);
+
+      // Neon 3D perspective pitch strip
+      c.fillStyle = 'rgba(0, 212, 255, 0.04)';
+      c.beginPath();
+      c.moveTo(150, 20);
+      c.lineTo(230, 20);
+      c.lineTo(260, 240);
+      c.lineTo(120, 240);
+      c.closePath();
+      c.fill();
+      c.strokeStyle = 'rgba(0, 212, 255, 0.2)';
+      c.lineWidth = 1;
+      c.stroke();
+
+      // Crease line (Sweet spot)
+      c.strokeStyle = 'rgba(0, 240, 224, 0.5)';
+      c.lineWidth = 2;
+      c.beginPath();
+      c.moveTo(125, 200);
+      c.lineTo(255, 200);
+      c.stroke();
+
+      // Holographic Bowler Drone
+      c.fillStyle = '#a855f7';
+      c.beginPath();
+      c.arc(190, 20, 7, 0, Math.PI * 2);
+      c.fill();
+      c.fillStyle = 'rgba(168, 85, 247, 0.3)';
+      c.beginPath();
+      c.arc(190, 20, 14, 0, Math.PI * 2);
+      c.fill();
+
+      // 3 Neon Stumps
+      for (let s = -1; s <= 1; s++) {
+        c.fillStyle = 'rgba(0, 240, 224, 0.85)';
+        c.fillRect(190 + s * 10 - 2, 204, 4, 18);
+      }
+      // Bails
+      c.fillStyle = '#f472b6';
+      c.fillRect(177, 202, 26, 3);
+
+      // Batsman Bat
+      const swingAngle = this.isSwinging ? Math.sin(this.swingProgress * Math.PI) * 1.2 : 0;
+      c.save();
+      c.translate(this.batX, 200);
+      c.rotate(swingAngle);
+      // Bat blade
+      c.fillStyle = '#00d4ff';
+      c.shadowColor = '#00d4ff';
+      c.shadowBlur = 10;
+      c.fillRect(-4, -28, 8, 30);
+      // Grip
+      c.fillStyle = '#ffffff';
+      c.shadowBlur = 0;
+      c.fillRect(-2, 2, 4, 12);
+      c.restore();
+
+      // Ball
+      if (this.ball && this.ball.active) {
+        c.save();
+        c.shadowColor = '#e74c3c';
+        c.shadowBlur = 12;
+        c.fillStyle = '#ef4444';
+        c.beginPath();
+        c.arc(this.ball.x, this.ball.y, this.ball.radius, 0, Math.PI * 2);
+        c.fill();
+        // Seam
+        c.strokeStyle = '#ffffff';
+        c.lineWidth = 1;
+        c.beginPath();
+        c.arc(this.ball.x, this.ball.y, this.ball.radius * 0.7, 0, Math.PI);
+        c.stroke();
+        c.restore();
+      }
+
+      // Particles
+      for (const p of this.particles) {
+        c.save();
+        c.globalAlpha = p.alpha;
+        c.fillStyle = p.color;
+        c.beginPath();
+        c.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        c.fill();
+        c.restore();
+      }
+    }
+  };
+
+  /* ─────────────────────────────────────────────────────────────
+     5. PLAYABLE CYBER BADMINTON MINI-GAME (SMASH BLITZ)
+     ───────────────────────────────────────────────────────────── */
+  const BadmintonGame = {
+    canvas: null,
+    ctx: null,
+    width: 380,
+    height: 250,
+    rally: 0,
+    best: 0,
+    speed: 0,
+    active: true,
+    racketX: 300,
+    racketY: 160,
+    aiY: 120,
+    isSmashing: false,
+    smashTimer: 0,
+    shuttle: null,
+    particles: [],
+
+    init() {
+      this.canvas = document.getElementById('badminton-canvas');
+      if (!this.canvas) return;
+      this.ctx = this.canvas.getContext('2d');
+      this.best = parseInt(localStorage.getItem('jj_badminton_best') || '0', 10);
+      document.getElementById('badminton-best').textContent = this.best;
+
+      this.bindInputs();
+      this.startRally();
+      this.loop();
+    },
+
+    startRally() {
+      this.rally = 0;
+      this.speed = 120;
+      this.active = true;
+      this.particles = [];
+      this.updateHud();
+      document.getElementById('badminton-end-screen').classList.remove('show');
+
+      this.shuttle = {
+        x: 60,
+        y: 120,
+        vx: 4.5,
+        vy: -2,
+        speed: 140,
+        active: true,
+        fromAI: true
+      };
+    },
+
+    updateHud() {
+      document.getElementById('badminton-rally').textContent = this.rally;
+      document.getElementById('badminton-speed').textContent = `${Math.round(this.speed)} km/h`;
+    },
+
+    triggerSmash() {
+      if (!this.active || !this.shuttle) return;
+      this.isSmashing = true;
+      this.smashTimer = 10;
+      CyberAudio.playHover();
+
+      // Check smash hit
+      const dx = Math.abs(this.shuttle.x - this.racketX);
+      const dy = Math.abs(this.shuttle.y - this.racketY);
+
+      if (dx < 35 && dy < 35 && this.shuttle.vx > 0) {
+        // Electrifying Power Smash!
+        this.rally++;
+        this.speed = 310 + Math.floor(Math.random() * 60);
+        this.shuttle.vx = -(6.5 + Math.min(4, this.rally * 0.3));
+        this.shuttle.vy = (Math.random() - 0.3) * 3;
+        this.shuttle.fromAI = false;
+
+        this.showBanner('POWER SMASH! ⚡', `${this.speed} km/h Sonic Boom!`);
+        CyberAudio.playBadmintonHit(true);
+        this.createShockwave(this.shuttle.x, this.shuttle.y, '#f472b6', 25);
+        this.updateHud();
+      }
+    },
+
+    showBanner(title, sub) {
+      const banner = document.getElementById('badminton-banner');
+      const titleEl = document.getElementById('badminton-banner-title');
+      const subEl = document.getElementById('badminton-banner-sub');
+      if (!banner) return;
+      titleEl.textContent = title;
+      subEl.textContent = sub;
+      banner.classList.add('show');
+      setTimeout(() => banner.classList.remove('show'), 800);
+    },
+
+    createShockwave(x, y, color, count = 20) {
+      for (let i = 0; i < count; i++) {
+        const ang = Math.random() * Math.PI * 2;
+        const spd = Math.random() * 6 + 2;
+        this.particles.push({
+          x, y,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd,
+          color,
+          alpha: 1,
+          size: Math.random() * 3 + 2
+        });
+      }
+    },
+
+    endRally() {
+      this.active = false;
+      const screen = document.getElementById('badminton-end-screen');
+      document.getElementById('badminton-final-rally').textContent = this.rally;
+      document.getElementById('badminton-final-speed').textContent = Math.round(this.speed);
+
+      if (this.rally > this.best) {
+        this.best = this.rally;
+        localStorage.setItem('jj_badminton_best', this.best.toString());
+        document.getElementById('badminton-best').textContent = this.best;
+        CyberAudio.playFanfare();
+      }
+
+      screen.classList.add('show');
+    },
+
+    bindInputs() {
+      this.canvas.addEventListener('mousemove', (e) => {
+        const rect = this.canvas.getBoundingClientRect();
+        this.racketX = Math.max(220, (e.clientX - rect.left) * (this.width / rect.width));
+        this.racketY = (e.clientY - rect.top) * (this.height / rect.height);
+      });
+
+      this.canvas.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+          const rect = this.canvas.getBoundingClientRect();
+          this.racketX = Math.max(220, (e.touches[0].clientX - rect.left) * (this.width / rect.width));
+          this.racketY = (e.touches[0].clientY - rect.top) * (this.height / rect.height);
+        }
+      }, { passive: true });
+
+      this.canvas.addEventListener('mousedown', () => this.triggerSmash());
+      this.canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        this.triggerSmash();
+      });
+
+      document.getElementById('badminton-restart-btn').addEventListener('click', () => {
+        this.startRally();
+        CyberAudio.playClick();
+      });
+    },
+
+    loop() {
+      this.update();
+      this.draw();
+      requestAnimationFrame(() => this.loop());
+    },
+
+    update() {
+      if (!this.active || !this.shuttle) return;
+
+      if (this.smashTimer > 0) this.smashTimer--;
+
+      // AI Tracking
+      this.aiY += (this.shuttle.y - this.aiY) * 0.12;
+
+      // Shuttlecock movement with aerodynamics
+      this.shuttle.x += this.shuttle.vx;
+      this.shuttle.y += this.shuttle.vy;
+      this.shuttle.vy += 0.08; // gravity
+
+      // Player racket return (normal intercept)
+      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 18 && Math.abs(this.shuttle.y - this.racketY) < 32) {
+        this.rally++;
+        this.speed = 180 + Math.min(80, this.rally * 8);
+        this.shuttle.vx = -(4.8 + Math.min(3, this.rally * 0.2));
+        this.shuttle.vy = -3.5 + (this.shuttle.y - this.racketY) * 0.08;
+        this.shuttle.fromAI = false;
+        CyberAudio.playBadmintonHit(false);
+        this.createShockwave(this.shuttle.x, this.shuttle.y, '#00d4ff', 12);
+        this.updateHud();
+      }
+
+      // AI return
+      if (this.shuttle.vx < 0 && this.shuttle.x < 65 && Math.abs(this.shuttle.y - this.aiY) < 38) {
+        this.shuttle.vx = 4.6 + Math.min(3.5, this.rally * 0.2);
+        this.shuttle.vy = -3.2 + (Math.random() - 0.4) * 2;
+        this.shuttle.fromAI = true;
+        CyberAudio.playBadmintonHit(false);
+        this.createShockwave(this.shuttle.x, this.shuttle.y, '#a855f7', 10);
+      }
+
+      // Check bounds / miss
+      if (this.shuttle.x > this.width + 10 || this.shuttle.y > 240) {
+        this.endRally();
+      }
+
+      // Particles
+      for (let i = this.particles.length - 1; i >= 0; i--) {
+        const p = this.particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.03;
+        if (p.alpha <= 0) this.particles.splice(i, 1);
+      }
+    },
+
+    draw() {
+      const c = this.ctx;
+      c.clearRect(0, 0, this.width, this.height);
+
+      // Court background
+      c.fillStyle = '#060a1c';
+      c.fillRect(0, 0, this.width, this.height);
+
+      // Floor & Court lines
+      c.strokeStyle = 'rgba(0, 212, 255, 0.2)';
+      c.lineWidth = 1.5;
+      c.beginPath();
+      c.moveTo(20, 220);
+      c.lineTo(360, 220);
+      c.stroke();
+
+      // Net in center
+      c.strokeStyle = 'rgba(0, 240, 224, 0.7)';
+      c.lineWidth = 2.5;
+      c.beginPath();
+      c.moveTo(190, 150);
+      c.lineTo(190, 220);
+      c.stroke();
+      // Net mesh
+      c.fillStyle = 'rgba(0, 240, 224, 0.1)';
+      c.fillRect(184, 150, 12, 70);
+
+      // AI Racket (Left)
+      c.save();
+      c.fillStyle = '#a855f7';
+      c.shadowColor = '#a855f7';
+      c.shadowBlur = 8;
+      c.beginPath();
+      c.ellipse(50, this.aiY, 6, 18, 0, 0, Math.PI * 2);
+      c.fill();
+      c.restore();
+
+      // Player Racket (Right)
+      c.save();
+      const racketColor = this.smashTimer > 0 ? '#f472b6' : '#00f0e0';
+      c.fillStyle = racketColor;
+      c.shadowColor = racketColor;
+      c.shadowBlur = this.smashTimer > 0 ? 16 : 8;
+      c.beginPath();
+      c.ellipse(this.racketX, this.racketY, 7, 20, 0.2, 0, Math.PI * 2);
+      c.fill();
+      // Handle
+      c.fillStyle = '#ffffff';
+      c.fillRect(this.racketX + 4, this.racketY + 12, 3, 14);
+      c.restore();
+
+      // Shuttlecock
+      if (this.shuttle && this.active) {
+        c.save();
+        const angle = Math.atan2(this.shuttle.vy, this.shuttle.vx);
+        c.translate(this.shuttle.x, this.shuttle.y);
+        c.rotate(angle);
+
+        // Cork
+        c.fillStyle = '#fef08a';
+        c.shadowColor = '#00d4ff';
+        c.shadowBlur = 8;
+        c.beginPath();
+        c.arc(4, 0, 4, 0, Math.PI * 2);
+        c.fill();
+
+        // Feathers
+        c.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        c.beginPath();
+        c.moveTo(2, 0);
+        c.lineTo(-8, -5);
+        c.lineTo(-8, 5);
+        c.closePath();
+        c.fill();
+        c.restore();
+      }
+
+      // Particles
+      for (const p of this.particles) {
+        c.save();
+        c.globalAlpha = p.alpha;
+        c.fillStyle = p.color;
+        c.beginPath();
+        c.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        c.fill();
+        c.restore();
+      }
+    }
+  };
+
+  /* ─────────────────────────────────────────────────────────────
+     6. SPORTS SECTION MODE TABS (PLAY vs STORY)
+     ───────────────────────────────────────────────────────────── */
+  function initSportTabs() {
+    document.querySelectorAll('.sport-mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sport = btn.getAttribute('data-sport');
+        const mode = btn.getAttribute('data-mode');
+
+        const card = document.getElementById(`${sport}-card`);
+        if (!card) return;
+
+        card.querySelectorAll('.sport-mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        card.querySelectorAll('.sport-content-pane').forEach(p => p.classList.remove('active'));
+        const targetPane = document.getElementById(`${sport}-pane-${mode}`);
+        if (targetPane) targetPane.classList.add('active');
+
+        CyberAudio.playClick();
+      });
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     7. FUTURISTIC CYBER TERMINAL & MATRIX DIGITAL RAIN
+     ───────────────────────────────────────────────────────────── */
+  const CyberTerminal = {
+    modal: null,
+    body: null,
+    input: null,
+    isOpen: false,
+
+    init() {
+      this.modal = document.getElementById('cyber-terminal-modal');
+      this.body = document.getElementById('terminal-body');
+      this.input = document.getElementById('terminal-input');
+      const toggleBtn = document.getElementById('cyber-terminal-btn');
+      const closeBtn = document.getElementById('terminal-close-btn');
+
+      if (toggleBtn) toggleBtn.addEventListener('click', () => this.toggle());
+      if (closeBtn) closeBtn.addEventListener('click', () => this.close());
+
+      // Keyboard shortcut `~`
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '`' || e.key === '~') {
+          e.preventDefault();
+          this.toggle();
+        }
+      });
+
+      if (this.input) {
+        this.input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const cmd = this.input.value.trim().toLowerCase();
+            this.input.value = '';
+            this.execute(cmd);
+          }
+        });
+      }
+
+      // Quick Chips
+      document.querySelectorAll('.terminal-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const cmd = chip.getAttribute('data-cmd');
+          this.execute(cmd);
+        });
+      });
+    },
+
+    toggle() {
+      this.isOpen ? this.close() : this.open();
+    },
+
+    open() {
+      this.isOpen = true;
+      if (this.modal) this.modal.classList.add('open');
+      if (this.input) this.input.focus();
+      CyberAudio.playClick();
+    },
+
+    close() {
+      this.isOpen = false;
+      if (this.modal) this.modal.classList.remove('open');
+      CyberAudio.playClick();
+    },
+
+    log(text, className = '') {
+      const line = document.createElement('div');
+      line.className = `terminal-log-line ${className}`;
+      line.textContent = text;
+      this.body.appendChild(line);
+      this.body.scrollTop = this.body.scrollHeight;
+    },
+
+    execute(cmd) {
+      if (!cmd) return;
+      this.log(`> ${cmd}`, 'cyan');
+
+      if (cmd === 'help') {
+        this.log('Available directives:');
+        this.log('  cricket     - Launch & scroll to Cricket game');
+        this.log('  badminton   - Launch & scroll to Badminton game');
+        this.log('  cube        - Scroll to 3D Rubik's Cube');
+        this.log('  checkerboard- Apply classic cube checkerboard');
+        this.log('  matrix      - Toggle Cyber Matrix Digital Rain');
+        this.log('  theme       - Toggle Light / Dark universe');
+        this.log('  skills      - Navigate to Technical Skills');
+        this.log('  about       - Navigate to About section');
+        this.log('  clear       - Clear terminal screen');
+      } else if (cmd === 'cricket') {
+        this.log('Launching Cyber Cricket Arena...', 'green');
+        document.querySelector('button[data-sport="cricket"][data-mode="game"]')?.click();
+        document.getElementById('sports')?.scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'badminton') {
+        this.log('Launching Cyber Badminton Arena...', 'green');
+        document.querySelector('button[data-sport="badminton"][data-mode="game"]')?.click();
+        document.getElementById('sports')?.scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'cube') {
+        this.log('Navigating to Rubik's Cube...', 'green');
+        document.getElementById('hobbies')?.scrollIntoView({ behavior: 'smooth' });
+        RubiksCube.autoSolve();
+      } else if (cmd === 'checkerboard') {
+        this.log('Executing U2 D2 F2 B2 L2 R2 checkerboard pattern...', 'pink');
+        document.getElementById('hobbies')?.scrollIntoView({ behavior: 'smooth' });
+        RubiksCube.applyCheckerboard();
+      } else if (cmd === 'matrix') {
+        MatrixRain.toggle();
+        this.log(`Matrix Rain: ${MatrixRain.active ? 'ENGAGED' : 'DISENGAGED'}`, 'green');
+      } else if (cmd === 'theme') {
+        const t = document.getElementById('theme-toggle');
+        if (t) t.checked = !t.checked;
+        this.log('Theme shifted.', 'green');
+      } else if (cmd === 'skills') {
+        document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'about') {
+        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'clear') {
+        this.body.innerHTML = '';
+        this.log('=== TERMINAL CLEARED ===', 'dim');
+      } else {
+        this.log(`Command not recognized: "${cmd}". Type "help" for options.`, 'dim');
+      }
+    }
+  };
+
+  /* Matrix Digital Rain Animation */
+  const MatrixRain = {
+    canvas: null,
+    ctx: null,
+    columns: 0,
+    drops: [],
+    active: false,
+
+    init() {
+      this.canvas = document.getElementById('matrix-canvas');
+      if (!this.canvas) return;
+      this.ctx = this.canvas.getContext('2d');
+      this.resize();
+      window.addEventListener('resize', () => this.resize());
+      this.loop();
+    },
+
+    resize() {
+      if (!this.canvas) return;
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+      this.columns = Math.floor(this.canvas.width / 18);
+      this.drops = Array(this.columns).fill(1);
+    },
+
+    toggle() {
+      this.active = !this.active;
+      if (this.canvas) this.canvas.classList.toggle('active', this.active);
+      return this.active;
+    },
+
+    loop() {
+      if (this.active && this.ctx) {
+        this.ctx.fillStyle = 'rgba(6, 8, 15, 0.08)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.ctx.fillStyle = '#00f0e0';
+        this.ctx.font = '14px monospace';
+
+        const chars = '0123456789ABCDEF01アカサタナハマヤラワ';
+        for (let i = 0; i < this.drops.length; i++) {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          this.ctx.fillText(text, i * 18, this.drops[i] * 18);
+          if (this.drops[i] * 18 > this.canvas.height && Math.random() > 0.975) {
+            this.drops[i] = 0;
+          }
+          this.drops[i]++;
+        }
+      }
+      requestAnimationFrame(() => this.loop());
+    }
+  };
+
+  /* ─────────────────────────────────────────────────────────────
+     8. HOLOGRAPHIC CARD LIGHTING & SMOOTH SCROLL REVEALS
+     ───────────────────────────────────────────────────────────── */
+  function initHolographicCards() {
+    document.querySelectorAll('.glass-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+
+    // Smooth reveal observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     GLOBAL INITIALIZATION
+     ───────────────────────────────────────────────────────────── */
+  window.addEventListener('DOMContentLoaded', () => {
+    CursorEngine.init();
+    RubiksCube.init();
+    CricketGame.init();
+    BadmintonGame.init();
+    initSportTabs();
+    CyberTerminal.init();
+    MatrixRain.init();
+    initHolographicCards();
+
+    // SFX Toggle in Navbar
+    const sfxBtn = document.getElementById('sfx-toggle');
+    if (sfxBtn) {
+      sfxBtn.addEventListener('click', () => CyberAudio.toggle());
+    }
+
+    // Live Session Clock in Telemetry
+    const clockEl = document.getElementById('session-clock');
+    if (clockEl) {
+      const updateClock = () => {
+        const now = new Date();
+        clockEl.textContent = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+      };
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
+  });
+
+})();
+</script>
+
 </body>
 </html>
 
