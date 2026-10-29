@@ -2880,18 +2880,18 @@ label:focus-visible,
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JUBAYED PORTFOLIO — CLEAN, FAST & RELIABLE INTERACTIVE ENGINE
+   JUBAYED PORTFOLIO — INTERACTIVE & PLAYABLE ENGINE
    - Circular Mouse Pointer (Smooth circular tracking & reactive hover)
-   - Playable Cricket Game (1-Over Chase, Big Swing button & canvas click)
-   - Playable Badminton Game (Rally counter, Smash button & canvas click)
-   - 3D Rubik's Cube Simulator (Checkerboard, Flower, Scramble, Solve)
-   - Pure Web Audio Synthesizer (Zero-latency pure synthesis)
+   - Playable Cricket Game (User-controlled bowling, clear swing button & canvas hit)
+   - Playable Badminton Game (User-controlled serve, auto-return on touch, power smash)
+   - 3D Rubik's Cube Simulator (Checkerboard, Flower, Scramble, Solve, 3D drag)
+   - Pure Web Audio Synthesizer (Instant response sound effects)
    ═══════════════════════════════════════════════════════════════ */
 
 (function() {
   'use strict';
 
-  // Safe local storage helper
+  // Safe storage helper
   const storage = {
     get(key, fallback = 0) {
       try {
@@ -3011,7 +3011,7 @@ label:focus-visible,
   };
 
   /* ─────────────────────────────────────────────────────────────
-     2. CIRCULAR MOUSE POINTER (Smooth & 100% Reliable)
+     2. CIRCULAR MOUSE POINTER (Clean, Smooth & Reliable)
      ───────────────────────────────────────────────────────────── */
   const CircleCursor = {
     dot: null,
@@ -3076,7 +3076,6 @@ label:focus-visible,
         document.body.classList.remove('cursor-click');
       });
 
-      // Hide when leaving window
       document.addEventListener('mouseleave', () => {
         this.dot.style.opacity = '0';
         this.ring.style.opacity = '0';
@@ -3227,7 +3226,6 @@ label:focus-visible,
       }, 120);
     },
 
-    // Checkerboard pattern: U2 D2 F2 B2 L2 R2
     applyCheckerboard() {
       const seq = ['U', 'U', 'D', 'D', 'F', 'F', 'B', 'B', 'L', 'L', 'R', 'R'];
       this.runSeq(seq, 'Checkerboard', () => {
@@ -3236,7 +3234,6 @@ label:focus-visible,
       });
     },
 
-    // Flower dot pattern
     applyFlower() {
       const seq = ["U", "D'", "R", "L'", "F", "B'", "U", "D'"];
       this.runSeq(seq, 'Flower Dot', () => {
@@ -3303,7 +3300,6 @@ label:focus-visible,
         };
       }
 
-      // Manual turn buttons
       document.querySelectorAll('.cube-turn-btn[data-move]').forEach(btn => {
         btn.onclick = () => {
           const base = btn.getAttribute('data-move');
@@ -3311,7 +3307,6 @@ label:focus-visible,
         };
       });
 
-      // 3D drag
       const container = document.getElementById('cube-container');
       const wrapper = document.getElementById('cube-wrapper');
       if (!container || !wrapper) return;
@@ -3347,11 +3342,12 @@ label:focus-visible,
   };
 
   /* ─────────────────────────────────────────────────────────────
-     4. PLAYABLE CRICKET MINI-GAME (Simple, Engaging, 1-Over Chase)
+     4. PLAYABLE CRICKET MINI-GAME (User-Controlled & Easy To Play)
      ───────────────────────────────────────────────────────────── */
   const Cricket = {
     canvas: null,
     ctx: null,
+    state: 'ready', // 'ready', 'bowling', 'finished'
     runs: 0,
     balls: 0,
     maxBalls: 6,
@@ -3371,17 +3367,20 @@ label:focus-visible,
       document.getElementById('cricket-best').textContent = this.best;
 
       this.bindEvents();
-      this.startOver();
+      this.resetMatch();
       this.loop();
     },
 
-    startOver() {
+    resetMatch() {
       this.runs = 0;
       this.balls = 0;
+      this.ball = null;
+      this.state = 'ready';
       this.particles = [];
       this.updateHud();
       document.getElementById('cricket-end-screen').classList.remove('show');
-      this.bowlNext();
+      const bowlBtn = document.getElementById('cricket-bowl-btn');
+      if (bowlBtn) bowlBtn.textContent = '⚡ Bowl Ball 1/6';
     },
 
     updateHud() {
@@ -3394,53 +3393,75 @@ label:focus-visible,
         this.endMatch();
         return;
       }
+      this.state = 'bowling';
+      // Comfortable, fun, readable speed (~1.2 seconds of flight)
       this.ball = {
-        x: 190 + (Math.random() * 24 - 12),
+        x: 190 + (Math.random() * 20 - 10),
         y: 20,
         radius: 4,
-        speedY: 4 + Math.random() * 1.2,
-        driftX: (Math.random() - 0.5) * 0.8,
+        speedY: 2.8,
+        driftX: (Math.random() - 0.5) * 0.4,
         active: true,
         hit: false
       };
+      AudioEngine.playTone(400, 0.05);
+      const bowlBtn = document.getElementById('cricket-bowl-btn');
+      if (bowlBtn) bowlBtn.textContent = `⚡ Bowling... (${this.balls + 1}/6)`;
     },
 
     swing() {
+      // If in ready state, swinging or clicking also bowls the first ball!
+      if (this.state === 'ready') {
+        this.bowlNext();
+        return;
+      }
+
       if (this.isSwinging) return;
       this.isSwinging = true;
-      this.swingTimer = 12;
+      this.swingTimer = 14;
 
       if (this.ball && this.ball.active && !this.ball.hit) {
         const distY = Math.abs(this.ball.y - 190);
         const distX = Math.abs(this.ball.x - this.batX);
 
-        if (distY < 45 && distX < 45) {
+        // Generous collision so hits feel great
+        if (distY < 50 && distX < 50) {
           this.ball.hit = true;
-          if (distY < 18 && distX < 24) {
+          if (distY < 20 && distX < 28) {
             // SIX!
             this.runs += 6;
-            this.showBanner('SIX! 🚀', '108m Boundary Smash!');
+            this.showBanner('SIX! 🚀', '108m Stratospheric Launch!');
             AudioEngine.playBatHit(true);
             this.addParticles(this.ball.x, this.ball.y, '#00f0e0', 25);
-          } else if (distY < 30) {
+          } else if (distY < 35) {
             // FOUR!
             this.runs += 4;
-            this.showBanner('FOUR! 🎯', 'Rocket to the Ropes!');
+            this.showBanner('FOUR! 🎯', 'Boundary to the Ropes!');
             AudioEngine.playBatHit(false);
             this.addParticles(this.ball.x, this.ball.y, '#a855f7', 16);
           } else {
             // 2 RUNS
             this.runs += 2;
-            this.showBanner('2 RUNS ⚡', 'Quick Running!');
+            this.showBanner('2 RUNS ⚡', 'Good Placement!');
             AudioEngine.playBatHit(false);
             this.addParticles(this.ball.x, this.ball.y, '#f472b6', 10);
           }
-          this.ball.speedY = -7;
-          this.ball.driftX = (Math.random() - 0.5) * 5;
+          this.ball.speedY = -6;
+          this.ball.driftX = (Math.random() - 0.5) * 4;
           this.balls++;
           this.updateHud();
-          setTimeout(() => this.bowlNext(), 1400);
+          this.onDeliveryFinished();
         }
+      }
+    },
+
+    onDeliveryFinished() {
+      if (this.balls >= this.maxBalls) {
+        setTimeout(() => this.endMatch(), 1000);
+      } else {
+        const bowlBtn = document.getElementById('cricket-bowl-btn');
+        if (bowlBtn) bowlBtn.textContent = `⚡ Bowl Ball ${this.balls + 1}/6`;
+        this.state = 'ready';
       }
     },
 
@@ -3452,7 +3473,7 @@ label:focus-visible,
       t.textContent = title;
       s.textContent = sub;
       banner.classList.add('show');
-      setTimeout(() => banner.classList.remove('show'), 900);
+      setTimeout(() => banner.classList.remove('show'), 1100);
     },
 
     addParticles(x, y, color, count = 15) {
@@ -3471,6 +3492,7 @@ label:focus-visible,
     },
 
     endMatch() {
+      this.state = 'finished';
       const screen = document.getElementById('cricket-end-screen');
       const finalRuns = document.getElementById('cricket-final-runs');
       const finalSr = document.getElementById('cricket-final-sr');
@@ -3506,7 +3528,7 @@ label:focus-visible,
         }
       }, { passive: true });
 
-      // Click to swing
+      // Click on canvas to swing or bowl
       this.canvas.addEventListener('mousedown', () => this.swing());
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -3517,15 +3539,21 @@ label:focus-visible,
       const swingBtn = document.getElementById('cricket-swing-btn');
       if (swingBtn) swingBtn.onclick = () => this.swing();
 
-      // Next ball button
+      // Bowl next ball button
       const bowlBtn = document.getElementById('cricket-bowl-btn');
-      if (bowlBtn) bowlBtn.onclick = () => this.bowlNext();
+      if (bowlBtn) bowlBtn.onclick = () => {
+        if (this.state === 'finished') {
+          this.resetMatch();
+        } else {
+          this.bowlNext();
+        }
+      };
 
-      // Restart button
+      // Restart button on end screen
       const restart = document.getElementById('cricket-restart-btn');
-      if (restart) restart.onclick = () => this.startOver();
+      if (restart) restart.onclick = () => this.resetMatch();
 
-      // Spacebar
+      // Spacebar to swing
       window.addEventListener('keydown', (e) => {
         if (e.code === 'Space' && document.getElementById('cricket-pane-game')?.classList.contains('active')) {
           e.preventDefault();
@@ -3561,9 +3589,9 @@ label:focus-visible,
             AudioEngine.playBowled();
             this.addParticles(190, 205, '#ef4444', 30);
           } else {
-            this.showBanner('DOT BALL', 'Missed the crease');
+            this.showBanner('DOT BALL', 'Missed the ball');
           }
-          setTimeout(() => this.bowlNext(), 1400);
+          this.onDeliveryFinished();
         } else if (this.ball.hit && this.ball.y < -30) {
           this.ball.active = false;
         }
@@ -3599,7 +3627,7 @@ label:focus-visible,
       c.stroke();
 
       // Yellow Crease line (Sweet spot)
-      c.strokeStyle = 'rgba(250, 204, 21, 0.7)';
+      c.strokeStyle = 'rgba(250, 204, 21, 0.75)';
       c.lineWidth = 2;
       c.beginPath();
       c.moveTo(125, 190);
@@ -3646,6 +3674,14 @@ label:focus-visible,
         c.restore();
       }
 
+      // Ready Prompt if awaiting first bowl
+      if (this.state === 'ready' && !this.ball) {
+        c.fillStyle = 'rgba(0, 240, 224, 0.9)';
+        c.font = 'bold 13px system-ui, sans-serif';
+        c.textAlign = 'center';
+        c.fillText('🏏 Click "SWING BAT" or "Bowl Ball" to start!', 190, 110);
+      }
+
       // Particles
       for (const p of this.particles) {
         c.save();
@@ -3660,15 +3696,15 @@ label:focus-visible,
   };
 
   /* ─────────────────────────────────────────────────────────────
-     5. PLAYABLE BADMINTON MINI-GAME (Simple, Engaging, Rally Blitz)
+     5. PLAYABLE BADMINTON MINI-GAME (User-Controlled & Easy Rally)
      ───────────────────────────────────────────────────────────── */
   const Badminton = {
     canvas: null,
     ctx: null,
+    state: 'ready', // 'ready', 'rallying', 'ended'
     rally: 0,
     best: 0,
     speed: 0,
-    active: true,
     racketX: 300,
     racketY: 150,
     aiY: 120,
@@ -3684,25 +3720,20 @@ label:focus-visible,
       document.getElementById('badminton-best').textContent = this.best;
 
       this.bindEvents();
-      this.startRally();
+      this.resetRally();
       this.loop();
     },
 
-    startRally() {
+    resetRally() {
       this.rally = 0;
       this.speed = 120;
-      this.active = true;
+      this.state = 'ready';
+      this.shuttle = null;
       this.particles = [];
       this.updateHud();
       document.getElementById('badminton-end-screen').classList.remove('show');
-
-      this.shuttle = {
-        x: 60,
-        y: 100,
-        vx: 4.5,
-        vy: -2,
-        active: true
-      };
+      const serveBtn = document.getElementById('badminton-serve-btn');
+      if (serveBtn) serveBtn.textContent = '🏸 Serve Shuttle';
     },
 
     updateHud() {
@@ -3710,18 +3741,39 @@ label:focus-visible,
       document.getElementById('badminton-speed').textContent = `${Math.round(this.speed)} km/h`;
     },
 
+    serve() {
+      this.state = 'rallying';
+      document.getElementById('badminton-end-screen').classList.remove('show');
+      this.shuttle = {
+        x: 60,
+        y: 100,
+        vx: 3.8,
+        vy: -2,
+        active: true
+      };
+      AudioEngine.playTone(550, 0.05);
+      const serveBtn = document.getElementById('badminton-serve-btn');
+      if (serveBtn) serveBtn.textContent = '🏸 In Play!';
+    },
+
     smash() {
-      if (!this.active || !this.shuttle) return;
+      if (this.state === 'ready') {
+        this.serve();
+        return;
+      }
+      if (!this.shuttle || !this.shuttle.active) return;
+
       this.isSmashing = true;
       setTimeout(() => { this.isSmashing = false; }, 200);
 
       const dx = Math.abs(this.shuttle.x - this.racketX);
       const dy = Math.abs(this.shuttle.y - this.racketY);
 
-      if (dx < 40 && dy < 40 && this.shuttle.vx > 0) {
+      // Smash when shuttlecock is anywhere near the racket
+      if (dx < 45 && dy < 45 && this.shuttle.vx > 0) {
         this.rally++;
         this.speed = 310 + Math.floor(Math.random() * 50);
-        this.shuttle.vx = -(7 + Math.min(3, this.rally * 0.25));
+        this.shuttle.vx = -(6.5 + Math.min(3, this.rally * 0.25));
         this.shuttle.vy = (Math.random() - 0.3) * 3;
 
         this.showBanner('POWER SMASH! ⚡', `${this.speed} km/h Sonic Boom!`);
@@ -3739,7 +3791,7 @@ label:focus-visible,
       t.textContent = title;
       s.textContent = sub;
       b.classList.add('show');
-      setTimeout(() => b.classList.remove('show'), 800);
+      setTimeout(() => b.classList.remove('show'), 900);
     },
 
     addShockwave(x, y, color, count = 15) {
@@ -3758,7 +3810,7 @@ label:focus-visible,
     },
 
     endRally() {
-      this.active = false;
+      this.state = 'ended';
       const screen = document.getElementById('badminton-end-screen');
       document.getElementById('badminton-final-rally').textContent = this.rally;
       document.getElementById('badminton-final-speed').textContent = Math.round(this.speed);
@@ -3770,6 +3822,8 @@ label:focus-visible,
         AudioEngine.playFanfare();
       }
       screen.classList.add('show');
+      const serveBtn = document.getElementById('badminton-serve-btn');
+      if (serveBtn) serveBtn.textContent = '🏸 Serve Again';
     },
 
     bindEvents() {
@@ -3786,20 +3840,25 @@ label:focus-visible,
         }
       }, { passive: true });
 
-      this.canvas.addEventListener('mousedown', () => this.smash());
+      // Click on canvas to smash or serve
+      this.canvas.addEventListener('mousedown', () => {
+        if (this.state === 'ready') this.serve();
+        else this.smash();
+      });
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
-        this.smash();
+        if (this.state === 'ready') this.serve();
+        else this.smash();
       });
 
       const smashBtn = document.getElementById('badminton-smash-btn');
       if (smashBtn) smashBtn.onclick = () => this.smash();
 
       const serveBtn = document.getElementById('badminton-serve-btn');
-      if (serveBtn) serveBtn.onclick = () => this.startRally();
+      if (serveBtn) serveBtn.onclick = () => this.serve();
 
       const restart = document.getElementById('badminton-restart-btn');
-      if (restart) restart.onclick = () => this.startRally();
+      if (restart) restart.onclick = () => this.resetRally();
     },
 
     loop() {
@@ -3809,33 +3868,34 @@ label:focus-visible,
     },
 
     update() {
-      if (!this.active || !this.shuttle) return;
+      if (this.state !== 'rallying' || !this.shuttle) return;
 
-      this.aiY += (this.shuttle.y - this.aiY) * 0.12;
+      this.aiY += (this.shuttle.y - this.aiY) * 0.1;
 
       this.shuttle.x += this.shuttle.vx;
       this.shuttle.y += this.shuttle.vy;
-      this.shuttle.vy += 0.08;
+      this.shuttle.vy += 0.07; // gentle gravity
 
-      // Player return (normal)
-      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 20 && Math.abs(this.shuttle.y - this.racketY) < 32) {
+      // Touch return with racket
+      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 22 && Math.abs(this.shuttle.y - this.racketY) < 35) {
         this.rally++;
         this.speed = 180 + Math.min(80, this.rally * 8);
-        this.shuttle.vx = -(5 + Math.min(3, this.rally * 0.2));
+        this.shuttle.vx = -(4.6 + Math.min(2.5, this.rally * 0.2));
         this.shuttle.vy = -3.2 + (this.shuttle.y - this.racketY) * 0.08;
         AudioEngine.playRacketHit(false);
         this.addShockwave(this.shuttle.x, this.shuttle.y, '#00d4ff', 10);
         this.updateHud();
       }
 
-      // AI return
-      if (this.shuttle.vx < 0 && this.shuttle.x < 65 && Math.abs(this.shuttle.y - this.aiY) < 40) {
-        this.shuttle.vx = 4.8 + Math.min(3, this.rally * 0.2);
-        this.shuttle.vy = -3 + (Math.random() - 0.4) * 2;
+      // AI opponent return
+      if (this.shuttle.vx < 0 && this.shuttle.x < 65 && Math.abs(this.shuttle.y - this.aiY) < 42) {
+        this.shuttle.vx = 4.4 + Math.min(2.5, this.rally * 0.2);
+        this.shuttle.vy = -2.8 + (Math.random() - 0.4) * 2;
         AudioEngine.playRacketHit(false);
         this.addShockwave(this.shuttle.x, this.shuttle.y, '#a855f7', 10);
       }
 
+      // Missed
       if (this.shuttle.x > 390 || this.shuttle.y > 230) {
         this.endRally();
       }
@@ -3893,7 +3953,7 @@ label:focus-visible,
       c.restore();
 
       // Shuttlecock
-      if (this.shuttle && this.active) {
+      if (this.shuttle && this.state === 'rallying') {
         c.save();
         const angle = Math.atan2(this.shuttle.vy, this.shuttle.vx);
         c.translate(this.shuttle.x, this.shuttle.y);
@@ -3910,6 +3970,14 @@ label:focus-visible,
         c.closePath();
         c.fill();
         c.restore();
+      }
+
+      // Ready prompt if awaiting serve
+      if (this.state === 'ready') {
+        c.fillStyle = 'rgba(0, 240, 224, 0.9)';
+        c.font = 'bold 13px system-ui, sans-serif';
+        c.textAlign = 'center';
+        c.fillText('🏸 Click "Serve Shuttle" or Canvas to start!', 190, 110);
       }
 
       for (const p of this.particles) {
