@@ -84,116 +84,83 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
-   CUSTOM CYBER CURSOR (Fixed & Interactive)
+   CIRCULAR MOUSE POINTER (Clean, Round & Responsive)
    ═══════════════════════════════════════════════ */
 .cursor-dot, .cursor-ring {
   position: fixed;
+  top: 0;
+  left: 0;
   border-radius: 50%;
   pointer-events: none;
   z-index: 999999;
-  top: 0;
-  left: 0;
   opacity: 0;
-  transform: translate3d(-100px, -100px, 0);
-  transition: opacity 0.25s ease;
   will-change: transform;
 }
 
-body.has-custom-cursor {
+body.has-circle-cursor {
   cursor: none;
 }
-body.has-custom-cursor .page-wrapper,
-body.has-custom-cursor a,
-body.has-custom-cursor button,
-body.has-custom-cursor label,
-body.has-custom-cursor input {
+body.has-circle-cursor a,
+body.has-circle-cursor button,
+body.has-circle-cursor input,
+body.has-circle-cursor label,
+body.has-circle-cursor select,
+body.has-circle-cursor canvas {
   cursor: none;
 }
 
-body.has-custom-cursor .cursor-dot,
-body.has-custom-cursor .cursor-ring {
+body.has-circle-cursor .cursor-dot,
+body.has-circle-cursor .cursor-ring {
   opacity: 1;
 }
 
+/* Inner Circle Dot */
 .cursor-dot {
   width: 8px;
   height: 8px;
   background: var(--neon-cyan);
-  box-shadow: 0 0 14px var(--neon-cyan), 0 0 4px #ffffff;
+  box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px rgba(0, 240, 224, 0.6);
   margin: -4px 0 0 -4px;
-  transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), background 0.2s, box-shadow 0.2s;
+  border-radius: 50%;
+  transition: transform 0.15s ease, background 0.2s;
 }
 
+/* Outer Circle Ring */
 .cursor-ring {
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid rgba(0, 212, 255, 0.65);
-  box-shadow: 0 0 16px rgba(0, 212, 255, 0.35);
-  margin: -18px 0 0 -18px;
-  transition: width 0.22s cubic-bezier(0.2, 0, 0.2, 1),
-              height 0.22s cubic-bezier(0.2, 0, 0.2, 1),
-              margin 0.22s cubic-bezier(0.2, 0, 0.2, 1),
-              border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(0, 212, 255, 0.75);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+  margin: -16px 0 0 -16px;
+  border-radius: 50%;
+  transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, border-color 0.2s, background 0.2s;
 }
 
-/* Sci-fi targeting reticle crosshairs */
-.cursor-ring::before,
-.cursor-ring::after {
-  content: '';
-  position: absolute;
-  background: var(--neon-cyan);
-  pointer-events: none;
-  transition: background 0.2s;
-}
-.cursor-ring::before {
-  top: -4px; left: 50%;
-  width: 2px; height: 4px;
-  transform: translateX(-50%);
-}
-.cursor-ring::after {
-  bottom: -4px; left: 50%;
-  width: 2px; height: 4px;
-  transform: translateX(-50%);
-}
-
-/* Hovering interactive elements */
+/* Hover on interactive elements: Circle smoothly expands */
 body.cursor-hover .cursor-ring {
-  width: 52px;
-  height: 52px;
-  margin: -26px 0 0 -26px;
-  border-color: var(--neon-pink);
-  background: rgba(244, 114, 182, 0.08);
-  box-shadow: 0 0 24px rgba(244, 114, 182, 0.5);
-}
-body.cursor-hover .cursor-ring::before,
-body.cursor-hover .cursor-ring::after {
-  background: var(--neon-pink);
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  border-color: var(--neon-violet);
+  background: rgba(168, 85, 247, 0.12);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
 }
 body.cursor-hover .cursor-dot {
-  transform: scale(1.6);
+  transform: scale(1.4);
   background: #ffffff;
-  box-shadow: 0 0 16px var(--neon-pink);
+  box-shadow: 0 0 12px var(--neon-violet);
 }
 
-/* Clicking / Active state */
+/* Click pulse */
 body.cursor-click .cursor-ring {
-  width: 26px;
-  height: 26px;
-  margin: -13px 0 0 -13px;
+  transform: scale(0.75);
   border-color: #ffffff;
   background: rgba(0, 240, 224, 0.35);
-  box-shadow: 0 0 20px rgba(0, 240, 224, 0.8);
 }
 
 @media (pointer: coarse) {
   .cursor-dot, .cursor-ring { display: none !important; }
-  body.has-custom-cursor { cursor: auto !important; }
-  body.has-custom-cursor .page-wrapper,
-  body.has-custom-cursor a,
-  body.has-custom-cursor button,
-  body.has-custom-cursor label {
-    cursor: auto !important;
-  }
+  body.has-circle-cursor { cursor: auto !important; }
 }
 
 /* ═══════════════════════════════════════════════
@@ -280,7 +247,7 @@ body.cursor-click .cursor-ring {
   justify-content: center;
   flex-direction: column;
   background: radial-gradient(ellipse at center, rgba(0,180,255,0.08) 0%, var(--bg-primary) 70%);
-  animation: introFadeOut 0.8s ease-in 4.5s forwards;
+  animation: introFadeOut 0.5s ease-in 1.2s forwards;
   pointer-events: none;
 }
 
@@ -399,8 +366,7 @@ body.cursor-click .cursor-ring {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
-  opacity: 0;
-  animation: fadeSlideDown 0.8s ease-out 4.8s forwards;
+  opacity: 1;
 }
 
 .nav-logo {
@@ -499,17 +465,11 @@ section {
   z-index: 1;
 }
 
-/* Scroll-triggered reveal using animation-timeline where supported */
+/* Reveal styles */
 .reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  animation: revealUp 0.8s ease-out forwards;
-  animation-play-state: paused;
-}
-/* Fallback: always reveal after intro */
-.reveal {
-  animation-delay: 5s;
-  animation-play-state: running;
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 @keyframes revealUp {
@@ -2274,173 +2234,41 @@ label:focus-visible,
   color: rgba(255, 255, 255, 0.2);
 }
 
-/* Floating Cyber Terminal Button */
-.cyber-terminal-btn {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 8000;
-  background: rgba(10, 14, 28, 0.9);
-  border: 1px solid rgba(0, 240, 224, 0.45);
-  color: var(--neon-cyan);
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-family: monospace;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 16px rgba(0, 240, 224, 0.3);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
-}
-.cyber-terminal-btn:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 224, 0.5);
-  border-color: var(--neon-cyan);
-}
 
-/* Holographic Cyber Terminal Modal */
-.cyber-terminal-modal {
-  position: fixed;
-  bottom: 76px;
-  left: 24px;
-  width: min(520px, calc(100vw - 48px));
-  height: 380px;
-  background: rgba(8, 12, 24, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 240, 224, 0.4);
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 224, 0.25);
-  z-index: 8500;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px) scale(0.95);
-  pointer-events: none;
-  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.2, 0, 0.2, 1);
-}
-.cyber-terminal-modal.open {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
 
-.terminal-header {
-  padding: 10px 14px;
-  background: rgba(0, 240, 224, 0.08);
-  border-bottom: 1px solid rgba(0, 240, 224, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: monospace;
-  font-size: 0.74rem;
-  color: var(--neon-cyan);
-  letter-spacing: 0.06em;
-}
 
-.terminal-controls {
-  display: flex;
-  gap: 6px;
-}
-.terminal-ctrl-btn {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-}
-.terminal-ctrl-close { background: #ef4444; }
-.terminal-ctrl-min { background: #facc15; }
 
-.terminal-body {
-  flex: 1;
-  padding: 12px 14px;
-  overflow-y: auto;
-  font-family: monospace;
-  font-size: 0.78rem;
-  color: #e2e8f0;
-  line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
 
-.terminal-log-line {
-  word-break: break-word;
-}
-.terminal-log-line.cyan { color: var(--neon-cyan); }
-.terminal-log-line.green { color: #34d399; }
-.terminal-log-line.pink { color: var(--neon-pink); }
-.terminal-log-line.dim { color: var(--text-dim); }
-
-.terminal-input-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.4);
-}
-.terminal-prompt {
-  color: var(--neon-cyan);
-  font-family: monospace;
+.game-action-btn {
+  padding: 8px 18px;
+  border-radius: 24px;
   font-size: 0.8rem;
   font-weight: 700;
-}
-.terminal-input {
-  flex: 1;
-  background: transparent;
   border: none;
+  background: var(--accent-gradient);
   color: #ffffff;
-  font-family: monospace;
-  font-size: 0.8rem;
-  outline: none;
-}
-
-.terminal-chips {
-  display: flex;
-  gap: 6px;
-  padding: 8px 14px;
-  background: rgba(0, 0, 0, 0.35);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  overflow-x: auto;
-}
-.terminal-chip {
-  padding: 3px 10px;
-  border-radius: 12px;
-  background: rgba(0, 212, 255, 0.1);
-  border: 1px solid rgba(0, 212, 255, 0.25);
-  color: var(--neon-cyan);
-  font-family: monospace;
-  font-size: 0.7rem;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.15s ease;
+  letter-spacing: 0.04em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 14px rgba(0, 212, 255, 0.35);
 }
-.terminal-chip:hover {
-  background: rgba(0, 212, 255, 0.25);
+.game-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 212, 255, 0.55);
+}
+.game-action-btn:active {
+  transform: scale(0.96);
 }
 
-/* Fullscreen Matrix Rain Canvas */
-.matrix-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 90;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+.game-action-btn--sec {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  box-shadow: none;
 }
-.matrix-canvas.active {
-  opacity: 0.24;
+.game-action-btn--sec:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 </style>
@@ -2793,7 +2621,7 @@ label:focus-visible,
                   <span class="game-hud-label">RUNS:</span>
                   <span class="game-hud-val" id="cricket-runs">0</span>
                   <span class="game-hud-label">/ TGT:</span>
-                  <span class="game-hud-val--violet">20</span>
+                  <span class="game-hud-val--violet">18</span>
                 </div>
                 <div class="game-hud-stat">
                   <span class="game-hud-label">BALLS:</span>
@@ -2806,7 +2634,7 @@ label:focus-visible,
               </div>
 
               <div class="game-canvas-wrap">
-                <canvas id="cricket-canvas" class="game-canvas" width="380" height="250"></canvas>
+                <canvas id="cricket-canvas" class="game-canvas" width="380" height="240"></canvas>
                 <div class="game-overlay-banner" id="cricket-banner">
                   <div class="game-banner-title" id="cricket-banner-title">SIX! 🚀</div>
                   <div class="game-banner-sub" id="cricket-banner-sub">108m Stratospheric Launch!</div>
@@ -2826,9 +2654,15 @@ label:focus-visible,
                   <button class="game-restart-btn" id="cricket-restart-btn">Play Another Over ⚡</button>
                 </div>
               </div>
-              <p class="game-hint">🖱️ Move mouse to aim bat • Click / Space to swing! • 6-Ball Super Over</p>
+
+              <!-- Clear Action Buttons -->
+              <div style="margin-top: 0.8rem; display: flex; gap: 0.6rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <button id="cricket-swing-btn" class="game-action-btn" title="Swing Bat (or click canvas / press Space)">🏏 SWING BAT!</button>
+                <button id="cricket-bowl-btn" class="game-action-btn game-action-btn--sec" title="Bowl next ball">⚡ Next Ball</button>
+              </div>
+              <p class="game-hint">🖱️ Move mouse to align bat • Click button or canvas to swing! • 6-Ball Over</p>
             </div>
-            <h3 class="sport-title sport-title--cricket" style="margin-top: 1rem;">🏏 Cyber Cricket: 1-Over Chase</h3>
+            <h3 class="sport-title sport-title--cricket" style="margin-top: 1rem;">🏏 Cricket: 1-Over Challenge</h3>
           </div>
 
           <!-- Story View -->
@@ -2879,10 +2713,10 @@ label:focus-visible,
               </div>
 
               <div class="game-canvas-wrap">
-                <canvas id="badminton-canvas" class="game-canvas" width="380" height="250"></canvas>
+                <canvas id="badminton-canvas" class="game-canvas" width="380" height="240"></canvas>
                 <div class="game-overlay-banner" id="badminton-banner">
                   <div class="game-banner-title" id="badminton-banner-title">POWER SMASH! ⚡</div>
-                  <div class="game-banner-sub" id="badminton-banner-sub">342 km/h Sonic Boom!</div>
+                  <div class="game-banner-sub" id="badminton-banner-sub">340 km/h Sonic Boom!</div>
                 </div>
                 <div class="game-end-screen" id="badminton-end-screen">
                   <div class="game-end-title" id="badminton-end-title">RALLY ENDED</div>
@@ -2899,9 +2733,15 @@ label:focus-visible,
                   <button class="game-restart-btn" id="badminton-restart-btn">Rally Again 🏸</button>
                 </div>
               </div>
-              <p class="game-hint">🖱️ Move mouse to return • Click when high for POWER SMASH!</p>
+
+              <!-- Clear Action Buttons -->
+              <div style="margin-top: 0.8rem; display: flex; gap: 0.6rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <button id="badminton-smash-btn" class="game-action-btn" title="Smash shuttlecock">⚡ POWER SMASH!</button>
+                <button id="badminton-serve-btn" class="game-action-btn game-action-btn--sec" title="Serve new shuttle">🏸 New Shuttle</button>
+              </div>
+              <p class="game-hint">🖱️ Move mouse to return shuttle • Click button or canvas to POWER SMASH!</p>
             </div>
-            <h3 class="sport-title sport-title--badminton" style="margin-top: 1rem;">🏸 Cyber Badminton: Smash Blitz</h3>
+            <h3 class="sport-title sport-title--badminton" style="margin-top: 1rem;">🏸 Badminton: Smash & Rally</h3>
           </div>
 
           <!-- Story View -->
@@ -3036,67 +2876,42 @@ label:focus-visible,
     </div>
   </footer>
 
-
-<!-- Fullscreen Cyber Matrix Rain Canvas -->
-<canvas id="matrix-canvas" class="matrix-canvas" aria-hidden="true"></canvas>
-
-<!-- Floating Cyber Terminal Launcher -->
-<button id="cyber-terminal-btn" class="cyber-terminal-btn" title="Open Cyber Terminal (Press `~`)">
-  <span>⚡</span> JJ-OS TERMINAL
-</button>
-
-<!-- Holographic Cyber Terminal Modal -->
-<div id="cyber-terminal-modal" class="cyber-terminal-modal" role="dialog" aria-label="Cyber Terminal">
-  <div class="terminal-header">
-    <div style="display:flex; align-items:center; gap:8px;">
-      <span style="color:#34d399;">●</span>
-      <span>JUBAYED-OS v2.6.4 [QUANTUM CORE]</span>
-    </div>
-    <div class="terminal-controls">
-      <button class="terminal-ctrl-btn terminal-ctrl-close" id="terminal-close-btn" title="Close"></button>
-    </div>
-  </div>
-  <div class="terminal-body" id="terminal-body">
-    <div class="terminal-log-line cyan">=== JUBAYED CYBER-PORTFOLIO TERMINAL ===</div>
-    <div class="terminal-log-line dim">Session: ONLINE • Quantum Latency: 12ms</div>
-    <div class="terminal-log-line">Type <span class="cyan">"help"</span> for commands or click quick directives below:</div>
-  </div>
-  <div class="terminal-chips">
-    <button class="terminal-chip" data-cmd="cricket">🏏 Play Cricket</button>
-    <button class="terminal-chip" data-cmd="badminton">🏸 Play Badminton</button>
-    <button class="terminal-chip" data-cmd="cube">🧊 Solve Cube</button>
-    <button class="terminal-chip" data-cmd="checkerboard">🏁 Checkerboard</button>
-    <button class="terminal-chip" data-cmd="matrix">💻 Matrix Rain</button>
-    <button class="terminal-chip" data-cmd="theme">🌓 Toggle Theme</button>
-    <button class="terminal-chip" data-cmd="help">❓ Help</button>
-  </div>
-  <div class="terminal-input-row">
-    <span class="terminal-prompt">visitor@jj:~$</span>
-    <input type="text" id="terminal-input" class="terminal-input" placeholder="Type command..." autocomplete="off" spellcheck="false">
-  </div>
-</div>
-
 </div><!-- .page-wrapper -->
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   JUBAYED PORTFOLIO — INTERACTIVE CYBER ENGINE (2026)
-   - Custom Cursor (Fixed, smooth tracking, reactive states)
-   - Cyber Web Audio Synthesizer (Zero-latency pure synthesis)
+   JUBAYED PORTFOLIO — CLEAN, FAST & RELIABLE INTERACTIVE ENGINE
+   - Circular Mouse Pointer (Smooth circular tracking & reactive hover)
+   - Playable Cricket Game (1-Over Chase, Big Swing button & canvas click)
+   - Playable Badminton Game (Rally counter, Smash button & canvas click)
    - 3D Rubik's Cube Simulator (Checkerboard, Flower, Scramble, Solve)
-   - Playable Cyber Cricket (1-Over Chase Mini-Game)
-   - Playable Cyber Badminton (Smash & Rally Blitz Mini-Game)
-   - Cyber Terminal Console & Fullscreen Matrix Rain
-   - Holographic Card Spotlight & Instant Intersection Reveals
+   - Pure Web Audio Synthesizer (Zero-latency pure synthesis)
    ═══════════════════════════════════════════════════════════════ */
 
 (function() {
   'use strict';
 
+  // Safe local storage helper
+  const storage = {
+    get(key, fallback = 0) {
+      try {
+        const v = localStorage.getItem(key);
+        return v !== null ? parseInt(v, 10) || fallback : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    },
+    set(key, val) {
+      try {
+        localStorage.setItem(key, String(val));
+      } catch (e) {}
+    }
+  };
+
   /* ─────────────────────────────────────────────────────────────
-     1. CYBER WEB AUDIO SYNTHESIZER
+     1. PURE WEB AUDIO SYNTHESIZER
      ───────────────────────────────────────────────────────────── */
-  const CyberAudio = {
+  const AudioEngine = {
     ctx: null,
     enabled: true,
 
@@ -3117,11 +2932,11 @@ label:focus-visible,
         btn.textContent = this.enabled ? '🔊 FX: ON' : '🔇 FX: OFF';
         btn.classList.toggle('muted', !this.enabled);
       }
-      if (this.enabled) this.playBeep(800, 0.08);
+      if (this.enabled) this.playTone(800, 0.08);
       return this.enabled;
     },
 
-    playBeep(freq = 600, duration = 0.05, type = 'sine') {
+    playTone(freq, dur = 0.06, type = 'sine') {
       if (!this.enabled) return;
       this.init();
       if (!this.ctx) return;
@@ -3130,72 +2945,40 @@ label:focus-visible,
         const gain = this.ctx.createGain();
         osc.type = type;
         osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-        gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+        gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start();
-        osc.stop(this.ctx.currentTime + duration);
+        osc.stop(this.ctx.currentTime + dur);
       } catch (e) {}
     },
 
-    playHover() {
-      this.playBeep(1200, 0.03, 'sine');
-    },
-
-    playClick() {
-      this.playBeep(700, 0.05, 'triangle');
-    },
-
-    playCricketHit(isSix) {
+    playBatHit(isSix) {
       if (!this.enabled) return;
       this.init();
       if (!this.ctx) return;
       try {
         const t = this.ctx.currentTime;
-        // Wood contact pop
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(isSix ? 280 : 360, t);
-        osc.frequency.exponentialRampToValueAtTime(80, t + (isSix ? 0.25 : 0.12));
-        gain.gain.setValueAtTime(0.3, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + (isSix ? 0.25 : 0.12));
+        osc.frequency.setValueAtTime(isSix ? 280 : 340, t);
+        osc.frequency.exponentialRampToValueAtTime(80, t + (isSix ? 0.22 : 0.1));
+        gain.gain.setValueAtTime(0.25, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + (isSix ? 0.22 : 0.1));
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start(t);
-        osc.stop(t + 0.3);
-
-        if (isSix) {
-          // Crowd cheering synth
-          setTimeout(() => {
-            this.playFanfare();
-          }, 60);
-        }
-      } catch(e) {}
+        osc.stop(t + 0.25);
+      } catch (e) {}
     },
 
     playBowled() {
-      if (!this.enabled) return;
-      this.init();
-      if (!this.ctx) return;
-      try {
-        const t = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(220, t);
-        osc.frequency.exponentialRampToValueAtTime(40, t + 0.35);
-        gain.gain.setValueAtTime(0.25, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(t);
-        osc.stop(t + 0.4);
-      } catch(e) {}
+      this.playTone(180, 0.25, 'sawtooth');
     },
 
-    playBadmintonHit(isSmash) {
+    playRacketHit(isSmash) {
       if (!this.enabled) return;
       this.init();
       if (!this.ctx) return;
@@ -3204,40 +2987,37 @@ label:focus-visible,
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = isSmash ? 'square' : 'sine';
-        osc.frequency.setValueAtTime(isSmash ? 900 : 1600, t);
-        osc.frequency.exponentialRampToValueAtTime(isSmash ? 120 : 400, t + (isSmash ? 0.18 : 0.05));
-        gain.gain.setValueAtTime(isSmash ? 0.25 : 0.12, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + (isSmash ? 0.2 : 0.06));
+        osc.frequency.setValueAtTime(isSmash ? 800 : 1500, t);
+        osc.frequency.exponentialRampToValueAtTime(isSmash ? 150 : 400, t + (isSmash ? 0.16 : 0.05));
+        gain.gain.setValueAtTime(isSmash ? 0.2 : 0.1, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + (isSmash ? 0.16 : 0.05));
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start(t);
-        osc.stop(t + 0.25);
-      } catch(e) {}
+        osc.stop(t + 0.2);
+      } catch (e) {}
     },
 
-    playCubeTurn() {
-      this.playBeep(450, 0.04, 'triangle');
+    playCubeClick() {
+      this.playTone(500, 0.04, 'triangle');
     },
 
     playFanfare() {
       if (!this.enabled) return;
-      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-      notes.forEach((freq, idx) => {
-        setTimeout(() => {
-          this.playBeep(freq, 0.15, 'sine');
-        }, idx * 70);
+      [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+        setTimeout(() => this.playTone(freq, 0.14, 'sine'), idx * 75);
       });
     }
   };
 
   /* ─────────────────────────────────────────────────────────────
-     2. FIXED & INTERACTIVE CUSTOM CURSOR ENGINE
+     2. CIRCULAR MOUSE POINTER (Smooth & 100% Reliable)
      ───────────────────────────────────────────────────────────── */
-  const CursorEngine = {
+  const CircleCursor = {
     dot: null,
     ring: null,
-    targetX: -100,
-    targetY: -100,
+    mouseX: -100,
+    mouseY: -100,
     ringX: -100,
     ringY: -100,
     active: false,
@@ -3247,41 +3027,42 @@ label:focus-visible,
       this.ring = document.querySelector('.cursor-ring');
       if (!this.dot || !this.ring) return;
 
-      const isFinePointer = window.matchMedia('(pointer: fine)').matches;
-      if (!isFinePointer) return;
+      const isFine = window.matchMedia('(pointer: fine)').matches;
+      if (!isFine) return;
 
       window.addEventListener('mousemove', (e) => {
-        this.targetX = e.clientX;
-        this.targetY = e.clientY;
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
         if (!this.active) {
           this.active = true;
-          document.body.classList.add('has-custom-cursor');
-          this.ringX = this.targetX;
-          this.ringY = this.targetY;
+          document.body.classList.add('has-circle-cursor');
+          this.ringX = this.mouseX;
+          this.ringY = this.mouseY;
+          this.dot.style.opacity = '1';
+          this.ring.style.opacity = '1';
         }
-        this.dot.style.transform = `translate3d(${this.targetX}px, ${this.targetY}px, 0)`;
+        this.dot.style.transform = `translate3d(${this.mouseX}px, ${this.mouseY}px, 0)`;
       }, { passive: true });
 
-      // Smooth lag loop for targeting ring
-      const render = () => {
+      const animate = () => {
         if (this.active) {
-          this.ringX += (this.targetX - this.ringX) * 0.22;
-          this.ringY += (this.targetY - this.ringY) * 0.22;
+          this.ringX += (this.mouseX - this.ringX) * 0.25;
+          this.ringY += (this.mouseY - this.ringY) * 0.25;
           this.ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0)`;
         }
-        requestAnimationFrame(render);
+        requestAnimationFrame(animate);
       };
-      requestAnimationFrame(render);
+      requestAnimationFrame(animate);
 
-      // Interactive hover states
-      const interactiveSelector = 'a, button, input, label, select, .cube-btn, .cube-turn-btn, .sport-mode-btn, canvas, .glass-card, [role="button"]';
+      // Hover expansion on interactive elements
+      const hoverTargets = 'a, button, input, label, select, canvas, .cube-btn, .cube-turn-btn, .sport-mode-btn, .glass-card, [role="button"]';
       document.addEventListener('mouseover', (e) => {
-        if (e.target.closest(interactiveSelector)) {
+        if (e.target.closest(hoverTargets)) {
           document.body.classList.add('cursor-hover');
         }
       });
       document.addEventListener('mouseout', (e) => {
-        if (e.target.closest(interactiveSelector)) {
+        if (e.target.closest(hoverTargets)) {
           document.body.classList.remove('cursor-hover');
         }
       });
@@ -3289,21 +3070,19 @@ label:focus-visible,
       // Click pulse
       window.addEventListener('mousedown', () => {
         document.body.classList.add('cursor-click');
-        CyberAudio.init();
+        AudioEngine.init();
       });
       window.addEventListener('mouseup', () => {
         document.body.classList.remove('cursor-click');
       });
 
-      // Window blur/focus
+      // Hide when leaving window
       document.addEventListener('mouseleave', () => {
-        if (this.dot && this.ring) {
-          this.dot.style.opacity = '0';
-          this.ring.style.opacity = '0';
-        }
+        this.dot.style.opacity = '0';
+        this.ring.style.opacity = '0';
       });
       document.addEventListener('mouseenter', () => {
-        if (this.dot && this.ring && this.active) {
+        if (this.active) {
           this.dot.style.opacity = '1';
           this.ring.style.opacity = '1';
         }
@@ -3312,10 +3091,9 @@ label:focus-visible,
   };
 
   /* ─────────────────────────────────────────────────────────────
-     3. INTERACTIVE 3D RUBIK'S CUBE (SOLVER & PATTERNS)
+     3. PLAYABLE 3D RUBIK'S CUBE (SOLVER & PATTERNS)
      ───────────────────────────────────────────────────────────── */
-  const RubiksCube = {
-    // 6 faces: F, B, L, R, U, D (9 stickers each)
+  const CubeGame = {
     faces: {},
     history: [],
     movesCount: 0,
@@ -3329,8 +3107,7 @@ label:focus-visible,
 
     init() {
       this.resetState();
-      this.bindControls();
-      this.bindDrag();
+      this.bindEvents();
       this.render();
     },
 
@@ -3348,28 +3125,21 @@ label:focus-visible,
       this.updateHud('Status: Solved ✨', true);
     },
 
-    rotCW(face) {
-      return [
-        face[6], face[3], face[0],
-        face[7], face[4], face[1],
-        face[8], face[5], face[2]
-      ];
+    rotCW(f) {
+      return [f[6], f[3], f[0], f[7], f[4], f[1], f[8], f[5], f[2]];
     },
 
     applyMove(move, record = true) {
       const isPrime = move.endsWith("'");
       const base = move.replace("'", "");
       const count = isPrime ? 3 : 1;
-
-      for (let i = 0; i < count; i++) {
-        this.rawMove(base);
-      }
+      for (let i = 0; i < count; i++) this.rawMove(base);
 
       if (record) {
         this.history.push(move);
         this.movesCount++;
         this.updateHud(`Moved: ${move}`, false);
-        CyberAudio.playCubeTurn();
+        AudioEngine.playCubeClick();
       }
       this.render();
     },
@@ -3422,21 +3192,15 @@ label:focus-visible,
     },
 
     render() {
-      for (const [faceName, tiles] of Object.entries(this.faces)) {
-        const faceEl = document.querySelector(`.cube-face--${this.getFaceClassName(faceName)}`);
-        if (!faceEl) continue;
-        const tileEls = faceEl.querySelectorAll('.cube-tile');
-        tiles.forEach((color, idx) => {
-          if (tileEls[idx]) {
-            tileEls[idx].className = `cube-tile c-${color}`;
-          }
+      const faceMap = { F: 'front', B: 'back', L: 'left', R: 'right', U: 'top', D: 'bottom' };
+      for (const [code, tiles] of Object.entries(this.faces)) {
+        const el = document.querySelector(`.cube-face--${faceMap[code]}`);
+        if (!el) continue;
+        const tileEls = el.querySelectorAll('.cube-tile');
+        tiles.forEach((c, i) => {
+          if (tileEls[i]) tileEls[i].className = `cube-tile c-${c}`;
         });
       }
-    },
-
-    getFaceClassName(code) {
-      const map = { F: 'front', B: 'back', L: 'left', R: 'right', U: 'top', D: 'bottom' };
-      return map[code] || 'front';
     },
 
     updateHud(status, isSolved) {
@@ -3446,49 +3210,46 @@ label:focus-visible,
         statusEl.textContent = status;
         statusEl.classList.toggle('solved', !!isSolved);
       }
-      if (movesEl) {
-        movesEl.textContent = `Moves: ${this.movesCount}`;
-      }
+      if (movesEl) movesEl.textContent = `Moves: ${this.movesCount}`;
     },
 
-    runSequence(moves, statusMsg, onComplete) {
+    runSeq(seq, label, done) {
       let idx = 0;
-      const interval = setInterval(() => {
-        if (idx >= moves.length) {
-          clearInterval(interval);
-          if (onComplete) onComplete();
+      const timer = setInterval(() => {
+        if (idx >= seq.length) {
+          clearInterval(timer);
+          if (done) done();
           return;
         }
-        this.applyMove(moves[idx], true);
-        this.updateHud(`${statusMsg} (${idx + 1}/${moves.length})`, false);
+        this.applyMove(seq[idx], true);
+        this.updateHud(`${label} (${idx + 1}/${seq.length})`, false);
         idx++;
-      }, 130);
+      }, 120);
     },
 
-    // Classic Rubik's Patterns
+    // Checkerboard pattern: U2 D2 F2 B2 L2 R2
     applyCheckerboard() {
       const seq = ['U', 'U', 'D', 'D', 'F', 'F', 'B', 'B', 'L', 'L', 'R', 'R'];
-      this.runSequence(seq, 'Checkerboard', () => {
+      this.runSeq(seq, 'Checkerboard', () => {
         this.updateHud('Pattern: Checkerboard 🏁', false);
-        CyberAudio.playFanfare();
+        AudioEngine.playFanfare();
       });
     },
 
+    // Flower dot pattern
     applyFlower() {
       const seq = ["U", "D'", "R", "L'", "F", "B'", "U", "D'"];
-      this.runSequence(seq, 'Flower Dot', () => {
+      this.runSeq(seq, 'Flower Dot', () => {
         this.updateHud('Pattern: Flower Center 🌸', false);
-        CyberAudio.playFanfare();
+        AudioEngine.playFanfare();
       });
     },
 
     scramble() {
-      const possible = ['U', 'D', 'L', 'R', 'F', 'B', "U'", "D'", "L'", "R'", "F'", "B'"];
+      const moves = ['U', 'D', 'L', 'R', 'F', 'B', "U'", "D'", "L'", "R'", "F'", "B'"];
       const seq = [];
-      for (let i = 0; i < 12; i++) {
-        seq.push(possible[Math.floor(Math.random() * possible.length)]);
-      }
-      this.runSequence(seq, 'Scrambling', () => {
+      for (let i = 0; i < 10; i++) seq.push(moves[Math.floor(Math.random() * moves.length)]);
+      this.runSeq(seq, 'Scrambling', () => {
         this.updateHud('Scrambled 🎲 (Ready to solve)', false);
       });
     },
@@ -3497,138 +3258,119 @@ label:focus-visible,
       if (this.history.length === 0) {
         this.resetState();
         this.render();
-        CyberAudio.playFanfare();
+        AudioEngine.playFanfare();
         return;
       }
-      // Invert history stack
-      const invertMove = (m) => m.endsWith("'") ? m.replace("'", "") : m + "'";
-      const reverseMoves = [...this.history].reverse().map(invertMove);
-      this.history = []; // Clear for next
-
-      this.runSequence(reverseMoves, 'Solving', () => {
+      const invert = (m) => m.endsWith("'") ? m.replace("'", "") : m + "'";
+      const reverseMoves = [...this.history].reverse().map(invert);
+      this.history = [];
+      this.runSeq(reverseMoves, 'Solving', () => {
         this.movesCount = 0;
         this.updateHud('✨ SOLVED! 🎉', true);
-        CyberAudio.playFanfare();
+        AudioEngine.playFanfare();
       });
     },
 
-    bindControls() {
-      const btnChecker = document.getElementById('btn-checkerboard');
-      const btnFlower = document.getElementById('btn-flower');
-      const btnScramble = document.getElementById('btn-scramble');
-      const btnSolve = document.getElementById('btn-solve');
-      const btnReset = document.getElementById('btn-reset');
-      const btnSpin = document.getElementById('cube-spin-toggle');
-      const btnInvert = document.getElementById('btn-turn-invert');
+    bindEvents() {
+      const checker = document.getElementById('btn-checkerboard');
+      const flower = document.getElementById('btn-flower');
+      const scram = document.getElementById('btn-scramble');
+      const solve = document.getElementById('btn-solve');
+      const reset = document.getElementById('btn-reset');
+      const spin = document.getElementById('cube-spin-toggle');
+      const invert = document.getElementById('btn-turn-invert');
 
-      if (btnChecker) btnChecker.addEventListener('click', () => this.applyCheckerboard());
-      if (btnFlower) btnFlower.addEventListener('click', () => this.applyFlower());
-      if (btnScramble) btnScramble.addEventListener('click', () => this.scramble());
-      if (btnSolve) btnSolve.addEventListener('click', () => this.autoSolve());
-      if (btnReset) btnReset.addEventListener('click', () => {
-        this.resetState();
-        this.render();
-        CyberAudio.playClick();
-      });
+      if (checker) checker.onclick = () => this.applyCheckerboard();
+      if (flower) flower.onclick = () => this.applyFlower();
+      if (scram) scram.onclick = () => this.scramble();
+      if (solve) solve.onclick = () => this.autoSolve();
+      if (reset) reset.onclick = () => { this.resetState(); this.render(); };
 
-      if (btnInvert) {
-        btnInvert.addEventListener('click', () => {
+      if (invert) {
+        invert.onclick = () => {
           this.primeMode = !this.primeMode;
-          btnInvert.classList.toggle('active', this.primeMode);
-          btnInvert.textContent = this.primeMode ? "' Prime: ON" : "' Prime: OFF";
-          CyberAudio.playClick();
-        });
+          invert.classList.toggle('active', this.primeMode);
+          invert.textContent = this.primeMode ? "' Prime: ON" : "' Prime: OFF";
+        };
       }
 
-      if (btnSpin) {
-        btnSpin.addEventListener('click', () => {
+      if (spin) {
+        spin.onclick = () => {
           this.autoSpin = !this.autoSpin;
-          const wrapper = document.getElementById('cube-wrapper');
-          if (wrapper) wrapper.classList.toggle('is-paused', !this.autoSpin);
-          btnSpin.textContent = this.autoSpin ? '🔄 Spin: ON' : '⏸️ Spin: OFF';
-          CyberAudio.playClick();
-        });
+          const w = document.getElementById('cube-wrapper');
+          if (w) w.classList.toggle('is-paused', !this.autoSpin);
+          spin.textContent = this.autoSpin ? '🔄 Spin: ON' : '⏸️ Spin: OFF';
+        };
       }
 
-      // Manual Turn Buttons
+      // Manual turn buttons
       document.querySelectorAll('.cube-turn-btn[data-move]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.onclick = () => {
           const base = btn.getAttribute('data-move');
-          const move = this.primeMode ? base + "'" : base;
-          this.applyMove(move, true);
-        });
+          this.applyMove(this.primeMode ? base + "'" : base, true);
+        };
       });
-    },
 
-    bindDrag() {
+      // 3D drag
       const container = document.getElementById('cube-container');
       const wrapper = document.getElementById('cube-wrapper');
       if (!container || !wrapper) return;
 
-      const onStart = (clientX, clientY) => {
+      const start = (x, y) => {
         this.isDragging = true;
-        this.startX = clientX;
-        this.startY = clientY;
+        this.startX = x;
+        this.startY = y;
         wrapper.classList.add('is-dragging');
       };
-
-      const onMove = (clientX, clientY) => {
+      const move = (x, y) => {
         if (!this.isDragging) return;
-        const dx = clientX - this.startX;
-        const dy = clientY - this.startY;
-        this.rotY += dx * 0.7;
-        this.rotX -= dy * 0.7;
+        this.rotY += (x - this.startX) * 0.7;
+        this.rotX -= (y - this.startY) * 0.7;
         wrapper.style.transform = `rotateX(${this.rotX}deg) rotateY(${this.rotY}deg)`;
-        this.startX = clientX;
-        this.startY = clientY;
+        this.startX = x;
+        this.startY = y;
       };
+      const end = () => { this.isDragging = false; };
 
-      const onEnd = () => {
-        this.isDragging = false;
-      };
-
-      container.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
-      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
-      window.addEventListener('mouseup', onEnd);
+      container.addEventListener('mousedown', (e) => start(e.clientX, e.clientY));
+      window.addEventListener('mousemove', (e) => move(e.clientX, e.clientY));
+      window.addEventListener('mouseup', end);
 
       container.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 1) onStart(e.touches[0].clientX, e.touches[0].clientY);
+        if (e.touches.length === 1) start(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
       window.addEventListener('touchmove', (e) => {
-        if (e.touches.length === 1) onMove(e.touches[0].clientX, e.touches[0].clientY);
+        if (e.touches.length === 1) move(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
-      window.addEventListener('touchend', onEnd);
+      window.addEventListener('touchend', end);
     }
   };
 
   /* ─────────────────────────────────────────────────────────────
-     4. PLAYABLE CYBER CRICKET MINI-GAME (1-OVER CHASE)
+     4. PLAYABLE CRICKET MINI-GAME (Simple, Engaging, 1-Over Chase)
      ───────────────────────────────────────────────────────────── */
-  const CricketGame = {
+  const Cricket = {
     canvas: null,
     ctx: null,
-    width: 380,
-    height: 250,
     runs: 0,
     balls: 0,
     maxBalls: 6,
-    target: 20,
+    target: 18,
     best: 0,
     batX: 190,
     isSwinging: false,
-    swingProgress: 0,
+    swingTimer: 0,
     ball: null,
-    deliveryTimer: null,
     particles: [],
 
     init() {
       this.canvas = document.getElementById('cricket-canvas');
       if (!this.canvas) return;
       this.ctx = this.canvas.getContext('2d');
-      this.best = parseInt(localStorage.getItem('jj_cricket_best') || '0', 10);
+      this.best = storage.get('jj_cricket_best', 0);
       document.getElementById('cricket-best').textContent = this.best;
 
-      this.bindInputs();
+      this.bindEvents();
       this.startOver();
       this.loop();
     },
@@ -3639,7 +3381,7 @@ label:focus-visible,
       this.particles = [];
       this.updateHud();
       document.getElementById('cricket-end-screen').classList.remove('show');
-      this.scheduleBall(1000);
+      this.bowlNext();
     },
 
     updateHud() {
@@ -3647,94 +3389,80 @@ label:focus-visible,
       document.getElementById('cricket-balls').textContent = `${this.balls}/${this.maxBalls}`;
     },
 
-    scheduleBall(delay = 1200) {
+    bowlNext() {
       if (this.balls >= this.maxBalls) {
         this.endMatch();
         return;
       }
-      clearTimeout(this.deliveryTimer);
-      this.deliveryTimer = setTimeout(() => {
-        this.bowlBall();
-      }, delay);
-    },
-
-    bowlBall() {
-      // Variations: Yorker, Outswinger, Inswinger, Bouncer, Slower
-      const types = ['yorker', 'outswing', 'inswing', 'bouncer', 'thunderbolt'];
-      const type = types[this.balls % types.length];
-      
       this.ball = {
-        x: 190 + (Math.random() * 20 - 10),
+        x: 190 + (Math.random() * 24 - 12),
         y: 20,
         radius: 4,
-        speedY: type === 'thunderbolt' ? 5.2 : type === 'bouncer' ? 4.5 : 3.8,
-        driftX: type === 'outswing' ? 0.6 : type === 'inswing' ? -0.6 : (Math.random() - 0.5) * 0.4,
-        type: type,
+        speedY: 4 + Math.random() * 1.2,
+        driftX: (Math.random() - 0.5) * 0.8,
         active: true,
         hit: false
       };
     },
 
-    swingBat() {
+    swing() {
       if (this.isSwinging) return;
       this.isSwinging = true;
-      this.swingProgress = 0;
-      CyberAudio.playHover();
+      this.swingTimer = 12;
 
-      // Check collision
       if (this.ball && this.ball.active && !this.ball.hit) {
-        const distY = Math.abs(this.ball.y - 200);
+        const distY = Math.abs(this.ball.y - 190);
         const distX = Math.abs(this.ball.x - this.batX);
 
-        if (distY < 35 && distX < 40) {
+        if (distY < 45 && distX < 45) {
           this.ball.hit = true;
-          if (distY < 14 && distX < 22) {
+          if (distY < 18 && distX < 24) {
             // SIX!
             this.runs += 6;
-            this.showBanner('SIX! 🚀', '108m Stratospheric Launch!');
-            CyberAudio.playCricketHit(true);
-            this.createExplosion(this.ball.x, this.ball.y, '#00f0e0', 30);
-          } else if (distY < 24) {
+            this.showBanner('SIX! 🚀', '108m Boundary Smash!');
+            AudioEngine.playBatHit(true);
+            this.addParticles(this.ball.x, this.ball.y, '#00f0e0', 25);
+          } else if (distY < 30) {
             // FOUR!
             this.runs += 4;
-            this.showBanner('FOUR! 🎯', 'Rocket Grounder to Ropes!');
-            CyberAudio.playCricketHit(false);
-            this.createExplosion(this.ball.x, this.ball.y, '#a855f7', 18);
+            this.showBanner('FOUR! 🎯', 'Rocket to the Ropes!');
+            AudioEngine.playBatHit(false);
+            this.addParticles(this.ball.x, this.ball.y, '#a855f7', 16);
           } else {
             // 2 RUNS
             this.runs += 2;
             this.showBanner('2 RUNS ⚡', 'Quick Running!');
-            CyberAudio.playCricketHit(false);
-            this.createExplosion(this.ball.x, this.ball.y, '#f472b6', 10);
+            AudioEngine.playBatHit(false);
+            this.addParticles(this.ball.x, this.ball.y, '#f472b6', 10);
           }
           this.ball.speedY = -7;
-          this.ball.driftX = (Math.random() - 0.5) * 4;
+          this.ball.driftX = (Math.random() - 0.5) * 5;
           this.balls++;
           this.updateHud();
-          this.scheduleBall(1400);
+          setTimeout(() => this.bowlNext(), 1400);
         }
       }
     },
 
     showBanner(title, sub) {
       const banner = document.getElementById('cricket-banner');
-      const titleEl = document.getElementById('cricket-banner-title');
-      const subEl = document.getElementById('cricket-banner-sub');
+      const t = document.getElementById('cricket-banner-title');
+      const s = document.getElementById('cricket-banner-sub');
       if (!banner) return;
-      titleEl.textContent = title;
-      subEl.textContent = sub;
+      t.textContent = title;
+      s.textContent = sub;
       banner.classList.add('show');
       setTimeout(() => banner.classList.remove('show'), 900);
     },
 
-    createExplosion(x, y, color, count = 20) {
+    addParticles(x, y, color, count = 15) {
       for (let i = 0; i < count; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const spd = Math.random() * 5 + 2;
+        const ang = Math.random() * Math.PI * 2;
+        const spd = Math.random() * 5 + 1.5;
         this.particles.push({
           x, y,
-          vx: Math.cos(angle) * spd,
-          vy: Math.sin(angle) * spd,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd,
           color,
           alpha: 1,
           size: Math.random() * 3 + 2
@@ -3753,51 +3481,56 @@ label:focus-visible,
 
       if (this.runs >= this.target) {
         title.textContent = 'CHASE MASTER 🏆 VICTORY!';
-        CyberAudio.playFanfare();
+        AudioEngine.playFanfare();
       } else {
         title.textContent = 'OVER COMPLETED 🏏';
       }
 
       if (this.runs > this.best) {
         this.best = this.runs;
-        localStorage.setItem('jj_cricket_best', this.best.toString());
+        storage.set('jj_cricket_best', this.best);
         document.getElementById('cricket-best').textContent = this.best;
       }
-
       screen.classList.add('show');
     },
 
-    bindInputs() {
+    bindEvents() {
       this.canvas.addEventListener('mousemove', (e) => {
         const rect = this.canvas.getBoundingClientRect();
-        const scaleX = this.width / rect.width;
-        this.batX = (e.clientX - rect.left) * scaleX;
+        this.batX = (e.clientX - rect.left) * (380 / rect.width);
       });
-
       this.canvas.addEventListener('touchmove', (e) => {
         if (e.touches.length > 0) {
           const rect = this.canvas.getBoundingClientRect();
-          const scaleX = this.width / rect.width;
-          this.batX = (e.touches[0].clientX - rect.left) * scaleX;
+          this.batX = (e.touches[0].clientX - rect.left) * (380 / rect.width);
         }
       }, { passive: true });
 
-      this.canvas.addEventListener('mousedown', () => this.swingBat());
+      // Click to swing
+      this.canvas.addEventListener('mousedown', () => this.swing());
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
-        this.swingBat();
+        this.swing();
       });
 
+      // Swing button
+      const swingBtn = document.getElementById('cricket-swing-btn');
+      if (swingBtn) swingBtn.onclick = () => this.swing();
+
+      // Next ball button
+      const bowlBtn = document.getElementById('cricket-bowl-btn');
+      if (bowlBtn) bowlBtn.onclick = () => this.bowlNext();
+
+      // Restart button
+      const restart = document.getElementById('cricket-restart-btn');
+      if (restart) restart.onclick = () => this.startOver();
+
+      // Spacebar
       window.addEventListener('keydown', (e) => {
-        if (e.code === 'Space' && document.getElementById('cricket-pane-game').classList.contains('active')) {
+        if (e.code === 'Space' && document.getElementById('cricket-pane-game')?.classList.contains('active')) {
           e.preventDefault();
-          this.swingBat();
+          this.swing();
         }
-      });
-
-      document.getElementById('cricket-restart-btn').addEventListener('click', () => {
-        this.startOver();
-        CyberAudio.playClick();
       });
     },
 
@@ -3808,110 +3541,94 @@ label:focus-visible,
     },
 
     update() {
-      // Swing animation
-      if (this.isSwinging) {
-        this.swingProgress += 0.14;
-        if (this.swingProgress >= 1) {
-          this.isSwinging = false;
-          this.swingProgress = 0;
-        }
+      if (this.swingTimer > 0) {
+        this.swingTimer--;
+        if (this.swingTimer === 0) this.isSwinging = false;
       }
 
-      // Ball physics
       if (this.ball && this.ball.active) {
         this.ball.x += this.ball.driftX;
         this.ball.y += this.ball.speedY;
-        this.ball.radius = Math.min(10, 4 + (this.ball.y / 200) * 6);
+        this.ball.radius = Math.min(10, 4 + (this.ball.y / 190) * 6);
 
-        // Check wicket or pass
-        if (!this.ball.hit && this.ball.y > 220) {
+        if (!this.ball.hit && this.ball.y > 215) {
           this.ball.active = false;
           this.balls++;
           this.updateHud();
 
-          // Check if clean bowled
           if (Math.abs(this.ball.x - 190) < 18) {
             this.showBanner('BOWLED! 💥', 'Stumps Shattered!');
-            CyberAudio.playBowled();
-            this.createExplosion(190, 210, '#ef4444', 35);
+            AudioEngine.playBowled();
+            this.addParticles(190, 205, '#ef4444', 30);
           } else {
-            this.showBanner('DOT BALL', 'Left to keeper');
+            this.showBanner('DOT BALL', 'Missed the crease');
           }
-          this.scheduleBall(1400);
+          setTimeout(() => this.bowlNext(), 1400);
         } else if (this.ball.hit && this.ball.y < -30) {
           this.ball.active = false;
         }
       }
 
-      // Particles
       for (let i = this.particles.length - 1; i >= 0; i--) {
         const p = this.particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.alpha -= 0.025;
+        p.alpha -= 0.03;
         if (p.alpha <= 0) this.particles.splice(i, 1);
       }
     },
 
     draw() {
       const c = this.ctx;
-      c.clearRect(0, 0, this.width, this.height);
+      c.clearRect(0, 0, 380, 240);
 
       // Pitch background
-      c.fillStyle = '#081026';
-      c.fillRect(0, 0, this.width, this.height);
+      c.fillStyle = '#070b1a';
+      c.fillRect(0, 0, 380, 240);
 
-      // Neon 3D perspective pitch strip
-      c.fillStyle = 'rgba(0, 212, 255, 0.04)';
+      // 3D Perspective Pitch
+      c.fillStyle = 'rgba(0, 212, 255, 0.05)';
       c.beginPath();
       c.moveTo(150, 20);
       c.lineTo(230, 20);
-      c.lineTo(260, 240);
-      c.lineTo(120, 240);
+      c.lineTo(260, 230);
+      c.lineTo(120, 230);
       c.closePath();
       c.fill();
       c.strokeStyle = 'rgba(0, 212, 255, 0.2)';
-      c.lineWidth = 1;
       c.stroke();
 
-      // Crease line (Sweet spot)
-      c.strokeStyle = 'rgba(0, 240, 224, 0.5)';
+      // Yellow Crease line (Sweet spot)
+      c.strokeStyle = 'rgba(250, 204, 21, 0.7)';
       c.lineWidth = 2;
       c.beginPath();
-      c.moveTo(125, 200);
-      c.lineTo(255, 200);
+      c.moveTo(125, 190);
+      c.lineTo(255, 190);
       c.stroke();
 
-      // Holographic Bowler Drone
+      // Bowler Drone at top
       c.fillStyle = '#a855f7';
       c.beginPath();
       c.arc(190, 20, 7, 0, Math.PI * 2);
       c.fill();
-      c.fillStyle = 'rgba(168, 85, 247, 0.3)';
-      c.beginPath();
-      c.arc(190, 20, 14, 0, Math.PI * 2);
-      c.fill();
 
       // 3 Neon Stumps
       for (let s = -1; s <= 1; s++) {
-        c.fillStyle = 'rgba(0, 240, 224, 0.85)';
-        c.fillRect(190 + s * 10 - 2, 204, 4, 18);
+        c.fillStyle = '#00f0e0';
+        c.fillRect(190 + s * 10 - 2, 195, 4, 18);
       }
       // Bails
       c.fillStyle = '#f472b6';
-      c.fillRect(177, 202, 26, 3);
+      c.fillRect(177, 193, 26, 3);
 
-      // Batsman Bat
-      const swingAngle = this.isSwinging ? Math.sin(this.swingProgress * Math.PI) * 1.2 : 0;
+      // Bat
       c.save();
-      c.translate(this.batX, 200);
-      c.rotate(swingAngle);
-      // Bat blade
+      c.translate(this.batX, 190);
+      c.rotate(this.isSwinging ? -0.8 : 0);
       c.fillStyle = '#00d4ff';
       c.shadowColor = '#00d4ff';
       c.shadowBlur = 10;
       c.fillRect(-4, -28, 8, 30);
-      // Grip
       c.fillStyle = '#ffffff';
       c.shadowBlur = 0;
       c.fillRect(-2, 2, 4, 12);
@@ -3920,18 +3637,12 @@ label:focus-visible,
       // Ball
       if (this.ball && this.ball.active) {
         c.save();
-        c.shadowColor = '#e74c3c';
-        c.shadowBlur = 12;
         c.fillStyle = '#ef4444';
+        c.shadowColor = '#e74c3c';
+        c.shadowBlur = 10;
         c.beginPath();
         c.arc(this.ball.x, this.ball.y, this.ball.radius, 0, Math.PI * 2);
         c.fill();
-        // Seam
-        c.strokeStyle = '#ffffff';
-        c.lineWidth = 1;
-        c.beginPath();
-        c.arc(this.ball.x, this.ball.y, this.ball.radius * 0.7, 0, Math.PI);
-        c.stroke();
         c.restore();
       }
 
@@ -3949,22 +3660,19 @@ label:focus-visible,
   };
 
   /* ─────────────────────────────────────────────────────────────
-     5. PLAYABLE CYBER BADMINTON MINI-GAME (SMASH BLITZ)
+     5. PLAYABLE BADMINTON MINI-GAME (Simple, Engaging, Rally Blitz)
      ───────────────────────────────────────────────────────────── */
-  const BadmintonGame = {
+  const Badminton = {
     canvas: null,
     ctx: null,
-    width: 380,
-    height: 250,
     rally: 0,
     best: 0,
     speed: 0,
     active: true,
     racketX: 300,
-    racketY: 160,
+    racketY: 150,
     aiY: 120,
     isSmashing: false,
-    smashTimer: 0,
     shuttle: null,
     particles: [],
 
@@ -3972,10 +3680,10 @@ label:focus-visible,
       this.canvas = document.getElementById('badminton-canvas');
       if (!this.canvas) return;
       this.ctx = this.canvas.getContext('2d');
-      this.best = parseInt(localStorage.getItem('jj_badminton_best') || '0', 10);
+      this.best = storage.get('jj_badminton_best', 0);
       document.getElementById('badminton-best').textContent = this.best;
 
-      this.bindInputs();
+      this.bindEvents();
       this.startRally();
       this.loop();
     },
@@ -3990,12 +3698,10 @@ label:focus-visible,
 
       this.shuttle = {
         x: 60,
-        y: 120,
+        y: 100,
         vx: 4.5,
         vy: -2,
-        speed: 140,
-        active: true,
-        fromAI: true
+        active: true
       };
     },
 
@@ -4004,46 +3710,42 @@ label:focus-visible,
       document.getElementById('badminton-speed').textContent = `${Math.round(this.speed)} km/h`;
     },
 
-    triggerSmash() {
+    smash() {
       if (!this.active || !this.shuttle) return;
       this.isSmashing = true;
-      this.smashTimer = 10;
-      CyberAudio.playHover();
+      setTimeout(() => { this.isSmashing = false; }, 200);
 
-      // Check smash hit
       const dx = Math.abs(this.shuttle.x - this.racketX);
       const dy = Math.abs(this.shuttle.y - this.racketY);
 
-      if (dx < 35 && dy < 35 && this.shuttle.vx > 0) {
-        // Electrifying Power Smash!
+      if (dx < 40 && dy < 40 && this.shuttle.vx > 0) {
         this.rally++;
-        this.speed = 310 + Math.floor(Math.random() * 60);
-        this.shuttle.vx = -(6.5 + Math.min(4, this.rally * 0.3));
+        this.speed = 310 + Math.floor(Math.random() * 50);
+        this.shuttle.vx = -(7 + Math.min(3, this.rally * 0.25));
         this.shuttle.vy = (Math.random() - 0.3) * 3;
-        this.shuttle.fromAI = false;
 
         this.showBanner('POWER SMASH! ⚡', `${this.speed} km/h Sonic Boom!`);
-        CyberAudio.playBadmintonHit(true);
-        this.createShockwave(this.shuttle.x, this.shuttle.y, '#f472b6', 25);
+        AudioEngine.playRacketHit(true);
+        this.addShockwave(this.shuttle.x, this.shuttle.y, '#f472b6', 20);
         this.updateHud();
       }
     },
 
     showBanner(title, sub) {
-      const banner = document.getElementById('badminton-banner');
-      const titleEl = document.getElementById('badminton-banner-title');
-      const subEl = document.getElementById('badminton-banner-sub');
-      if (!banner) return;
-      titleEl.textContent = title;
-      subEl.textContent = sub;
-      banner.classList.add('show');
-      setTimeout(() => banner.classList.remove('show'), 800);
+      const b = document.getElementById('badminton-banner');
+      const t = document.getElementById('badminton-banner-title');
+      const s = document.getElementById('badminton-banner-sub');
+      if (!b) return;
+      t.textContent = title;
+      s.textContent = sub;
+      b.classList.add('show');
+      setTimeout(() => b.classList.remove('show'), 800);
     },
 
-    createShockwave(x, y, color, count = 20) {
+    addShockwave(x, y, color, count = 15) {
       for (let i = 0; i < count; i++) {
         const ang = Math.random() * Math.PI * 2;
-        const spd = Math.random() * 6 + 2;
+        const spd = Math.random() * 6 + 1.5;
         this.particles.push({
           x, y,
           vx: Math.cos(ang) * spd,
@@ -4063,39 +3765,41 @@ label:focus-visible,
 
       if (this.rally > this.best) {
         this.best = this.rally;
-        localStorage.setItem('jj_badminton_best', this.best.toString());
+        storage.set('jj_badminton_best', this.best);
         document.getElementById('badminton-best').textContent = this.best;
-        CyberAudio.playFanfare();
+        AudioEngine.playFanfare();
       }
-
       screen.classList.add('show');
     },
 
-    bindInputs() {
+    bindEvents() {
       this.canvas.addEventListener('mousemove', (e) => {
         const rect = this.canvas.getBoundingClientRect();
-        this.racketX = Math.max(220, (e.clientX - rect.left) * (this.width / rect.width));
-        this.racketY = (e.clientY - rect.top) * (this.height / rect.height);
+        this.racketX = Math.max(220, (e.clientX - rect.left) * (380 / rect.width));
+        this.racketY = (e.clientY - rect.top) * (240 / rect.height);
       });
-
       this.canvas.addEventListener('touchmove', (e) => {
         if (e.touches.length > 0) {
           const rect = this.canvas.getBoundingClientRect();
-          this.racketX = Math.max(220, (e.touches[0].clientX - rect.left) * (this.width / rect.width));
-          this.racketY = (e.touches[0].clientY - rect.top) * (this.height / rect.height);
+          this.racketX = Math.max(220, (e.touches[0].clientX - rect.left) * (380 / rect.width));
+          this.racketY = (e.touches[0].clientY - rect.top) * (240 / rect.height);
         }
       }, { passive: true });
 
-      this.canvas.addEventListener('mousedown', () => this.triggerSmash());
+      this.canvas.addEventListener('mousedown', () => this.smash());
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
-        this.triggerSmash();
+        this.smash();
       });
 
-      document.getElementById('badminton-restart-btn').addEventListener('click', () => {
-        this.startRally();
-        CyberAudio.playClick();
-      });
+      const smashBtn = document.getElementById('badminton-smash-btn');
+      if (smashBtn) smashBtn.onclick = () => this.smash();
+
+      const serveBtn = document.getElementById('badminton-serve-btn');
+      if (serveBtn) serveBtn.onclick = () => this.startRally();
+
+      const restart = document.getElementById('badminton-restart-btn');
+      if (restart) restart.onclick = () => this.startRally();
     },
 
     loop() {
@@ -4107,43 +3811,35 @@ label:focus-visible,
     update() {
       if (!this.active || !this.shuttle) return;
 
-      if (this.smashTimer > 0) this.smashTimer--;
-
-      // AI Tracking
       this.aiY += (this.shuttle.y - this.aiY) * 0.12;
 
-      // Shuttlecock movement with aerodynamics
       this.shuttle.x += this.shuttle.vx;
       this.shuttle.y += this.shuttle.vy;
-      this.shuttle.vy += 0.08; // gravity
+      this.shuttle.vy += 0.08;
 
-      // Player racket return (normal intercept)
-      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 18 && Math.abs(this.shuttle.y - this.racketY) < 32) {
+      // Player return (normal)
+      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 20 && Math.abs(this.shuttle.y - this.racketY) < 32) {
         this.rally++;
         this.speed = 180 + Math.min(80, this.rally * 8);
-        this.shuttle.vx = -(4.8 + Math.min(3, this.rally * 0.2));
-        this.shuttle.vy = -3.5 + (this.shuttle.y - this.racketY) * 0.08;
-        this.shuttle.fromAI = false;
-        CyberAudio.playBadmintonHit(false);
-        this.createShockwave(this.shuttle.x, this.shuttle.y, '#00d4ff', 12);
+        this.shuttle.vx = -(5 + Math.min(3, this.rally * 0.2));
+        this.shuttle.vy = -3.2 + (this.shuttle.y - this.racketY) * 0.08;
+        AudioEngine.playRacketHit(false);
+        this.addShockwave(this.shuttle.x, this.shuttle.y, '#00d4ff', 10);
         this.updateHud();
       }
 
       // AI return
-      if (this.shuttle.vx < 0 && this.shuttle.x < 65 && Math.abs(this.shuttle.y - this.aiY) < 38) {
-        this.shuttle.vx = 4.6 + Math.min(3.5, this.rally * 0.2);
-        this.shuttle.vy = -3.2 + (Math.random() - 0.4) * 2;
-        this.shuttle.fromAI = true;
-        CyberAudio.playBadmintonHit(false);
-        this.createShockwave(this.shuttle.x, this.shuttle.y, '#a855f7', 10);
+      if (this.shuttle.vx < 0 && this.shuttle.x < 65 && Math.abs(this.shuttle.y - this.aiY) < 40) {
+        this.shuttle.vx = 4.8 + Math.min(3, this.rally * 0.2);
+        this.shuttle.vy = -3 + (Math.random() - 0.4) * 2;
+        AudioEngine.playRacketHit(false);
+        this.addShockwave(this.shuttle.x, this.shuttle.y, '#a855f7', 10);
       }
 
-      // Check bounds / miss
-      if (this.shuttle.x > this.width + 10 || this.shuttle.y > 240) {
+      if (this.shuttle.x > 390 || this.shuttle.y > 230) {
         this.endRally();
       }
 
-      // Particles
       for (let i = this.particles.length - 1; i >= 0; i--) {
         const p = this.particles[i];
         p.x += p.vx;
@@ -4155,51 +3851,43 @@ label:focus-visible,
 
     draw() {
       const c = this.ctx;
-      c.clearRect(0, 0, this.width, this.height);
+      c.clearRect(0, 0, 380, 240);
 
-      // Court background
       c.fillStyle = '#060a1c';
-      c.fillRect(0, 0, this.width, this.height);
+      c.fillRect(0, 0, 380, 240);
 
-      // Floor & Court lines
-      c.strokeStyle = 'rgba(0, 212, 255, 0.2)';
+      // Floor line
+      c.strokeStyle = 'rgba(0, 212, 255, 0.25)';
       c.lineWidth = 1.5;
       c.beginPath();
-      c.moveTo(20, 220);
-      c.lineTo(360, 220);
+      c.moveTo(20, 210);
+      c.lineTo(360, 210);
       c.stroke();
 
-      // Net in center
-      c.strokeStyle = 'rgba(0, 240, 224, 0.7)';
+      // Net
+      c.strokeStyle = '#00f0e0';
       c.lineWidth = 2.5;
       c.beginPath();
-      c.moveTo(190, 150);
-      c.lineTo(190, 220);
+      c.moveTo(190, 140);
+      c.lineTo(190, 210);
       c.stroke();
-      // Net mesh
-      c.fillStyle = 'rgba(0, 240, 224, 0.1)';
-      c.fillRect(184, 150, 12, 70);
+      c.fillStyle = 'rgba(0, 240, 224, 0.12)';
+      c.fillRect(184, 140, 12, 70);
 
       // AI Racket (Left)
-      c.save();
       c.fillStyle = '#a855f7';
-      c.shadowColor = '#a855f7';
-      c.shadowBlur = 8;
       c.beginPath();
       c.ellipse(50, this.aiY, 6, 18, 0, 0, Math.PI * 2);
       c.fill();
-      c.restore();
 
       // Player Racket (Right)
       c.save();
-      const racketColor = this.smashTimer > 0 ? '#f472b6' : '#00f0e0';
-      c.fillStyle = racketColor;
-      c.shadowColor = racketColor;
-      c.shadowBlur = this.smashTimer > 0 ? 16 : 8;
+      c.fillStyle = this.isSmashing ? '#f472b6' : '#00f0e0';
+      c.shadowColor = c.fillStyle;
+      c.shadowBlur = this.isSmashing ? 18 : 8;
       c.beginPath();
       c.ellipse(this.racketX, this.racketY, 7, 20, 0.2, 0, Math.PI * 2);
       c.fill();
-      // Handle
       c.fillStyle = '#ffffff';
       c.fillRect(this.racketX + 4, this.racketY + 12, 3, 14);
       c.restore();
@@ -4210,17 +3898,11 @@ label:focus-visible,
         const angle = Math.atan2(this.shuttle.vy, this.shuttle.vx);
         c.translate(this.shuttle.x, this.shuttle.y);
         c.rotate(angle);
-
-        // Cork
         c.fillStyle = '#fef08a';
-        c.shadowColor = '#00d4ff';
-        c.shadowBlur = 8;
         c.beginPath();
         c.arc(4, 0, 4, 0, Math.PI * 2);
         c.fill();
-
-        // Feathers
-        c.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        c.fillStyle = 'rgba(255, 255, 255, 0.85)';
         c.beginPath();
         c.moveTo(2, 0);
         c.lineTo(-8, -5);
@@ -4230,7 +3912,6 @@ label:focus-visible,
         c.restore();
       }
 
-      // Particles
       for (const p of this.particles) {
         c.save();
         c.globalAlpha = p.alpha;
@@ -4244,14 +3925,13 @@ label:focus-visible,
   };
 
   /* ─────────────────────────────────────────────────────────────
-     6. SPORTS SECTION MODE TABS (PLAY vs STORY)
+     6. SPORT TABS & CARD SPOTLIGHT
      ───────────────────────────────────────────────────────────── */
   function initSportTabs() {
     document.querySelectorAll('.sport-mode-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.onclick = () => {
         const sport = btn.getAttribute('data-sport');
         const mode = btn.getAttribute('data-mode');
-
         const card = document.getElementById(`${sport}-card`);
         if (!card) return;
 
@@ -4259,246 +3939,53 @@ label:focus-visible,
         btn.classList.add('active');
 
         card.querySelectorAll('.sport-content-pane').forEach(p => p.classList.remove('active'));
-        const targetPane = document.getElementById(`${sport}-pane-${mode}`);
-        if (targetPane) targetPane.classList.add('active');
-
-        CyberAudio.playClick();
-      });
+        const pane = document.getElementById(`${sport}-pane-${mode}`);
+        if (pane) pane.classList.add('active');
+        AudioEngine.playTone(700, 0.04);
+      };
     });
   }
 
-  /* ─────────────────────────────────────────────────────────────
-     7. FUTURISTIC CYBER TERMINAL & MATRIX DIGITAL RAIN
-     ───────────────────────────────────────────────────────────── */
-  const CyberTerminal = {
-    modal: null,
-    body: null,
-    input: null,
-    isOpen: false,
-
-    init() {
-      this.modal = document.getElementById('cyber-terminal-modal');
-      this.body = document.getElementById('terminal-body');
-      this.input = document.getElementById('terminal-input');
-      const toggleBtn = document.getElementById('cyber-terminal-btn');
-      const closeBtn = document.getElementById('terminal-close-btn');
-
-      if (toggleBtn) toggleBtn.addEventListener('click', () => this.toggle());
-      if (closeBtn) closeBtn.addEventListener('click', () => this.close());
-
-      // Keyboard shortcut `~`
-      window.addEventListener('keydown', (e) => {
-        if (e.key === '`' || e.key === '~') {
-          e.preventDefault();
-          this.toggle();
-        }
-      });
-
-      if (this.input) {
-        this.input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            const cmd = this.input.value.trim().toLowerCase();
-            this.input.value = '';
-            this.execute(cmd);
-          }
-        });
-      }
-
-      // Quick Chips
-      document.querySelectorAll('.terminal-chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-          const cmd = chip.getAttribute('data-cmd');
-          this.execute(cmd);
-        });
-      });
-    },
-
-    toggle() {
-      this.isOpen ? this.close() : this.open();
-    },
-
-    open() {
-      this.isOpen = true;
-      if (this.modal) this.modal.classList.add('open');
-      if (this.input) this.input.focus();
-      CyberAudio.playClick();
-    },
-
-    close() {
-      this.isOpen = false;
-      if (this.modal) this.modal.classList.remove('open');
-      CyberAudio.playClick();
-    },
-
-    log(text, className = '') {
-      const line = document.createElement('div');
-      line.className = `terminal-log-line ${className}`;
-      line.textContent = text;
-      this.body.appendChild(line);
-      this.body.scrollTop = this.body.scrollHeight;
-    },
-
-    execute(cmd) {
-      if (!cmd) return;
-      this.log(`> ${cmd}`, 'cyan');
-
-      if (cmd === 'help') {
-        this.log('Available directives:');
-        this.log('  cricket     - Launch & scroll to Cricket game');
-        this.log('  badminton   - Launch & scroll to Badminton game');
-        this.log('  cube        - Scroll to 3D Rubik's Cube');
-        this.log('  checkerboard- Apply classic cube checkerboard');
-        this.log('  matrix      - Toggle Cyber Matrix Digital Rain');
-        this.log('  theme       - Toggle Light / Dark universe');
-        this.log('  skills      - Navigate to Technical Skills');
-        this.log('  about       - Navigate to About section');
-        this.log('  clear       - Clear terminal screen');
-      } else if (cmd === 'cricket') {
-        this.log('Launching Cyber Cricket Arena...', 'green');
-        document.querySelector('button[data-sport="cricket"][data-mode="game"]')?.click();
-        document.getElementById('sports')?.scrollIntoView({ behavior: 'smooth' });
-      } else if (cmd === 'badminton') {
-        this.log('Launching Cyber Badminton Arena...', 'green');
-        document.querySelector('button[data-sport="badminton"][data-mode="game"]')?.click();
-        document.getElementById('sports')?.scrollIntoView({ behavior: 'smooth' });
-      } else if (cmd === 'cube') {
-        this.log('Navigating to Rubik's Cube...', 'green');
-        document.getElementById('hobbies')?.scrollIntoView({ behavior: 'smooth' });
-        RubiksCube.autoSolve();
-      } else if (cmd === 'checkerboard') {
-        this.log('Executing U2 D2 F2 B2 L2 R2 checkerboard pattern...', 'pink');
-        document.getElementById('hobbies')?.scrollIntoView({ behavior: 'smooth' });
-        RubiksCube.applyCheckerboard();
-      } else if (cmd === 'matrix') {
-        MatrixRain.toggle();
-        this.log(`Matrix Rain: ${MatrixRain.active ? 'ENGAGED' : 'DISENGAGED'}`, 'green');
-      } else if (cmd === 'theme') {
-        const t = document.getElementById('theme-toggle');
-        if (t) t.checked = !t.checked;
-        this.log('Theme shifted.', 'green');
-      } else if (cmd === 'skills') {
-        document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
-      } else if (cmd === 'about') {
-        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-      } else if (cmd === 'clear') {
-        this.body.innerHTML = '';
-        this.log('=== TERMINAL CLEARED ===', 'dim');
-      } else {
-        this.log(`Command not recognized: "${cmd}". Type "help" for options.`, 'dim');
-      }
-    }
-  };
-
-  /* Matrix Digital Rain Animation */
-  const MatrixRain = {
-    canvas: null,
-    ctx: null,
-    columns: 0,
-    drops: [],
-    active: false,
-
-    init() {
-      this.canvas = document.getElementById('matrix-canvas');
-      if (!this.canvas) return;
-      this.ctx = this.canvas.getContext('2d');
-      this.resize();
-      window.addEventListener('resize', () => this.resize());
-      this.loop();
-    },
-
-    resize() {
-      if (!this.canvas) return;
-      this.canvas.width = window.innerWidth;
-      this.canvas.height = window.innerHeight;
-      this.columns = Math.floor(this.canvas.width / 18);
-      this.drops = Array(this.columns).fill(1);
-    },
-
-    toggle() {
-      this.active = !this.active;
-      if (this.canvas) this.canvas.classList.toggle('active', this.active);
-      return this.active;
-    },
-
-    loop() {
-      if (this.active && this.ctx) {
-        this.ctx.fillStyle = 'rgba(6, 8, 15, 0.08)';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        this.ctx.fillStyle = '#00f0e0';
-        this.ctx.font = '14px monospace';
-
-        const chars = '0123456789ABCDEF01アカサタナハマヤラワ';
-        for (let i = 0; i < this.drops.length; i++) {
-          const text = chars[Math.floor(Math.random() * chars.length)];
-          this.ctx.fillText(text, i * 18, this.drops[i] * 18);
-          if (this.drops[i] * 18 > this.canvas.height && Math.random() > 0.975) {
-            this.drops[i] = 0;
-          }
-          this.drops[i]++;
-        }
-      }
-      requestAnimationFrame(() => this.loop());
-    }
-  };
-
-  /* ─────────────────────────────────────────────────────────────
-     8. HOLOGRAPHIC CARD LIGHTING & SMOOTH SCROLL REVEALS
-     ───────────────────────────────────────────────────────────── */
-  function initHolographicCards() {
+  function initCardLighting() {
     document.querySelectorAll('.glass-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
       });
     });
-
-    // Smooth reveal observer
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   }
 
   /* ─────────────────────────────────────────────────────────────
-     GLOBAL INITIALIZATION
+     GLOBAL LAUNCHER (Runs immediately regardless of readyState)
      ───────────────────────────────────────────────────────────── */
-  window.addEventListener('DOMContentLoaded', () => {
-    CursorEngine.init();
-    RubiksCube.init();
-    CricketGame.init();
-    BadmintonGame.init();
+  function startAll() {
+    CircleCursor.init();
+    CubeGame.init();
+    Cricket.init();
+    Badminton.init();
     initSportTabs();
-    CyberTerminal.init();
-    MatrixRain.init();
-    initHolographicCards();
+    initCardLighting();
 
-    // SFX Toggle in Navbar
     const sfxBtn = document.getElementById('sfx-toggle');
-    if (sfxBtn) {
-      sfxBtn.addEventListener('click', () => CyberAudio.toggle());
-    }
+    if (sfxBtn) sfxBtn.onclick = () => AudioEngine.toggle();
 
-    // Live Session Clock in Telemetry
     const clockEl = document.getElementById('session-clock');
     if (clockEl) {
-      const updateClock = () => {
-        const now = new Date();
-        clockEl.textContent = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+      const tick = () => {
+        const d = new Date();
+        clockEl.textContent = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d.getSeconds().toString().padStart(2, '0')}`;
       };
-      updateClock();
-      setInterval(updateClock, 1000);
+      tick();
+      setInterval(tick, 1000);
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startAll);
+  } else {
+    startAll();
+  }
 
 })();
 </script>
