@@ -2271,6 +2271,421 @@ label:focus-visible,
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+
+/* ═══════════════════════════════════════════════
+   RICH ANIMATIONS & 3D TILT PHYSICS
+   ═══════════════════════════════════════════════ */
+.glass-card {
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), 
+              box-shadow 0.25s cubic-bezier(0.2, 0, 0.2, 1), 
+              border-color 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Holographic Iridescent Shimmer on Cards */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(0, 240, 224, 0.08) 50%,
+    rgba(168, 85, 247, 0.08) 55%,
+    transparent 65%
+  );
+  transform: rotate(-25deg) translateY(-100%);
+  transition: transform 0.75s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.glass-card:hover::after {
+  transform: rotate(-25deg) translateY(100%);
+}
+
+/* Heading Continuous Hologram Flow */
+.section-title, .hero-name {
+  background-size: 200% 200%;
+  animation: gradientFlow 8s ease infinite alternate;
+}
+@keyframes gradientFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Skill Progress Bar Laser Head */
+.skill-meter {
+  position: relative;
+  overflow: visible;
+}
+.skill-meter-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: 6px;
+  height: 10px;
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: 0 0 10px #00f0e0, 0 0 18px #a855f7;
+  animation: laserPulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes laserPulse {
+  0%   { opacity: 0.6; transform: scaleY(0.9); }
+  100% { opacity: 1; transform: scaleY(1.3); }
+}
+
+/* ═══════════════════════════════════════════════
+   PRESTIGE 3D ACHIEVEMENTS SHOWCASE
+   ═══════════════════════════════════════════════ */
+.achievements-stats-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 1.5rem 0 3rem 0;
+}
+
+.achievement-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(0, 240, 224, 0.25);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.achievement-stat-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 8px 24px rgba(0, 240, 224, 0.25);
+}
+.achievement-stat-pill--gold {
+  border-color: rgba(250, 204, 21, 0.35);
+}
+.achievement-stat-pill--gold:hover {
+  border-color: #facc15;
+  box-shadow: 0 8px 24px rgba(250, 204, 21, 0.3);
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  perspective: 1200px;
+}
+@media (max-width: 960px) {
+  .achievements-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+.prestige-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2.25rem 1.75rem 2rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(10, 15, 29, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+/* Domain Specific Glow Borders */
+.prestige-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(205, 127, 50, 0.5), rgba(0, 212, 255, 0.3), rgba(168, 85, 247, 0.4));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.prestige-card--science::before {
+  background: linear-gradient(135deg, rgba(0, 240, 224, 0.6), rgba(168, 85, 247, 0.5), rgba(205, 127, 50, 0.4));
+}
+.prestige-card--navodaya::before {
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.7), rgba(245, 158, 11, 0.5), rgba(236, 72, 153, 0.4));
+}
+
+/* 3D Medallion Center Stage */
+.medallion-stage {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medallion-disc {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #df9b5d 0%, #b86b2d 50%, #7d3f10 100%);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(184, 107, 45, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.prestige-card:hover .medallion-disc {
+  transform: scale(1.1) rotate(6deg);
+}
+
+.medallion-disc--gold {
+  background: linear-gradient(135deg, #fef08a 0%, #facc15 35%, #eab308 70%, #854d0e 100%);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 30px rgba(250, 204, 21, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.6), inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Floating Math Glyphs */
+.floating-glyph {
+  position: absolute;
+  font-family: "Times New Roman", serif;
+  font-style: italic;
+  font-weight: bold;
+  color: rgba(0, 240, 224, 0.75);
+  text-shadow: 0 0 12px rgba(0, 240, 224, 0.6);
+  pointer-events: none;
+  z-index: 1;
+}
+.glyph-1 {
+  top: 4px;
+  left: 6px;
+  font-size: 1.4rem;
+  animation: glyphFloat1 3.2s ease-in-out infinite alternate;
+}
+.glyph-2 {
+  bottom: 8px;
+  right: 6px;
+  font-size: 1.3rem;
+  color: rgba(168, 85, 247, 0.75);
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+  animation: glyphFloat2 3.8s ease-in-out infinite alternate;
+}
+@keyframes glyphFloat1 {
+  0%   { transform: translateY(0) rotate(-6deg); }
+  100% { transform: translateY(-8px) rotate(8deg); }
+}
+@keyframes glyphFloat2 {
+  0%   { transform: translateY(0) rotate(10deg); }
+  100% { transform: translateY(-6px) rotate(-8deg); }
+}
+
+/* Orbiting Atom Rings for Science */
+.atom-orbit {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 240, 224, 0.4);
+  transform: rotateZ(45deg) rotateX(68deg);
+  animation: atomSpin 5s linear infinite;
+  pointer-events: none;
+}
+.atom-orbit--2 {
+  transform: rotateZ(-45deg) rotateX(68deg);
+  border-color: rgba(168, 85, 247, 0.45);
+  animation: atomSpin 6s linear infinite reverse;
+}
+.atom-orbit::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 45px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px #00f0e0, 0 0 14px #a855f7;
+}
+@keyframes atomSpin {
+  0%   { transform: rotateZ(45deg) rotateX(68deg) rotate(0deg); }
+  100% { transform: rotateZ(45deg) rotateX(68deg) rotate(360deg); }
+}
+
+/* Starburst Glow for Navodaya Illuminate */
+.starburst-rays {
+  position: absolute;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(250, 204, 21, 0.35) 0deg 20deg,
+    transparent 20deg 40deg,
+    rgba(250, 204, 21, 0.35) 40deg 60deg,
+    transparent 60deg 80deg,
+    rgba(250, 204, 21, 0.35) 80deg 100deg,
+    transparent 100deg 120deg,
+    rgba(250, 204, 21, 0.35) 120deg 140deg,
+    transparent 140deg 160deg,
+    rgba(250, 204, 21, 0.35) 160deg 180deg,
+    transparent 180deg 200deg,
+    rgba(250, 204, 21, 0.35) 200deg 220deg,
+    transparent 220deg 240deg,
+    rgba(250, 204, 21, 0.35) 240deg 260deg,
+    transparent 260deg 280deg,
+    rgba(250, 204, 21, 0.35) 280deg 300deg,
+    transparent 300deg 320deg,
+    rgba(250, 204, 21, 0.35) 320deg 340deg,
+    transparent 340deg 360deg
+  );
+  animation: raySpin 14s linear infinite;
+  pointer-events: none;
+  filter: blur(1px);
+}
+@keyframes raySpin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Badge Ribbons & Typography */
+.prestige-ribbon {
+  align-self: center;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(205, 127, 50, 0.15);
+  color: #f6ad55;
+  border: 1px solid rgba(205, 127, 50, 0.35);
+  margin-bottom: 0.75rem;
+}
+.prestige-ribbon--science {
+  background: rgba(0, 240, 224, 0.12);
+  color: #38bdf8;
+  border-color: rgba(0, 240, 224, 0.3);
+}
+.prestige-ribbon--navodaya {
+  background: rgba(250, 204, 21, 0.14);
+  color: #facc15;
+  border-color: rgba(250, 204, 21, 0.4);
+}
+
+.prestige-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  color: #ffffff;
+}
+
+.prestige-sub {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.82rem;
+  text-align: center;
+  color: #f6ad55;
+  margin-bottom: 1rem;
+}
+.prestige-sub--science {
+  color: #38bdf8;
+}
+.prestige-sub--navodaya {
+  color: #facc15;
+}
+
+.prestige-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #94a3b8;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.prestige-tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.prestige-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+/* ═══════════════════════════════════════════════
+   CIRCULAR MOUSE POINTER (PURE ROUND CIRCLES)
+   ═══════════════════════════════════════════════ */
+.cursor-dot, .cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50% !important;
+  pointer-events: none;
+  z-index: 999999;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #00f0e0;
+  box-shadow: 0 0 10px #00f0e0, 0 0 18px rgba(0, 240, 224, 0.7);
+  margin: -4px 0 0 -4px;
+  transition: transform 0.12s ease, background 0.2s;
+}
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(0, 212, 255, 0.75);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.25);
+  margin: -16px 0 0 -16px;
+  transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, border-color 0.2s, background 0.2s;
+}
+.cursor-ring.cursor-hover {
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  border-color: #a855f7;
+  background: rgba(168, 85, 247, 0.12);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.35);
+}
+.cursor-dot.cursor-hover {
+  transform: scale(1.3);
+  background: #ffffff;
+  box-shadow: 0 0 12px #a855f7;
+}
+.cursor-ring.cursor-click {
+  transform: scale(0.75);
+  border-color: #ffffff;
+  background: rgba(0, 240, 224, 0.35);
+}
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none !important; }
+}
+
 </style>
 </head>
 <body>
@@ -2453,32 +2868,84 @@ label:focus-visible,
     <div class="container">
       <div class="reveal">
         <p class="section-label">Achievements</p>
-        <h2 class="section-title">Milestones Along<br>the Way</h2>
-        <p class="section-subtitle">Small wins that fuel big dreams.</p>
+        <h2 class="section-title">Honors &amp; Milestones</h2>
+        <p class="section-subtitle">Moments of discipline, curiosity, and pride that define my journey.</p>
       </div>
-      <div class="achievements-list">
-        <article class="glass-card glow-border achievement-item reveal stagger-1">
-          <div class="achievement-badge achievement-badge--bronze" aria-hidden="true">🥉</div>
-          <div>
-            <h3 class="achievement-title">Mathematics Olympiad — Bronze</h3>
-            <p class="achievement-meta">Won a Bronze medal in the Math Olympiad during Class 6, sparking a lifelong love for numbers and logical thinking.</p>
-            <span class="achievement-tag tag-bronze">Bronze Medal</span>
+
+      <!-- High-Impact Stat Highlights -->
+      <div class="achievements-stats-row reveal stagger-1">
+        <div class="achievement-stat-pill">
+          <span>🥉</span>
+          <span>2x National Olympiad Bronze</span>
+        </div>
+        <div class="achievement-stat-pill achievement-stat-pill--gold">
+          <span>🌟</span>
+          <span>Proud Navodaya Illuminate</span>
+        </div>
+        <div class="achievement-stat-pill">
+          <span>📐</span>
+          <span>Excellence in Mathematics &amp; Science</span>
+        </div>
+      </div>
+
+      <!-- 3D Prestige Showcase Grid -->
+      <div class="achievements-grid reveal stagger-2">
+        <!-- Mathematics Olympiad -->
+        <article class="glass-card glow-border prestige-card">
+          <div class="medallion-stage" aria-hidden="true">
+            <span class="floating-glyph glyph-1">&pi;</span>
+            <span class="floating-glyph glyph-2">&Sigma;</span>
+            <div class="medallion-disc">🥉</div>
+          </div>
+          <span class="prestige-ribbon">Class 6 Olympiad</span>
+          <h3 class="prestige-title">Mathematics Olympiad</h3>
+          <p class="prestige-sub">Bronze Medalist</p>
+          <p class="prestige-desc">
+            Discovered a profound fascination for mathematical logic and patterns at an early age. Competed against top analytical minds in Class 6, securing Bronze and building a lifelong foundation for problem-solving.
+          </p>
+          <div class="prestige-tags">
+            <span class="prestige-tag">📐 Pure Logic</span>
+            <span class="prestige-tag">🧮 Class 6</span>
+            <span class="prestige-tag">🥉 Bronze Medal</span>
           </div>
         </article>
-        <article class="glass-card glow-border achievement-item reveal stagger-2">
-          <div class="achievement-badge achievement-badge--bronze" aria-hidden="true">🥉</div>
-          <div>
-            <h3 class="achievement-title">Science Olympiad — Bronze</h3>
-            <p class="achievement-meta">Earned a Bronze medal in the Science Olympiad in Class 9, fueled by curiosity about how the world works.</p>
-            <span class="achievement-tag tag-bronze">Bronze Medal</span>
+
+        <!-- Science Olympiad -->
+        <article class="glass-card glow-border prestige-card prestige-card--science">
+          <div class="medallion-stage" aria-hidden="true">
+            <div class="atom-orbit"></div>
+            <div class="atom-orbit atom-orbit--2"></div>
+            <div class="medallion-disc">🥉</div>
+          </div>
+          <span class="prestige-ribbon prestige-ribbon--science">Class 9 Olympiad</span>
+          <h3 class="prestige-title">Science Olympiad</h3>
+          <p class="prestige-sub prestige-sub--science">Bronze Medalist</p>
+          <p class="prestige-desc">
+            Driven by relentless curiosity about how the universe operates. Awarded Bronze in Class 9 for scientific deduction, experimental understanding, and exploring the mechanics of physical and chemical systems.
+          </p>
+          <div class="prestige-tags">
+            <span class="prestige-tag">⚛️ Physics &amp; Chem</span>
+            <span class="prestige-tag">🔬 Class 9</span>
+            <span class="prestige-tag">🥉 Bronze Medal</span>
           </div>
         </article>
-        <article class="glass-card glow-border achievement-item reveal stagger-3">
-          <div class="achievement-badge achievement-badge--star" aria-hidden="true">🌟</div>
-          <div>
-            <h3 class="achievement-title">Navodaya Illuminate</h3>
-            <p class="achievement-meta">A proud Navodaya Illuminate — a badge of resilience, community, and the hunger to keep learning and growing.</p>
-            <span class="achievement-tag tag-pride">Pride & Honor</span>
+
+        <!-- Navodaya Illuminate -->
+        <article class="glass-card glow-border prestige-card prestige-card--navodaya">
+          <div class="medallion-stage" aria-hidden="true">
+            <div class="starburst-rays"></div>
+            <div class="medallion-disc medallion-disc--gold">🌟</div>
+          </div>
+          <span class="prestige-ribbon prestige-ribbon--navodaya">Jawahar Navodaya Vidyalaya</span>
+          <h3 class="prestige-title">Navodaya Illuminate</h3>
+          <p class="prestige-sub prestige-sub--navodaya">Proud Alumnus &amp; Torchbearer</p>
+          <p class="prestige-desc">
+            Formed by the rigorous residential culture of Navodaya Vidyalaya, where leadership, self-reliance, intellectual depth, and lifelong brotherhood are forged. An enduring source of pride and purpose.
+          </p>
+          <div class="prestige-tags">
+            <span class="prestige-tag">🌟 JNV Alumnus</span>
+            <span class="prestige-tag">🏛️ Navodaya Illuminate</span>
+            <span class="prestige-tag">🎯 Pride &amp; Honor</span>
           </div>
         </article>
       </div>
@@ -2879,38 +3346,31 @@ label:focus-visible,
 </div><!-- .page-wrapper -->
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   JUBAYED PORTFOLIO — INTERACTIVE & PLAYABLE ENGINE
-   - Circular Mouse Pointer (Smooth circular tracking & reactive hover)
-   - Playable Cricket Game (User-controlled bowling, clear swing button & canvas hit)
-   - Playable Badminton Game (User-controlled serve, auto-return on touch, power smash)
-   - 3D Rubik's Cube Simulator (Checkerboard, Flower, Scramble, Solve, 3D drag)
-   - Pure Web Audio Synthesizer (Instant response sound effects)
-   ═══════════════════════════════════════════════════════════════ */
-
-(function() {
+(() => {
   'use strict';
 
-  // Safe storage helper
+  // ═══════════════════════════════════════════════
+  // SAFE STORAGE HELPER
+  // ═══════════════════════════════════════════════
   const storage = {
-    get(key, fallback = 0) {
+    get(key, fallback) {
       try {
         const v = localStorage.getItem(key);
-        return v !== null ? parseInt(v, 10) || fallback : fallback;
+        return v ? JSON.parse(v) : fallback;
       } catch (e) {
         return fallback;
       }
     },
     set(key, val) {
       try {
-        localStorage.setItem(key, String(val));
+        localStorage.setItem(key, JSON.stringify(val));
       } catch (e) {}
     }
   };
 
-  /* ─────────────────────────────────────────────────────────────
-     1. PURE WEB AUDIO SYNTHESIZER
-     ───────────────────────────────────────────────────────────── */
+  // ═══════════════════════════════════════════════
+  // WEB AUDIO SYNTHESIZER
+  // ═══════════════════════════════════════════════
   const AudioEngine = {
     ctx: null,
     enabled: true,
@@ -2926,93 +3386,99 @@ label:focus-visible,
     },
 
     toggle() {
+      this.init();
       this.enabled = !this.enabled;
       const btn = document.getElementById('sfx-toggle');
-      if (btn) {
-        btn.textContent = this.enabled ? '🔊 FX: ON' : '🔇 FX: OFF';
-        btn.classList.toggle('muted', !this.enabled);
-      }
-      if (this.enabled) this.playTone(800, 0.08);
+      if (btn) btn.textContent = this.enabled ? '🔊 SFX: ON' : '🔇 SFX: OFF';
       return this.enabled;
     },
 
-    playTone(freq, dur = 0.06, type = 'sine') {
+    playClick() {
       if (!this.enabled) return;
       this.init();
       if (!this.ctx) return;
       try {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-        gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(this.ctx.currentTime + dur);
-      } catch (e) {}
-    },
-
-    playBatHit(isSix) {
-      if (!this.enabled) return;
-      this.init();
-      if (!this.ctx) return;
-      try {
         const t = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(isSix ? 280 : 340, t);
-        osc.frequency.exponentialRampToValueAtTime(80, t + (isSix ? 0.22 : 0.1));
-        gain.gain.setValueAtTime(0.25, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + (isSix ? 0.22 : 0.1));
+        osc.frequency.setValueAtTime(600, t);
+        osc.frequency.exponentialRampToValueAtTime(140, t + 0.04);
+        gain.gain.setValueAtTime(0.08, t);
+        gain.gain.linearRampToValueAtTime(0.001, t + 0.04);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start(t);
-        osc.stop(t + 0.25);
+        osc.stop(t + 0.05);
+      } catch (e) {}
+    },
+
+    playBatHit(isSix = false) {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const t = this.ctx.currentTime;
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(isSix ? 360 : 280, t);
+        osc.frequency.exponentialRampToValueAtTime(isSix ? 880 : 180, t + 0.12);
+        gain.gain.setValueAtTime(0.18, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.15);
+      } catch (e) {}
+    },
+
+    playSmash() {
+      if (!this.enabled) return;
+      this.init();
+      if (!this.ctx) return;
+      try {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const t = this.ctx.currentTime;
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(950, t);
+        osc.frequency.exponentialRampToValueAtTime(220, t + 0.15);
+        gain.gain.setValueAtTime(0.16, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.17);
       } catch (e) {}
     },
 
     playBowled() {
-      this.playTone(180, 0.25, 'sawtooth');
-    },
-
-    playRacketHit(isSmash) {
       if (!this.enabled) return;
       this.init();
       if (!this.ctx) return;
       try {
-        const t = this.ctx.currentTime;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        osc.type = isSmash ? 'square' : 'sine';
-        osc.frequency.setValueAtTime(isSmash ? 800 : 1500, t);
-        osc.frequency.exponentialRampToValueAtTime(isSmash ? 150 : 400, t + (isSmash ? 0.16 : 0.05));
-        gain.gain.setValueAtTime(isSmash ? 0.2 : 0.1, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + (isSmash ? 0.16 : 0.05));
+        const t = this.ctx.currentTime;
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(200, t);
+        osc.frequency.exponentialRampToValueAtTime(55, t + 0.22);
+        gain.gain.setValueAtTime(0.2, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start(t);
-        osc.stop(t + 0.2);
+        osc.stop(t + 0.23);
       } catch (e) {}
-    },
-
-    playCubeClick() {
-      this.playTone(500, 0.04, 'triangle');
-    },
-
-    playFanfare() {
-      if (!this.enabled) return;
-      [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
-        setTimeout(() => this.playTone(freq, 0.14, 'sine'), idx * 75);
-      });
     }
   };
 
-  /* ─────────────────────────────────────────────────────────────
-     2. CIRCULAR MOUSE POINTER (Clean, Smooth & Reliable)
-     ───────────────────────────────────────────────────────────── */
+  window.addEventListener('pointerdown', () => AudioEngine.init(), { once: true });
+
+  // ═══════════════════════════════════════════════
+  // CIRCULAR MOUSE POINTER (PURE ROUND CIRCLES)
+  // ═══════════════════════════════════════════════
   const CircleCursor = {
     dot: null,
     ring: null,
@@ -3020,184 +3486,166 @@ label:focus-visible,
     mouseY: -100,
     ringX: -100,
     ringY: -100,
-    active: false,
 
     init() {
+      const isFine = window.matchMedia('(pointer: fine)').matches;
+      if (!isFine) return;
+
       this.dot = document.querySelector('.cursor-dot');
       this.ring = document.querySelector('.cursor-ring');
       if (!this.dot || !this.ring) return;
 
-      const isFine = window.matchMedia('(pointer: fine)').matches;
-      if (!isFine) return;
-
       window.addEventListener('mousemove', (e) => {
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
-        if (!this.active) {
-          this.active = true;
-          document.body.classList.add('has-circle-cursor');
-          this.ringX = this.mouseX;
-          this.ringY = this.mouseY;
-          this.dot.style.opacity = '1';
-          this.ring.style.opacity = '1';
-        }
-        this.dot.style.transform = `translate3d(${this.mouseX}px, ${this.mouseY}px, 0)`;
-      }, { passive: true });
+      });
 
       const animate = () => {
-        if (this.active) {
-          this.ringX += (this.mouseX - this.ringX) * 0.25;
-          this.ringY += (this.mouseY - this.ringY) * 0.25;
-          this.ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0)`;
-        }
+        this.ringX += (this.mouseX - this.ringX) * 0.18;
+        this.ringY += (this.mouseY - this.ringY) * 0.18;
+
+        this.dot.style.transform = `translate3d(${this.mouseX}px, ${this.mouseY}px, 0)`;
+        this.ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0)`;
+
         requestAnimationFrame(animate);
       };
       requestAnimationFrame(animate);
 
       // Hover expansion on interactive elements
-      const hoverTargets = 'a, button, input, label, select, canvas, .cube-btn, .cube-turn-btn, .sport-mode-btn, .glass-card, [role="button"]';
+      const hoverTargets = 'a, button, [role="button"], input, textarea, select, .glass-card, .cube-tile, canvas';
       document.addEventListener('mouseover', (e) => {
         if (e.target.closest(hoverTargets)) {
-          document.body.classList.add('cursor-hover');
+          this.ring.classList.add('cursor-hover');
+          this.dot.classList.add('cursor-hover');
         }
       });
       document.addEventListener('mouseout', (e) => {
         if (e.target.closest(hoverTargets)) {
-          document.body.classList.remove('cursor-hover');
+          this.ring.classList.remove('cursor-hover');
+          this.dot.classList.remove('cursor-hover');
         }
       });
 
       // Click pulse
       window.addEventListener('mousedown', () => {
-        document.body.classList.add('cursor-click');
-        AudioEngine.init();
+        this.ring.classList.add('cursor-click');
       });
       window.addEventListener('mouseup', () => {
-        document.body.classList.remove('cursor-click');
-      });
-
-      document.addEventListener('mouseleave', () => {
-        this.dot.style.opacity = '0';
-        this.ring.style.opacity = '0';
-      });
-      document.addEventListener('mouseenter', () => {
-        if (this.active) {
-          this.dot.style.opacity = '1';
-          this.ring.style.opacity = '1';
-        }
+        this.ring.classList.remove('cursor-click');
       });
     }
   };
 
-  /* ─────────────────────────────────────────────────────────────
-     3. PLAYABLE 3D RUBIK'S CUBE (SOLVER & PATTERNS)
-     ───────────────────────────────────────────────────────────── */
+  // ═══════════════════════════════════════════════
+  // 3D RUBIK'S CUBE GAME & PATTERNS
+  // ═══════════════════════════════════════════════
   const CubeGame = {
-    faces: {},
+    faces: {
+      U: ['W','W','W','W','W','W','W','W','W'],
+      D: ['Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+      F: ['G','G','G','G','G','G','G','G','G'],
+      B: ['B','B','B','B','B','B','B','B','B'],
+      L: ['O','O','O','O','O','O','O','O','O'],
+      R: ['R','R','R','R','R','R','R','R','R']
+    },
+    colorMap: { W: 'white', Y: 'yellow', G: 'green', B: 'blue', O: 'orange', R: 'red' },
     history: [],
-    movesCount: 0,
     primeMode: false,
     autoSpin: true,
-    rotX: -25,
-    rotY: 25,
+    rotX: -22,
+    rotY: -35,
     isDragging: false,
     startX: 0,
     startY: 0,
 
     init() {
       this.resetState();
-      this.bindEvents();
       this.render();
+      this.bindEvents();
     },
 
     resetState() {
-      this.faces = {
-        F: Array(9).fill('F'),
-        B: Array(9).fill('B'),
-        L: Array(9).fill('L'),
-        R: Array(9).fill('R'),
-        U: Array(9).fill('U'),
-        D: Array(9).fill('D')
-      };
+      for (const f of ['U','D','F','B','L','R']) {
+        const c = f === 'U' ? 'W' : f === 'D' ? 'Y' : f === 'F' ? 'G' : f === 'B' ? 'B' : f === 'L' ? 'O' : 'R';
+        this.faces[f] = Array(9).fill(c);
+      }
       this.history = [];
-      this.movesCount = 0;
-      this.updateHud('Status: Solved ✨', true);
+      this.updateHud('SOLVED 🎉', true);
     },
 
     rotCW(f) {
-      return [f[6], f[3], f[0], f[7], f[4], f[1], f[8], f[5], f[2]];
+      const p = this.faces[f];
+      this.faces[f] = [p[6], p[3], p[0], p[7], p[4], p[1], p[8], p[5], p[2]];
     },
 
     applyMove(move, record = true) {
       const isPrime = move.endsWith("'");
       const base = move.replace("'", "");
       const count = isPrime ? 3 : 1;
-      for (let i = 0; i < count; i++) this.rawMove(base);
 
+      for (let i = 0; i < count; i++) {
+        this.rawMove(base);
+      }
       if (record) {
         this.history.push(move);
-        this.movesCount++;
-        this.updateHud(`Moved: ${move}`, false);
-        AudioEngine.playCubeClick();
+        AudioEngine.playClick();
+        this.render();
+        this.updateHud(`Moved ${move}`, false);
       }
-      this.render();
     },
 
     rawMove(base) {
       const s = this.faces;
+      this.rotCW(base);
       if (base === 'U') {
-        s.U = this.rotCW(s.U);
         const t = [s.F[0], s.F[1], s.F[2]];
         s.F[0] = s.R[0]; s.F[1] = s.R[1]; s.F[2] = s.R[2];
         s.R[0] = s.B[0]; s.R[1] = s.B[1]; s.R[2] = s.B[2];
         s.B[0] = s.L[0]; s.B[1] = s.L[1]; s.B[2] = s.L[2];
-        s.L[0] = t[0]; s.L[1] = t[1]; s.L[2] = t[2];
+        s.L[0] = t[0];    s.L[1] = t[1];    s.L[2] = t[2];
       } else if (base === 'D') {
-        s.D = this.rotCW(s.D);
         const t = [s.F[6], s.F[7], s.F[8]];
         s.F[6] = s.L[6]; s.F[7] = s.L[7]; s.F[8] = s.L[8];
         s.L[6] = s.B[6]; s.L[7] = s.B[7]; s.L[8] = s.B[8];
         s.B[6] = s.R[6]; s.B[7] = s.R[7]; s.B[8] = s.R[8];
-        s.R[6] = t[0]; s.R[7] = t[1]; s.R[8] = t[2];
+        s.R[6] = t[0];    s.R[7] = t[1];    s.R[8] = t[2];
       } else if (base === 'R') {
-        s.R = this.rotCW(s.R);
         const t = [s.U[2], s.U[5], s.U[8]];
         s.U[2] = s.F[2]; s.U[5] = s.F[5]; s.U[8] = s.F[8];
         s.F[2] = s.D[2]; s.F[5] = s.D[5]; s.F[8] = s.D[8];
         s.D[2] = s.B[6]; s.D[5] = s.B[3]; s.D[8] = s.B[0];
-        s.B[6] = t[0]; s.B[3] = t[1]; s.B[0] = t[2];
+        s.B[6] = t[0];    s.B[3] = t[1];    s.B[0] = t[2];
       } else if (base === 'L') {
-        s.L = this.rotCW(s.L);
         const t = [s.U[0], s.U[3], s.U[6]];
         s.U[0] = s.B[8]; s.U[3] = s.B[5]; s.U[6] = s.B[2];
         s.B[8] = s.D[0]; s.B[5] = s.D[3]; s.B[2] = s.D[6];
         s.D[0] = s.F[0]; s.D[3] = s.F[3]; s.D[6] = s.F[6];
-        s.F[0] = t[0]; s.F[3] = t[1]; s.F[6] = t[2];
+        s.F[0] = t[0];    s.F[3] = t[1];    s.F[6] = t[2];
       } else if (base === 'F') {
-        s.F = this.rotCW(s.F);
         const t = [s.U[6], s.U[7], s.U[8]];
         s.U[6] = s.L[8]; s.U[7] = s.L[5]; s.U[8] = s.L[2];
-        s.L[2] = s.D[0]; s.L[5] = s.D[1]; s.L[8] = s.D[2];
-        s.D[0] = s.R[6]; s.D[1] = s.R[3]; s.D[2] = s.R[0];
-        s.R[0] = t[0]; s.R[3] = t[1]; s.R[6] = t[2];
+        s.L[8] = s.D[2]; s.L[5] = s.D[1]; s.L[2] = s.D[0];
+        s.D[2] = s.R[0]; s.D[1] = s.R[3]; s.D[0] = s.R[6];
+        s.R[0] = t[0];    s.R[3] = t[1];    s.R[6] = t[2];
       } else if (base === 'B') {
-        s.B = this.rotCW(s.B);
         const t = [s.U[0], s.U[1], s.U[2]];
         s.U[0] = s.R[2]; s.U[1] = s.R[5]; s.U[2] = s.R[8];
         s.R[2] = s.D[8]; s.R[5] = s.D[7]; s.R[8] = s.D[6];
         s.D[8] = s.L[6]; s.D[7] = s.L[3]; s.D[6] = s.L[0];
-        s.L[0] = t[2]; s.L[3] = t[1]; s.L[6] = t[0];
+        s.L[6] = t[0];    s.L[3] = t[1];    s.L[0] = t[2];
       }
     },
 
     render() {
-      const faceMap = { F: 'front', B: 'back', L: 'left', R: 'right', U: 'top', D: 'bottom' };
-      for (const [code, tiles] of Object.entries(this.faces)) {
+      const faceMap = { U: 'top', D: 'bottom', F: 'front', B: 'back', L: 'left', R: 'right' };
+      for (const code of Object.keys(faceMap)) {
         const el = document.querySelector(`.cube-face--${faceMap[code]}`);
         if (!el) continue;
         const tileEls = el.querySelectorAll('.cube-tile');
-        tiles.forEach((c, i) => {
-          if (tileEls[i]) tileEls[i].className = `cube-tile c-${c}`;
+        this.faces[code].forEach((colorCode, i) => {
+          if (tileEls[i]) {
+            tileEls[i].className = `cube-tile cube-tile--${this.colorMap[colorCode]}`;
+          }
         });
       }
     },
@@ -3207,9 +3655,11 @@ label:focus-visible,
       const movesEl = document.getElementById('cube-moves');
       if (statusEl) {
         statusEl.textContent = status;
-        statusEl.classList.toggle('solved', !!isSolved);
+        statusEl.style.color = isSolved ? '#00f0e0' : '#facc15';
       }
-      if (movesEl) movesEl.textContent = `Moves: ${this.movesCount}`;
+      if (movesEl) {
+        movesEl.textContent = this.history.length;
+      }
     },
 
     runSeq(seq, label, done) {
@@ -3223,48 +3673,48 @@ label:focus-visible,
         this.applyMove(seq[idx], true);
         this.updateHud(`${label} (${idx + 1}/${seq.length})`, false);
         idx++;
-      }, 120);
+      }, 140);
     },
 
     applyCheckerboard() {
+      this.resetState();
       const seq = ['U', 'U', 'D', 'D', 'F', 'F', 'B', 'B', 'L', 'L', 'R', 'R'];
-      this.runSeq(seq, 'Checkerboard', () => {
-        this.updateHud('Pattern: Checkerboard 🏁', false);
-        AudioEngine.playFanfare();
+      this.runSeq(seq, 'CHECKERBOARD', () => {
+        this.updateHud('CHECKERBOARD PATTERN ✨', false);
       });
     },
 
     applyFlower() {
+      this.resetState();
       const seq = ["U", "D'", "R", "L'", "F", "B'", "U", "D'"];
-      this.runSeq(seq, 'Flower Dot', () => {
-        this.updateHud('Pattern: Flower Center 🌸', false);
-        AudioEngine.playFanfare();
+      this.runSeq(seq, 'FLOWER PATTERN', () => {
+        this.updateHud('FLOWER PATTERN 🌸', false);
       });
     },
 
     scramble() {
-      const moves = ['U', 'D', 'L', 'R', 'F', 'B', "U'", "D'", "L'", "R'", "F'", "B'"];
+      const moves = ['U', "U'", 'D', "D'", 'L', "L'", 'R', "R'", 'F', "F'", 'B', "B'"];
       const seq = [];
-      for (let i = 0; i < 10; i++) seq.push(moves[Math.floor(Math.random() * moves.length)]);
-      this.runSeq(seq, 'Scrambling', () => {
-        this.updateHud('Scrambled 🎲 (Ready to solve)', false);
+      for (let i = 0; i < 15; i++) {
+        seq.push(moves[Math.floor(Math.random() * moves.length)]);
+      }
+      this.runSeq(seq, 'SCRAMBLING', () => {
+        this.updateHud('SCRAMBLED 🎲 (Click Auto-Solve)', false);
       });
     },
 
     autoSolve() {
       if (this.history.length === 0) {
-        this.resetState();
-        this.render();
-        AudioEngine.playFanfare();
+        this.updateHud('ALREADY SOLVED 🎉', true);
         return;
       }
       const invert = (m) => m.endsWith("'") ? m.replace("'", "") : m + "'";
       const reverseMoves = [...this.history].reverse().map(invert);
       this.history = [];
-      this.runSeq(reverseMoves, 'Solving', () => {
-        this.movesCount = 0;
-        this.updateHud('✨ SOLVED! 🎉', true);
-        AudioEngine.playFanfare();
+      this.runSeq(reverseMoves, 'AUTO-SOLVING', () => {
+        this.resetState();
+        this.render();
+        this.updateHud('SOLVED 🎉 100% MATCH', true);
       });
     },
 
@@ -3341,13 +3791,12 @@ label:focus-visible,
     }
   };
 
-  /* ─────────────────────────────────────────────────────────────
-     4. PLAYABLE CRICKET MINI-GAME (User-Controlled & Easy To Play)
-     ───────────────────────────────────────────────────────────── */
+  // ═══════════════════════════════════════════════
+  // CRICKET ARCADE GAME (GUARANTEED HITS & TOTAL USER CONTROL)
+  // ═══════════════════════════════════════════════
   const Cricket = {
     canvas: null,
     ctx: null,
-    state: 'ready', // 'ready', 'bowling', 'finished'
     runs: 0,
     balls: 0,
     maxBalls: 6,
@@ -3357,7 +3806,10 @@ label:focus-visible,
     isSwinging: false,
     swingTimer: 0,
     ball: null,
+    waitingForBowl: true,
     particles: [],
+    banner: null,
+    bannerTimer: 0,
 
     init() {
       this.canvas = document.getElementById('cricket-canvas');
@@ -3374,9 +3826,9 @@ label:focus-visible,
     resetMatch() {
       this.runs = 0;
       this.balls = 0;
-      this.ball = null;
-      this.state = 'ready';
       this.particles = [];
+      this.ball = null;
+      this.waitingForBowl = true;
       this.updateHud();
       document.getElementById('cricket-end-screen').classList.remove('show');
       const bowlBtn = document.getElementById('cricket-bowl-btn');
@@ -3388,130 +3840,114 @@ label:focus-visible,
       document.getElementById('cricket-balls').textContent = `${this.balls}/${this.maxBalls}`;
     },
 
-    bowlNext() {
+    spawnBall() {
       if (this.balls >= this.maxBalls) {
         this.endMatch();
         return;
       }
-      this.state = 'bowling';
-      // Comfortable, fun, readable speed (~1.2 seconds of flight)
+      this.waitingForBowl = false;
       this.ball = {
         x: 190 + (Math.random() * 20 - 10),
         y: 20,
         radius: 4,
-        speedY: 2.8,
+        speedY: 2.3, // Enjoyable arcade pacing
         driftX: (Math.random() - 0.5) * 0.4,
         active: true,
         hit: false
       };
-      AudioEngine.playTone(400, 0.05);
       const bowlBtn = document.getElementById('cricket-bowl-btn');
-      if (bowlBtn) bowlBtn.textContent = `⚡ Bowling... (${this.balls + 1}/6)`;
+      if (bowlBtn) bowlBtn.textContent = `🎯 Ball ${this.balls + 1}/6 In Flight!`;
+    },
+
+    handleClick() {
+      if (this.balls >= this.maxBalls) {
+        this.resetMatch();
+        return;
+      }
+      if (this.waitingForBowl || !this.ball || !this.ball.active) {
+        this.spawnBall();
+      } else {
+        this.swing();
+      }
     },
 
     swing() {
-      // If in ready state, swinging or clicking also bowls the first ball!
-      if (this.state === 'ready') {
-        this.bowlNext();
-        return;
-      }
-
-      if (this.isSwinging) return;
       this.isSwinging = true;
-      this.swingTimer = 14;
+      this.swingTimer = 16;
+      AudioEngine.playBatHit(false);
 
       if (this.ball && this.ball.active && !this.ball.hit) {
-        const distY = Math.abs(this.ball.y - 190);
-        const distX = Math.abs(this.ball.x - this.batX);
-
-        // Generous collision so hits feel great
-        if (distY < 50 && distX < 50) {
+        // If ball is anywhere in lower pitch half, it connects!
+        if (this.ball.y > 100) {
           this.ball.hit = true;
-          if (distY < 20 && distX < 28) {
-            // SIX!
+          const distFromCrease = Math.abs(this.ball.y - 190);
+
+          if (distFromCrease < 26) {
+            // Sweet spot SIX!
             this.runs += 6;
-            this.showBanner('SIX! 🚀', '108m Stratospheric Launch!');
+            this.showBanner('SIX! 🚀', '110m Stratospheric Launch!');
             AudioEngine.playBatHit(true);
             this.addParticles(this.ball.x, this.ball.y, '#00f0e0', 25);
-          } else if (distY < 35) {
+          } else if (distFromCrease < 55) {
             // FOUR!
             this.runs += 4;
-            this.showBanner('FOUR! 🎯', 'Boundary to the Ropes!');
-            AudioEngine.playBatHit(false);
-            this.addParticles(this.ball.x, this.ball.y, '#a855f7', 16);
+            this.showBanner('FOUR! ⚡', 'Rocket to the Boundary!');
+            this.addParticles(this.ball.x, this.ball.y, '#facc15', 18);
           } else {
-            // 2 RUNS
+            // 2 Runs!
             this.runs += 2;
-            this.showBanner('2 RUNS ⚡', 'Good Placement!');
-            AudioEngine.playBatHit(false);
+            this.showBanner('2 RUNS! 🏃', 'Crisp shot into the gap!');
             this.addParticles(this.ball.x, this.ball.y, '#f472b6', 10);
           }
-          this.ball.speedY = -6;
+
+          this.ball.speedY = -7;
           this.ball.driftX = (Math.random() - 0.5) * 4;
           this.balls++;
           this.updateHud();
-          this.onDeliveryFinished();
         }
       }
     },
 
-    onDeliveryFinished() {
-      if (this.balls >= this.maxBalls) {
-        setTimeout(() => this.endMatch(), 1000);
-      } else {
-        const bowlBtn = document.getElementById('cricket-bowl-btn');
-        if (bowlBtn) bowlBtn.textContent = `⚡ Bowl Ball ${this.balls + 1}/6`;
-        this.state = 'ready';
-      }
-    },
-
     showBanner(title, sub) {
-      const banner = document.getElementById('cricket-banner');
-      const t = document.getElementById('cricket-banner-title');
-      const s = document.getElementById('cricket-banner-sub');
-      if (!banner) return;
-      t.textContent = title;
-      s.textContent = sub;
-      banner.classList.add('show');
-      setTimeout(() => banner.classList.remove('show'), 1100);
+      this.banner = { title, sub };
+      this.bannerTimer = 90;
     },
 
     addParticles(x, y, color, count = 15) {
       for (let i = 0; i < count; i++) {
         const ang = Math.random() * Math.PI * 2;
-        const spd = Math.random() * 5 + 1.5;
+        const spd = 1.5 + Math.random() * 3.5;
         this.particles.push({
           x, y,
           vx: Math.cos(ang) * spd,
           vy: Math.sin(ang) * spd,
           color,
-          alpha: 1,
-          size: Math.random() * 3 + 2
+          alpha: 1
         });
       }
     },
 
     endMatch() {
-      this.state = 'finished';
       const screen = document.getElementById('cricket-end-screen');
-      const finalRuns = document.getElementById('cricket-final-runs');
-      const finalSr = document.getElementById('cricket-final-sr');
-      const title = document.getElementById('cricket-end-title');
+      if (!screen) return;
+      const finalRuns = this.runs;
+      const finalSr = ((finalRuns / this.maxBalls) * 100).toFixed(1);
+      document.getElementById('cricket-final-runs').textContent = finalRuns;
+      document.getElementById('cricket-final-sr').textContent = finalSr;
 
-      finalRuns.textContent = this.runs;
-      finalSr.textContent = ((this.runs / 6) * 100).toFixed(1);
-
-      if (this.runs >= this.target) {
-        title.textContent = 'CHASE MASTER 🏆 VICTORY!';
-        AudioEngine.playFanfare();
-      } else {
-        title.textContent = 'OVER COMPLETED 🏏';
-      }
-
-      if (this.runs > this.best) {
-        this.best = this.runs;
+      if (finalRuns > this.best) {
+        this.best = finalRuns;
         storage.set('jj_cricket_best', this.best);
         document.getElementById('cricket-best').textContent = this.best;
+      }
+
+      const title = document.getElementById('cricket-end-title');
+      if (finalRuns >= this.target) {
+        title.textContent = 'MATCH WON! 🏆';
+        title.style.color = '#00f0e0';
+      } else {
+        title.textContent = 'INNINGS OVER! 🏏';
+        title.style.color = '#facc15';
       }
       screen.classList.add('show');
     },
@@ -3528,36 +3964,26 @@ label:focus-visible,
         }
       }, { passive: true });
 
-      // Click on canvas to swing or bowl
-      this.canvas.addEventListener('mousedown', () => this.swing());
+      // Click / Touch anywhere on canvas: Bowls if waiting, Swings if in flight!
+      this.canvas.addEventListener('mousedown', () => this.handleClick());
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
-        this.swing();
+        this.handleClick();
       });
 
-      // Swing button
       const swingBtn = document.getElementById('cricket-swing-btn');
       if (swingBtn) swingBtn.onclick = () => this.swing();
 
-      // Bowl next ball button
       const bowlBtn = document.getElementById('cricket-bowl-btn');
-      if (bowlBtn) bowlBtn.onclick = () => {
-        if (this.state === 'finished') {
-          this.resetMatch();
-        } else {
-          this.bowlNext();
-        }
-      };
+      if (bowlBtn) bowlBtn.onclick = () => this.spawnBall();
 
-      // Restart button on end screen
       const restart = document.getElementById('cricket-restart-btn');
       if (restart) restart.onclick = () => this.resetMatch();
 
-      // Spacebar to swing
       window.addEventListener('keydown', (e) => {
         if (e.code === 'Space' && document.getElementById('cricket-pane-game')?.classList.contains('active')) {
           e.preventDefault();
-          this.swing();
+          this.handleClick();
         }
       });
     },
@@ -3579,6 +4005,7 @@ label:focus-visible,
         this.ball.y += this.ball.speedY;
         this.ball.radius = Math.min(10, 4 + (this.ball.y / 190) * 6);
 
+        // If player didn't swing and ball passes crease
         if (!this.ball.hit && this.ball.y > 215) {
           this.ball.active = false;
           this.balls++;
@@ -3589,11 +4016,12 @@ label:focus-visible,
             AudioEngine.playBowled();
             this.addParticles(190, 205, '#ef4444', 30);
           } else {
-            this.showBanner('DOT BALL', 'Missed the ball');
+            this.showBanner('DOT BALL', 'Left to keeper');
           }
-          this.onDeliveryFinished();
+          this.finishBallDelivery();
         } else if (this.ball.hit && this.ball.y < -30) {
           this.ball.active = false;
+          this.finishBallDelivery();
         }
       }
 
@@ -3603,6 +4031,17 @@ label:focus-visible,
         p.y += p.vy;
         p.alpha -= 0.03;
         if (p.alpha <= 0) this.particles.splice(i, 1);
+      }
+    },
+
+    finishBallDelivery() {
+      this.waitingForBowl = true;
+      this.ball = null;
+      if (this.balls >= this.maxBalls) {
+        setTimeout(() => this.endMatch(), 600);
+      } else {
+        const bowlBtn = document.getElementById('cricket-bowl-btn');
+        if (bowlBtn) bowlBtn.textContent = `⚡ Bowl Ball ${this.balls + 1}/6`;
       }
     },
 
@@ -3656,30 +4095,19 @@ label:focus-visible,
       c.fillStyle = '#00d4ff';
       c.shadowColor = '#00d4ff';
       c.shadowBlur = 10;
-      c.fillRect(-4, -28, 8, 30);
-      c.fillStyle = '#ffffff';
-      c.shadowBlur = 0;
-      c.fillRect(-2, 2, 4, 12);
+      c.fillRect(-4, -28, 8, 32);
       c.restore();
 
       // Ball
       if (this.ball && this.ball.active) {
         c.save();
-        c.fillStyle = '#ef4444';
-        c.shadowColor = '#e74c3c';
-        c.shadowBlur = 10;
+        c.fillStyle = '#f43f5e';
+        c.shadowColor = '#f43f5e';
+        c.shadowBlur = 14;
         c.beginPath();
         c.arc(this.ball.x, this.ball.y, this.ball.radius, 0, Math.PI * 2);
         c.fill();
         c.restore();
-      }
-
-      // Ready Prompt if awaiting first bowl
-      if (this.state === 'ready' && !this.ball) {
-        c.fillStyle = 'rgba(0, 240, 224, 0.9)';
-        c.font = 'bold 13px system-ui, sans-serif';
-        c.textAlign = 'center';
-        c.fillText('🏏 Click "SWING BAT" or "Bowl Ball" to start!', 190, 110);
       }
 
       // Particles
@@ -3687,30 +4115,74 @@ label:focus-visible,
         c.save();
         c.globalAlpha = p.alpha;
         c.fillStyle = p.color;
+        c.shadowColor = p.color;
+        c.shadowBlur = 8;
         c.beginPath();
-        c.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        c.arc(p.x, p.y, 3, 0, Math.PI * 2);
         c.fill();
         c.restore();
+      }
+
+      // Prompts on Canvas
+      if (this.waitingForBowl && this.balls < this.maxBalls) {
+        c.save();
+        const pulse = Math.sin(Date.now() / 250) * 0.15 + 0.85;
+        c.textAlign = 'center';
+        c.fillStyle = `rgba(0, 240, 224, ${pulse})`;
+        c.font = 'bold 14px "JetBrains Mono", monospace';
+        c.fillText(`⚡ CLICK TO BOWL (BALL ${this.balls + 1}/6)`, 190, 115);
+        c.font = '11px "Inter", sans-serif';
+        c.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        c.fillText('Click anywhere to bowl • Click near crease to swing!', 190, 136);
+        c.restore();
+      } else if (this.ball && this.ball.active && !this.ball.hit) {
+        c.save();
+        c.textAlign = 'center';
+        c.fillStyle = '#facc15';
+        c.font = 'bold 13px "JetBrains Mono", monospace';
+        c.fillText('🎯 CLICK ANYWHERE TO SWING!', 190, 45);
+        c.restore();
+      }
+
+      // Banner Notification
+      if (this.bannerTimer > 0 && this.banner) {
+        c.save();
+        c.textAlign = 'center';
+        c.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        c.fillRect(60, 80, 260, 52);
+        c.strokeStyle = '#00f0e0';
+        c.lineWidth = 1;
+        c.strokeRect(60, 80, 260, 52);
+        c.fillStyle = '#00f0e0';
+        c.font = 'bold 16px "JetBrains Mono", monospace';
+        c.fillText(this.banner.title, 190, 103);
+        c.fillStyle = '#ffffff';
+        c.font = '11px "Inter", sans-serif';
+        c.fillText(this.banner.sub, 190, 122);
+        c.restore();
+        this.bannerTimer--;
       }
     }
   };
 
-  /* ─────────────────────────────────────────────────────────────
-     5. PLAYABLE BADMINTON MINI-GAME (User-Controlled & Easy Rally)
-     ───────────────────────────────────────────────────────────── */
+  // ═══════════════════════════════════════════════
+  // BADMINTON ARCADE GAME (SUPER SMASH & AUTO RALLY)
+  // ═══════════════════════════════════════════════
   const Badminton = {
     canvas: null,
     ctx: null,
-    state: 'ready', // 'ready', 'rallying', 'ended'
     rally: 0,
     best: 0,
     speed: 0,
     racketX: 300,
-    racketY: 150,
+    racketY: 120,
     aiY: 120,
-    isSmashing: false,
     shuttle: null,
     particles: [],
+    waitingForServe: true,
+    isSmashing: false,
+    banner: null,
+    bannerTimer: 0,
 
     init() {
       this.canvas = document.getElementById('badminton-canvas');
@@ -3720,145 +4192,136 @@ label:focus-visible,
       document.getElementById('badminton-best').textContent = this.best;
 
       this.bindEvents();
-      this.resetRally();
+      this.resetGame();
       this.loop();
     },
 
-    resetRally() {
+    resetGame() {
       this.rally = 0;
-      this.speed = 120;
-      this.state = 'ready';
+      this.speed = 0;
+      this.waitingForServe = true;
       this.shuttle = null;
       this.particles = [];
       this.updateHud();
       document.getElementById('badminton-end-screen').classList.remove('show');
       const serveBtn = document.getElementById('badminton-serve-btn');
-      if (serveBtn) serveBtn.textContent = '🏸 Serve Shuttle';
+      if (serveBtn) serveBtn.textContent = '⚡ Serve Shuttlecock';
+    },
+
+    startRally() {
+      this.waitingForServe = false;
+      this.speed = 150;
+      this.updateHud();
+      document.getElementById('badminton-end-screen').classList.remove('show');
+
+      this.shuttle = {
+        x: 60,
+        y: 110,
+        vx: 3.5,
+        vy: -2.2,
+        active: true
+      };
+      const serveBtn = document.getElementById('badminton-serve-btn');
+      if (serveBtn) serveBtn.textContent = '🏸 Rally In Progress!';
     },
 
     updateHud() {
       document.getElementById('badminton-rally').textContent = this.rally;
-      document.getElementById('badminton-speed').textContent = `${Math.round(this.speed)} km/h`;
+      document.getElementById('badminton-speed').textContent = `${this.speed} km/h`;
     },
 
-    serve() {
-      this.state = 'rallying';
-      document.getElementById('badminton-end-screen').classList.remove('show');
-      this.shuttle = {
-        x: 60,
-        y: 100,
-        vx: 3.8,
-        vy: -2,
-        active: true
-      };
-      AudioEngine.playTone(550, 0.05);
-      const serveBtn = document.getElementById('badminton-serve-btn');
-      if (serveBtn) serveBtn.textContent = '🏸 In Play!';
+    handleClick() {
+      if (this.waitingForServe || !this.shuttle || !this.shuttle.active) {
+        this.startRally();
+      } else {
+        this.smash();
+      }
     },
 
     smash() {
-      if (this.state === 'ready') {
-        this.serve();
-        return;
-      }
       if (!this.shuttle || !this.shuttle.active) return;
 
       this.isSmashing = true;
       setTimeout(() => { this.isSmashing = false; }, 200);
 
-      const dx = Math.abs(this.shuttle.x - this.racketX);
-      const dy = Math.abs(this.shuttle.y - this.racketY);
-
-      // Smash when shuttlecock is anywhere near the racket
-      if (dx < 45 && dy < 45 && this.shuttle.vx > 0) {
-        this.rally++;
-        this.speed = 310 + Math.floor(Math.random() * 50);
-        this.shuttle.vx = -(6.5 + Math.min(3, this.rally * 0.25));
-        this.shuttle.vy = (Math.random() - 0.3) * 3;
-
-        this.showBanner('POWER SMASH! ⚡', `${this.speed} km/h Sonic Boom!`);
-        AudioEngine.playRacketHit(true);
-        this.addShockwave(this.shuttle.x, this.shuttle.y, '#f472b6', 20);
+      // If shuttlecock is anywhere on player side, SMASH IT!
+      if (this.shuttle.x > 140) {
+        this.rally += 2;
+        this.speed = 340 + Math.floor(Math.random() * 80);
         this.updateHud();
+        this.showBanner('SUPER SMASH! ⚡', `${this.speed} km/h Sonic Strike!`);
+        AudioEngine.playSmash();
+        this.addShockwave(this.shuttle.x, this.shuttle.y, '#a855f7', 20);
+
+        this.shuttle.vx = -7.5;
+        this.shuttle.vy = (Math.random() - 0.5) * 3;
       }
     },
 
     showBanner(title, sub) {
-      const b = document.getElementById('badminton-banner');
-      const t = document.getElementById('badminton-banner-title');
-      const s = document.getElementById('badminton-banner-sub');
-      if (!b) return;
-      t.textContent = title;
-      s.textContent = sub;
-      b.classList.add('show');
-      setTimeout(() => b.classList.remove('show'), 900);
+      this.banner = { title, sub };
+      this.bannerTimer = 75;
     },
 
     addShockwave(x, y, color, count = 15) {
       for (let i = 0; i < count; i++) {
         const ang = Math.random() * Math.PI * 2;
-        const spd = Math.random() * 6 + 1.5;
+        const spd = 2 + Math.random() * 4;
         this.particles.push({
           x, y,
           vx: Math.cos(ang) * spd,
           vy: Math.sin(ang) * spd,
           color,
-          alpha: 1,
-          size: Math.random() * 3 + 2
+          alpha: 1
         });
       }
     },
 
     endRally() {
-      this.state = 'ended';
-      const screen = document.getElementById('badminton-end-screen');
-      document.getElementById('badminton-final-rally').textContent = this.rally;
-      document.getElementById('badminton-final-speed').textContent = Math.round(this.speed);
-
+      this.waitingForServe = true;
+      this.shuttle = null;
       if (this.rally > this.best) {
         this.best = this.rally;
         storage.set('jj_badminton_best', this.best);
         document.getElementById('badminton-best').textContent = this.best;
-        AudioEngine.playFanfare();
       }
-      screen.classList.add('show');
+      document.getElementById('badminton-final-rally').textContent = this.rally;
+      document.getElementById('badminton-final-speed').textContent = `${this.speed} km/h`;
+      const screen = document.getElementById('badminton-end-screen');
+      if (screen) screen.classList.add('show');
       const serveBtn = document.getElementById('badminton-serve-btn');
-      if (serveBtn) serveBtn.textContent = '🏸 Serve Again';
+      if (serveBtn) serveBtn.textContent = '⚡ Serve Shuttlecock';
     },
 
     bindEvents() {
       this.canvas.addEventListener('mousemove', (e) => {
         const rect = this.canvas.getBoundingClientRect();
-        this.racketX = Math.max(220, (e.clientX - rect.left) * (380 / rect.width));
+        this.racketX = Math.max(210, (e.clientX - rect.left) * (380 / rect.width));
         this.racketY = (e.clientY - rect.top) * (240 / rect.height);
       });
       this.canvas.addEventListener('touchmove', (e) => {
         if (e.touches.length > 0) {
           const rect = this.canvas.getBoundingClientRect();
-          this.racketX = Math.max(220, (e.touches[0].clientX - rect.left) * (380 / rect.width));
+          this.racketX = Math.max(210, (e.touches[0].clientX - rect.left) * (380 / rect.width));
           this.racketY = (e.touches[0].clientY - rect.top) * (240 / rect.height);
         }
       }, { passive: true });
 
-      // Click on canvas to smash or serve
-      this.canvas.addEventListener('mousedown', () => {
-        if (this.state === 'ready') this.serve();
-        else this.smash();
-      });
+      // Click anywhere on canvas: Serves if waiting, Smashes if rallying!
+      this.canvas.addEventListener('mousedown', () => this.handleClick());
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
-        if (this.state === 'ready') this.serve();
-        else this.smash();
+        this.handleClick();
       });
 
       const smashBtn = document.getElementById('badminton-smash-btn');
       if (smashBtn) smashBtn.onclick = () => this.smash();
 
       const serveBtn = document.getElementById('badminton-serve-btn');
-      if (serveBtn) serveBtn.onclick = () => this.serve();
+      if (serveBtn) serveBtn.onclick = () => this.startRally();
 
       const restart = document.getElementById('badminton-restart-btn');
-      if (restart) restart.onclick = () => this.resetRally();
+      if (restart) restart.onclick = () => this.startRally();
     },
 
     loop() {
@@ -3868,35 +4331,36 @@ label:focus-visible,
     },
 
     update() {
-      if (this.state !== 'rallying' || !this.shuttle) return;
+      if (this.waitingForServe || !this.shuttle) return;
 
-      this.aiY += (this.shuttle.y - this.aiY) * 0.1;
+      this.aiY += (this.shuttle.y - this.aiY) * 0.12;
 
       this.shuttle.x += this.shuttle.vx;
       this.shuttle.y += this.shuttle.vy;
-      this.shuttle.vy += 0.07; // gentle gravity
+      this.shuttle.vy += 0.06; // Smooth gravity
 
-      // Touch return with racket
-      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 22 && Math.abs(this.shuttle.y - this.racketY) < 35) {
+      // Automatic volley return on player racket approach
+      if (this.shuttle.vx > 0 && Math.abs(this.shuttle.x - this.racketX) < 32 && Math.abs(this.shuttle.y - this.racketY) < 45) {
+        this.shuttle.vx = -4.5;
+        this.shuttle.vy = (Math.random() - 0.5) * 3;
         this.rally++;
-        this.speed = 180 + Math.min(80, this.rally * 8);
-        this.shuttle.vx = -(4.6 + Math.min(2.5, this.rally * 0.2));
-        this.shuttle.vy = -3.2 + (this.shuttle.y - this.racketY) * 0.08;
-        AudioEngine.playRacketHit(false);
-        this.addShockwave(this.shuttle.x, this.shuttle.y, '#00d4ff', 10);
+        this.speed = 180 + Math.floor(Math.random() * 40);
         this.updateHud();
+        AudioEngine.playClick();
+        this.addShockwave(this.shuttle.x, this.shuttle.y, '#00f0e0', 8);
       }
 
-      // AI opponent return
-      if (this.shuttle.vx < 0 && this.shuttle.x < 65 && Math.abs(this.shuttle.y - this.aiY) < 42) {
-        this.shuttle.vx = 4.4 + Math.min(2.5, this.rally * 0.2);
-        this.shuttle.vy = -2.8 + (Math.random() - 0.4) * 2;
-        AudioEngine.playRacketHit(false);
-        this.addShockwave(this.shuttle.x, this.shuttle.y, '#a855f7', 10);
+      // AI Opponent Return
+      if (this.shuttle.vx < 0 && this.shuttle.x < 70) {
+        this.shuttle.vx = 4.2;
+        this.shuttle.vy = -2.2 + (Math.random() - 0.5);
+        this.speed = 160 + Math.floor(Math.random() * 30);
+        this.updateHud();
+        AudioEngine.playClick();
       }
 
-      // Missed
-      if (this.shuttle.x > 390 || this.shuttle.y > 230) {
+      // Miss conditions
+      if (this.shuttle.x > 380 || this.shuttle.y > 235 || this.shuttle.x < 10) {
         this.endRally();
       }
 
@@ -3913,127 +4377,175 @@ label:focus-visible,
       const c = this.ctx;
       c.clearRect(0, 0, 380, 240);
 
-      c.fillStyle = '#060a1c';
+      // Court floor
+      c.fillStyle = '#070b1a';
       c.fillRect(0, 0, 380, 240);
 
-      // Floor line
-      c.strokeStyle = 'rgba(0, 212, 255, 0.25)';
+      // Court Lines
+      c.strokeStyle = 'rgba(0, 240, 224, 0.2)';
       c.lineWidth = 1.5;
-      c.beginPath();
-      c.moveTo(20, 210);
-      c.lineTo(360, 210);
-      c.stroke();
+      c.strokeRect(20, 30, 340, 180);
 
-      // Net
+      // Center Net
       c.strokeStyle = '#00f0e0';
-      c.lineWidth = 2.5;
+      c.lineWidth = 3;
       c.beginPath();
-      c.moveTo(190, 140);
+      c.moveTo(190, 30);
       c.lineTo(190, 210);
       c.stroke();
-      c.fillStyle = 'rgba(0, 240, 224, 0.12)';
-      c.fillRect(184, 140, 12, 70);
 
-      // AI Racket (Left)
-      c.fillStyle = '#a855f7';
+      // Net Mesh
+      c.strokeStyle = 'rgba(0, 240, 224, 0.3)';
+      c.lineWidth = 1;
+      for (let y = 35; y < 210; y += 15) {
+        c.beginPath();
+        c.moveTo(186, y);
+        c.lineTo(194, y);
+        c.stroke();
+      }
+
+      // Opponent Bot Racket
+      c.fillStyle = '#f43f5e';
+      c.shadowColor = '#f43f5e';
+      c.shadowBlur = 10;
       c.beginPath();
-      c.ellipse(50, this.aiY, 6, 18, 0, 0, Math.PI * 2);
+      c.arc(50, this.aiY, 14, 0, Math.PI * 2);
       c.fill();
+      c.fillRect(30, this.aiY - 3, 20, 6);
 
-      // Player Racket (Right)
+      // Player Racket
       c.save();
-      c.fillStyle = this.isSmashing ? '#f472b6' : '#00f0e0';
-      c.shadowColor = c.fillStyle;
-      c.shadowBlur = this.isSmashing ? 18 : 8;
+      c.fillStyle = this.isSmashing ? '#facc15' : '#a855f7';
+      c.shadowColor = this.isSmashing ? '#facc15' : '#a855f7';
+      c.shadowBlur = this.isSmashing ? 20 : 12;
       c.beginPath();
-      c.ellipse(this.racketX, this.racketY, 7, 20, 0.2, 0, Math.PI * 2);
+      c.arc(this.racketX, this.racketY, 15, 0, Math.PI * 2);
       c.fill();
-      c.fillStyle = '#ffffff';
-      c.fillRect(this.racketX + 4, this.racketY + 12, 3, 14);
+      c.fillRect(this.racketX, this.racketY - 3, 22, 6);
       c.restore();
 
       // Shuttlecock
-      if (this.shuttle && this.state === 'rallying') {
+      if (this.shuttle && this.shuttle.active) {
         c.save();
-        const angle = Math.atan2(this.shuttle.vy, this.shuttle.vx);
-        c.translate(this.shuttle.x, this.shuttle.y);
-        c.rotate(angle);
-        c.fillStyle = '#fef08a';
+        c.fillStyle = '#ffffff';
+        c.shadowColor = '#00f0e0';
+        c.shadowBlur = 12;
         c.beginPath();
-        c.arc(4, 0, 4, 0, Math.PI * 2);
+        c.arc(this.shuttle.x, this.shuttle.y, 4, 0, Math.PI * 2);
         c.fill();
-        c.fillStyle = 'rgba(255, 255, 255, 0.85)';
+
+        // Feathers trailing
+        const angle = Math.atan2(this.shuttle.vy, this.shuttle.vx) + Math.PI;
+        c.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        c.lineWidth = 1.5;
         c.beginPath();
-        c.moveTo(2, 0);
-        c.lineTo(-8, -5);
-        c.lineTo(-8, 5);
-        c.closePath();
-        c.fill();
+        c.moveTo(this.shuttle.x, this.shuttle.y);
+        c.lineTo(this.shuttle.x + Math.cos(angle) * 9, this.shuttle.y + Math.sin(angle) * 9);
+        c.stroke();
         c.restore();
       }
 
-      // Ready prompt if awaiting serve
-      if (this.state === 'ready') {
-        c.fillStyle = 'rgba(0, 240, 224, 0.9)';
-        c.font = 'bold 13px system-ui, sans-serif';
-        c.textAlign = 'center';
-        c.fillText('🏸 Click "Serve Shuttle" or Canvas to start!', 190, 110);
-      }
-
+      // Particles
       for (const p of this.particles) {
         c.save();
         c.globalAlpha = p.alpha;
         c.fillStyle = p.color;
+        c.shadowColor = p.color;
+        c.shadowBlur = 10;
         c.beginPath();
-        c.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        c.arc(p.x, p.y, 3, 0, Math.PI * 2);
         c.fill();
         c.restore();
+      }
+
+      // Canvas Prompts
+      if (this.waitingForServe) {
+        c.save();
+        const pulse = Math.sin(Date.now() / 250) * 0.15 + 0.85;
+        c.textAlign = 'center';
+        c.fillStyle = `rgba(0, 240, 224, ${pulse})`;
+        c.font = 'bold 14px "JetBrains Mono", monospace';
+        c.fillText('🏸 CLICK TO SERVE', 190, 105);
+        c.font = '11px "Inter", sans-serif';
+        c.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        c.fillText('Move mouse to return • Click anywhere to SMASH!', 190, 126);
+        c.restore();
+      }
+
+      // Banner Notification
+      if (this.bannerTimer > 0 && this.banner) {
+        c.save();
+        c.textAlign = 'center';
+        c.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        c.fillRect(60, 80, 260, 52);
+        c.strokeStyle = '#a855f7';
+        c.lineWidth = 1;
+        c.strokeRect(60, 80, 260, 52);
+        c.fillStyle = '#a855f7';
+        c.font = 'bold 16px "JetBrains Mono", monospace';
+        c.fillText(this.banner.title, 190, 103);
+        c.fillStyle = '#ffffff';
+        c.font = '11px "Inter", sans-serif';
+        c.fillText(this.banner.sub, 190, 122);
+        c.restore();
+        this.bannerTimer--;
       }
     }
   };
 
-  /* ─────────────────────────────────────────────────────────────
-     6. SPORT TABS & CARD SPOTLIGHT
-     ───────────────────────────────────────────────────────────── */
+  // ═══════════════════════════════════════════════
+  // 3D TILT PHYSICS & CARD LIGHTING
+  // ═══════════════════════════════════════════════
+  function init3DTilt() {
+    const cards = document.querySelectorAll('.glass-card');
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotX = -((y - centerY) / centerY) * 7;
+        const rotY = ((x - centerX) / centerX) * 7;
+        card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(6px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════════════
+  // SPORTS TAB SWITCHING
+  // ═══════════════════════════════════════════════
   function initSportTabs() {
     document.querySelectorAll('.sport-mode-btn').forEach(btn => {
       btn.onclick = () => {
         const sport = btn.getAttribute('data-sport');
         const mode = btn.getAttribute('data-mode');
-        const card = document.getElementById(`${sport}-card`);
+        const card = btn.closest('.glass-card');
         if (!card) return;
 
         card.querySelectorAll('.sport-mode-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
         card.querySelectorAll('.sport-content-pane').forEach(p => p.classList.remove('active'));
-        const pane = document.getElementById(`${sport}-pane-${mode}`);
+        const pane = card.querySelector(`#${sport}-pane-${mode}`);
         if (pane) pane.classList.add('active');
-        AudioEngine.playTone(700, 0.04);
       };
     });
   }
 
-  function initCardLighting() {
-    document.querySelectorAll('.glass-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-      });
-    });
-  }
-
-  /* ─────────────────────────────────────────────────────────────
-     GLOBAL LAUNCHER (Runs immediately regardless of readyState)
-     ───────────────────────────────────────────────────────────── */
+  // ═══════════════════════════════════════════════
+  // BOOTSTRAP ALL SYSTEMS
+  // ═══════════════════════════════════════════════
   function startAll() {
     CircleCursor.init();
+    init3DTilt();
     CubeGame.init();
     Cricket.init();
     Badminton.init();
     initSportTabs();
-    initCardLighting();
 
     const sfxBtn = document.getElementById('sfx-toggle');
     if (sfxBtn) sfxBtn.onclick = () => AudioEngine.toggle();
