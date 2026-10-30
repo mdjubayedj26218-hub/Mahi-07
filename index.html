@@ -5,16 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Portfolio of Md Jubayed Jaman — Curious Mind. Future Creator. Kind Human.">
 <title>Md Jubayed Jaman — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Space+Grotesk:wght@500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
    0. CUSTOM PROPERTIES & PALETTE
    ═══════════════════════════════════════════════ */
 :root {
-  --bg-primary: #06080f;
-  --bg-secondary: #0b0e1a;
-  --bg-card: rgba(14, 18, 36, 0.65);
+  --bg-primary: #030712;
+  --bg-secondary: #070d1e;
+  --bg-card: rgba(11, 17, 34, 0.72);
   --glass: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.09);
   --neon-blue: #00d4ff;
   --neon-cyan: #00f0e0;
   --neon-violet: #a855f7;
@@ -23,8 +26,9 @@
   --text-primary: #e8ecf4;
   --text-secondary: #8892a8;
   --text-dim: #4a5568;
-  --font-display: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', 'Syne', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   --radius: 16px;
   --radius-sm: 10px;
   --transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -75,10 +79,34 @@ body {
   line-height: 1.7;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .section-title, .hero-name, .hero-title, .project-title, .final-title, .sport-title, .edu-institution {
+  font-family: var(--font-display);
+}
+
+.section-label, .edu-period, .journey-telemetry-badge, .journey-story-badge, .journey-story-coords, .journey-tag, .final-badge, .final-sub, .step-num, .step-label, .journey-origin-badge, .game-hud, .game-field-title-bottom, .cyber-nav-btn {
+  font-family: var(--font-mono);
+}
+
+/* Shimmer Gleam & Pulse for Start Journey Button */
+@keyframes btnPulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 35px rgba(0, 212, 255, 0.45), 0 0 70px rgba(168, 85, 247, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 55px rgba(0, 212, 255, 0.75), 0 0 95px rgba(244, 114, 182, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.85);
+    transform: scale(1.02);
+  }
+}
+@keyframes btnShimmerSweep {
+  0% { transform: translateX(-150%) rotate(25deg); }
+  35%, 100% { transform: translateX(500%) rotate(25deg); }
 }
 
 .page-wrapper {
-  background: var(--bg-primary);
+  background: radial-gradient(circle at 50% 0%, #0a142c 0%, #030712 55%, #02050e 100%);
   min-height: 100vh;
   position: relative;
 }
@@ -283,11 +311,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(6, 8, 15, 0.7);
+  background: rgba(6, 8, 15, 0.78);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
   opacity: 1;
+}
+.navbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.45), rgba(168, 85, 247, 0.45), transparent);
 }
 
 .nav-logo {
@@ -538,17 +575,20 @@ section {
 }
 
 .hero-name {
-  font-size: clamp(2.8rem, 8vw, 6rem);
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8.5vw, 6.2rem);
   font-weight: 900;
   line-height: 1.05;
-  letter-spacing: -0.02em;
-  background: var(--accent-gradient);
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 15%, #e0f2fe 45%, #38bdf8 75%, #c084fc 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientShift 6s ease-in-out infinite;
   margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.22)) drop-shadow(0 0 28px rgba(168, 85, 247, 0.10));
 }
 
 .hero-tagline {
@@ -2565,10 +2605,8 @@ label:focus-visible,
 /* ═══════════════════════════════════════════════
    CIRCULAR MOUSE POINTER (PURE ROUND CIRCLES)
    ═══════════════════════════════════════════════ */
-html, body {
-  cursor: none !important;
-}
-a, button, input, textarea, select, canvas, label, [role="button"], .glass-card, .cube-wrapper {
+body.has-custom-cursor,
+body.has-custom-cursor * {
   cursor: none !important;
 }
 .cursor-dot, .cursor-ring {
@@ -2577,7 +2615,7 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
   left: 0;
   border-radius: 50% !important;
   pointer-events: none;
-  z-index: 999999;
+  z-index: 999999999 !important;
   will-change: transform;
   opacity: 1 !important;
   display: block !important;
@@ -2688,18 +2726,1377 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
   color: var(--neon-cyan);
 }
 
+
+/* ═══════════════════════════════════════════════
+   24. THE OPENING EXPERIENCE — SOLVING RUBIK'S CUBE
+   ═══════════════════════════════════════════════ */
+.intro-cube-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  background: radial-gradient(circle at center, #070e1e 0%, #030611 65%, #010206 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.85s;
+  overflow: hidden;
+}
+.intro-cube-stage.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.intro-cube-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  z-index: 1;
+}
+.intro-cube-canvas:active {
+  cursor: grabbing;
+}
+.intro-cube-overlay {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 860px;
+  padding: 2rem 1.5rem;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cube-telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--neon-cyan);
+  letter-spacing: 1.5px;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+  animation: telemetryPulse 3s infinite ease-in-out;
+}
+.cube-hero-title {
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  background: linear-gradient(135deg, #ffffff 0%, #00f0e0 45%, #a855f7 85%, #f472b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 35px rgba(0, 240, 224, 0.35));
+  margin-bottom: 0.5rem;
+}
+.cube-hero-tagline {
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  color: var(--text-secondary);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  margin-bottom: 1.25rem;
+}
+.cube-preview-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: center;
+  margin-bottom: 1.8rem;
+  max-width: 720px;
+}
+.cube-pill {
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  background: rgba(14, 18, 36, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  backdrop-filter: blur(8px);
+}
+.cube-action-box {
+  pointer-events: auto;
+  margin-bottom: 1rem;
+}
+.cube-start-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.05rem 2.6rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #00d4ff 0%, #a855f7 50%, #f472b6 100%);
+  border: none;
+  color: #ffffff;
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow: 0 0 35px rgba(0, 212, 255, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+  animation: btnPulseGlow 3.5s ease-in-out infinite;
+}
+.cube-start-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: rotate(25deg);
+  animation: btnShimmerSweep 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+.cube-start-btn:hover {
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 0 55px rgba(168, 85, 247, 0.75), inset 0 1px 3px rgba(255, 255, 255, 0.7);
+}
+.cube-start-btn:active {
+  transform: scale(0.98);
+}
+.cube-start-icon {
+  font-size: 1.25rem;
+  animation: pulse 1.8s infinite;
+}
+.cube-solve-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.cube-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00f0e0;
+  box-shadow: 0 0 8px #00f0e0;
+  animation: dotPulse 1.8s infinite;
+}
+.cube-skip-btn {
+  pointer-events: auto;
+  margin-top: 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cube-skip-btn:hover {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  background: rgba(0, 240, 224, 0.08);
+}
+
+/* Holographic Domain Labels on Solved Cube */
+.cube-holo-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 12;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.cube-holo-labels.is-active {
+  opacity: 1;
+}
+.cube-holo-tag {
+  position: absolute;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  background: rgba(8, 12, 28, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.25);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: scale(0.85);
+}
+.cube-holo-labels.is-active .cube-holo-tag {
+  transform: scale(1);
+}
+.cube-holo-tag strong {
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+}
+.cube-holo-tag small {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+.cube-holo-tag--orange { top: 22%; left: 14%; border-color: rgba(249, 115, 22, 0.5); }
+.cube-holo-tag--cyan   { top: 20%; right: 14%; border-color: rgba(0, 212, 255, 0.5); }
+.cube-holo-tag--gold   { bottom: 24%; left: 12%; border-color: rgba(250, 204, 21, 0.5); }
+.cube-holo-tag--green  { bottom: 22%; right: 14%; border-color: rgba(16, 185, 129, 0.5); }
+.cube-holo-tag--white  { top: 10%; left: 46%; border-color: rgba(255, 255, 255, 0.5); }
+.cube-holo-tag--violet { bottom: 12%; left: 46%; border-color: rgba(168, 85, 247, 0.5); }
+
+/* ═══════════════════════════════════════════════
+   25. GEOGRAPHICAL JOURNEY — "EVERY JOURNEY HAS A BEGINNING"
+   ═══════════════════════════════════════════════ */
+.journey-section {
+  position: relative;
+  padding: 100px 0 80px;
+  overflow: hidden;
+}
+.journey-stage-wrapper {
+  margin-top: 2rem;
+  position: relative;
+}
+.journey-stage-card {
+  padding: 0 !important;
+  overflow: hidden;
+  position: relative;
+}
+.journey-canvas-container {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  background: radial-gradient(ellipse at center, #071329 0%, #030814 70%, #01040a 100%);
+  overflow: hidden;
+}
+.journey-globe-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+.journey-globe-canvas:active {
+  cursor: grabbing;
+}
+.journey-telemetry-badge {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(6, 12, 28, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--neon-cyan);
+  letter-spacing: 1px;
+  z-index: 5;
+  pointer-events: none;
+}
+.journey-story-card {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  max-width: 380px;
+  background: rgba(6, 12, 28, 0.84);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 16px;
+  padding: 1.4rem 1.6rem;
+  z-index: 6;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(0, 212, 255, 0.15);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+}
+.journey-story-badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(0, 212, 255, 0.14);
+  color: var(--neon-cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  margin-bottom: 0.5rem;
+}
+.journey-story-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
+}
+.journey-story-sub {
+  font-size: 0.85rem;
+  color: var(--neon-violet);
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+}
+.journey-story-coords {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--neon-cyan);
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.5px;
+}
+.journey-story-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0.9rem;
+}
+.journey-story-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.journey-tag {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+.journey-drag-hint {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  background: rgba(6, 12, 28, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Controls Bar */
+.journey-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.4rem;
+  background: rgba(11, 14, 28, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 50;
+}
+.journey-controls-left, .journey-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 55;
+}
+.journey-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  cursor: pointer;
+  position: relative;
+  z-index: 60;
+  pointer-events: auto !important;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.journey-ctrl-btn:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  transform: translateY(-1px);
+}
+.journey-ctrl-btn:active {
+  transform: translateY(1px);
+}
+.journey-ctrl-btn--primary {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.35), rgba(168, 85, 247, 0.35));
+  border-color: var(--neon-cyan);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.35);
+}
+.journey-ctrl-btn--dim {
+  color: var(--text-dim);
+  border-color: transparent;
+}
+.journey-ctrl-btn--dim:hover {
+  color: var(--text-secondary);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.journey-scenes-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 55;
+}
+.journey-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--text-secondary);
+  cursor: pointer;
+  position: relative;
+  z-index: 60;
+  pointer-events: auto !important;
+  user-select: none;
+  transition: all 0.25s ease;
+}
+.journey-step-btn * {
+  pointer-events: none;
+}
+.journey-ctrl-btn * {
+  pointer-events: none;
+}
+.journey-step-btn:hover {
+  color: #ffffff;
+  border-color: rgba(0, 212, 255, 0.6);
+  background: rgba(0, 212, 255, 0.08);
+  transform: translateY(-1px);
+}
+.journey-step-btn:active {
+  transform: translateY(1px);
+}
+.journey-step-btn.active {
+  background: rgba(0, 212, 255, 0.25);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.45);
+}
+.journey-step-btn .step-num {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+.journey-step-btn.active .step-num {
+  background: var(--neon-cyan);
+  color: #030814;
+  font-weight: bold;
+}
+
+/* Synthesis Banner */
+.journey-synthesis-card {
+  margin-top: 2.2rem;
+  padding: 2.4rem 2.8rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(14, 18, 38, 0.85) 0%, rgba(20, 14, 38, 0.85) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 35px rgba(168, 85, 247, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+.journey-synthesis-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00d4ff, #a855f7, #f472b6);
+}
+.synthesis-quote-mark {
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--neon-violet);
+  opacity: 0.4;
+  margin-bottom: -0.5rem;
+  font-family: Georgia, serif;
+}
+.synthesis-quote-body {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  color: var(--text-primary);
+  line-height: 1.7;
+  font-weight: 400;
+  margin-bottom: 1.4rem;
+}
+.synthesis-quote-body strong {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+.synthesis-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.synthesis-author {
+  font-weight: 700;
+  color: var(--neon-cyan);
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+.synthesis-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ═══════════════════════════════════════════════
+   26. PROJECTS SECTION
+   ═══════════════════════════════════════════════ */
+.projects-section {
+  position: relative;
+  padding: 80px 0;
+}
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem;
+  margin-top: 2rem;
+}
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem !important;
+  position: relative;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 212, 255, 0.5) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 212, 255, 0.25) !important;
+}
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+.project-icon-badge {
+  font-size: 2rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-tag-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.project-tag-pill--cyan { background: rgba(0, 212, 255, 0.12); color: var(--neon-cyan); border: 1px solid rgba(0, 212, 255, 0.3); }
+.project-tag-pill--violet { background: rgba(168, 85, 247, 0.12); color: var(--neon-violet); border: 1px solid rgba(168, 85, 247, 0.3); }
+.project-tag-pill--orange { background: rgba(249, 115, 22, 0.12); color: var(--neon-orange); border: 1px solid rgba(249, 115, 22, 0.3); }
+.project-tag-pill--green { background: rgba(16, 185, 129, 0.12); color: var(--neon-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+.project-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.65rem;
+  line-height: 1.25;
+}
+.project-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.4rem;
+  flex-grow: 1;
+}
+.project-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+}
+.tech-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+.project-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.project-btn {
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.25s ease;
+}
+.project-btn--primary {
+  background: rgba(0, 212, 255, 0.15);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  color: var(--neon-cyan);
+}
+.project-btn--primary:hover {
+  background: var(--neon-cyan);
+  color: #030814;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+.project-btn--sec {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+}
+.project-btn--sec:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ═══════════════════════════════════════════════
+   27. EDUCATION SECTION
+   ═══════════════════════════════════════════════ */
+.education-section {
+  position: relative;
+  padding: 80px 0;
+}
+.education-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  margin-top: 2rem;
+  position: relative;
+}
+.edu-card {
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem !important;
+  align-items: flex-start;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.edu-card:hover {
+  transform: translateX(6px);
+  border-color: rgba(168, 85, 247, 0.45) !important;
+}
+.edu-card-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.2rem;
+}
+.edu-marker-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--neon-violet);
+  box-shadow: 0 0 14px var(--neon-violet);
+  border: 3px solid #06080f;
+}
+.edu-marker-dot--active {
+  background: var(--neon-cyan);
+  box-shadow: 0 0 16px var(--neon-cyan);
+  animation: dotPulse 2s infinite;
+}
+.edu-marker-line {
+  width: 2px;
+  flex-grow: 1;
+  min-height: 40px;
+  background: linear-gradient(180deg, var(--neon-violet), rgba(168, 85, 247, 0.15));
+  margin-top: 0.5rem;
+}
+.edu-card-content {
+  flex-grow: 1;
+}
+.edu-period {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--neon-cyan);
+  letter-spacing: 1px;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+.edu-institution {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+.edu-role {
+  font-size: 0.92rem;
+  color: var(--neon-violet);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+.edu-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.1rem;
+}
+.edu-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.edu-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+.edu-tag--cyan { background: rgba(0, 212, 255, 0.1); border-color: rgba(0, 212, 255, 0.3); color: var(--neon-cyan); }
+.edu-tag--violet { background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: var(--neon-violet); }
+.edu-tag--pink { background: rgba(244, 114, 182, 0.1); border-color: rgba(244, 114, 182, 0.3); color: var(--neon-pink); }
+
+/* ═══════════════════════════════════════════════
+   28. CINEMATIC PERSISTENT AUDIO PLAYER DOCK
+   ═══════════════════════════════════════════════ */
+.cinematic-audio-dock {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px 7px 12px;
+  border-radius: 999px;
+  background: rgba(8, 12, 28, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.2);
+  transition: all 0.3s ease;
+}
+.cinematic-audio-dock:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 212, 255, 0.35);
+}
+.audio-dock-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.2s ease;
+}
+.audio-dock-btn:hover {
+  background: var(--neon-cyan);
+  color: #030814;
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 12px var(--neon-cyan);
+}
+.audio-waveform-wrap {
+  width: 58px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.audio-waveform-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.audio-track-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.audio-track-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+.audio-track-sub {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+.audio-volume-wrap {
+  display: flex;
+  align-items: center;
+  width: 60px;
+}
+.audio-volume-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+.audio-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+  cursor: pointer;
+}
+.audio-sfx-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--neon-cyan);
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+.sfx-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00f0e0;
+  box-shadow: 0 0 6px #00f0e0;
+  animation: dotPulse 1.6s infinite;
+}
+
+/* Nav replay button */
+.nav-replay-btn {
+  background: rgba(168, 85, 247, 0.15) !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  color: var(--neon-violet) !important;
+  margin-right: 0.5rem;
+}
+.nav-replay-btn:hover {
+  background: var(--neon-violet) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.5) !important;
+}
+
+/* Contact form inputs */
+.cyber-input {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  background: rgba(14, 18, 36, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  outline: none;
+  transition: all 0.25s ease;
+}
+.cyber-input:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.25);
+  background: rgba(14, 18, 36, 0.9);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .journey-story-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    max-width: 100%;
+    margin: 12px;
+  }
+  .journey-canvas-container {
+    height: 480px;
+  }
+  .cube-holo-tag {
+    display: none !important;
+  }
+  .cinematic-audio-dock .audio-track-info,
+  .cinematic-audio-dock .audio-volume-wrap,
+  .cinematic-audio-dock .audio-sfx-indicator {
+    display: none;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════
+   29. SPORTS DUAL TITLE BAR & DIRECT HEADERS
+   ═══════════════════════════════════════════════ */
+.sports-arena-title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1.8rem auto 2.2rem;
+  max-width: 840px;
+  flex-wrap: wrap;
+}
+.sports-title-pill {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: 16px;
+  background: rgba(14, 18, 38, 0.75);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(0, 212, 255, 0.15);
+  flex: 1;
+  min-width: 280px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.sports-title-pill:hover {
+  transform: translateY(-3px);
+}
+.sports-title-pill--cricket {
+  border-color: rgba(0, 240, 224, 0.4);
+}
+.sports-title-pill--cricket:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 224, 0.3);
+}
+.sports-title-pill--badminton {
+  border-color: rgba(244, 114, 182, 0.4);
+}
+.sports-title-pill--badminton:hover {
+  border-color: var(--neon-pink);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(244, 114, 182, 0.3);
+}
+.sport-pill-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+.sport-pill-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.sport-pill-super {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+}
+.sports-title-pill--badminton .sport-pill-super {
+  color: var(--neon-pink);
+}
+.sport-pill-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+.sport-pill-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: var(--neon-cyan);
+  white-space: nowrap;
+}
+.sports-title-pill--badminton .sport-pill-badge {
+  background: rgba(244, 114, 182, 0.12);
+  border-color: rgba(244, 114, 182, 0.3);
+  color: var(--neon-pink);
+}
+.sports-title-sep {
+  font-size: 1.4rem;
+  color: var(--neon-violet);
+  opacity: 0.6;
+}
+.game-direct-title-header {
+  text-align: center;
+  padding: 0.6rem 1rem 0.8rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.game-direct-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 0 12px rgba(0, 240, 224, 0.4);
+}
+.game-direct-title-header--badminton .game-direct-title {
+  color: var(--neon-pink);
+  text-shadow: 0 0 12px rgba(244, 114, 182, 0.4);
+}
+.game-direct-sub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+
+/* Approaching Region Banner & Origin Badge */
+.journey-approaching-banner {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  text-align: right;
+  z-index: 6;
+  pointer-events: none;
+  background: rgba(6, 12, 28, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  border-radius: 14px;
+  padding: 0.65rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.2);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.approaching-eyebrow {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--neon-cyan);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+}
+.approaching-title {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 0 0 14px rgba(0, 240, 224, 0.5);
+  line-height: 1.1;
+  margin: 0;
+}
+.approaching-sub {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+.journey-origin-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--neon-cyan);
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+
+
+/* Dynamic Birbhum Callout (Visible only after entering West Bengal) */
+.birbhum-stage-callout {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -100%) scale(0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  z-index: 22;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.birbhum-stage-callout.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -115%) scale(1);
+}
+.callout-glass-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(4, 9, 24, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(250, 204, 21, 0.7);
+  box-shadow: 0 0 25px rgba(250, 204, 21, 0.4), 0 12px 28px rgba(0, 0, 0, 0.75);
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+}
+.callout-icon {
+  font-size: 1.1rem;
+}
+.callout-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #facc15;
+  letter-spacing: 1.2px;
+  display: block;
+  line-height: 1.15;
+}
+.callout-sub {
+  font-size: 0.7rem;
+  color: #e2e8f0;
+  display: block;
+}
+.callout-pointer-beacon {
+  margin-top: 6px;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.beacon-pulse-ring {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #facc15;
+  animation: beaconPulseAnim 2s ease-out infinite;
+}
+.beacon-core-dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 12px #facc15;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+@keyframes beaconPulseAnim {
+  0% { transform: scale(0.3); opacity: 1; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════
+   BIRBHUM 3D TERRAIN STYLING
+   ═══════════════════════════════════════════════ */
+.birbhum-final-card {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(24px);
+  background: rgba(4, 9, 24, 0.9);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(250, 204, 21, 0.5);
+  box-shadow: 0 0 40px rgba(250, 204, 21, 0.3), 0 25px 50px rgba(0, 0, 0, 0.8);
+  padding: 1.3rem 2.2rem;
+  border-radius: 20px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 25;
+  max-width: 92%;
+}
+.birbhum-final-card.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.final-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #facc15;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  font-weight: 700;
+}
+.final-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.3rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.1;
+  text-shadow: 0 0 24px rgba(250, 204, 21, 0.5);
+}
+.final-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #38bdf8;
+  letter-spacing: 1.5px;
+  margin: 0.35rem 0 0.55rem;
+}
+.final-quote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #fef08a;
+  margin: 0.2rem 0 0.75rem;
+  letter-spacing: 0.5px;
+}
+.final-terrain-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.final-terrain-pill span {
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  color: #e2e8f0;
+}
+.hero-cta--journey {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.25), rgba(250, 204, 21, 0.25));
+  border-color: #f97316;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.35);
+  margin-left: 0.75rem;
+}
+.hero-cta--journey:hover {
+  background: rgba(249, 115, 22, 0.4);
+  border-color: #facc15;
+  color: #facc15;
+}
+
+
+
+.game-field-title-bottom {
+  text-align: center;
+  margin-top: 0.6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--neon-cyan);
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  display: inline-block;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.15);
+}
+.game-field-title-bottom--badminton {
+  color: var(--neon-pink);
+  background: rgba(244, 114, 182, 0.06);
+  border-color: rgba(244, 114, 182, 0.2);
+  box-shadow: 0 0 12px rgba(244, 114, 182, 0.15);
+}
+
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
+
+  <div id="intro-cube-stage" class="intro-cube-stage" aria-label="Opening Rubik's Cube Experience">
+    <canvas id="intro-cube-canvas" class="intro-cube-canvas"></canvas>
+
+    <div class="intro-cube-overlay" id="intro-cube-overlay">
+      <div class="cube-telemetry-badge">
+        <span class="cyber-telemetry-dot"></span>
+        <span id="cube-telemetry-text">QUANTUM ARCHITECTURE // SCRAMBLED STATE</span>
+        <span class="cyber-telemetry-sep">|</span>
+        <span>AWAITING SOLVE TRIGGER</span>
+      </div>
+
+      <h1 class="cube-hero-title">MD JUBAYED<br>JAMAN</h1>
+      <p class="cube-hero-tagline">Curious Mind. Future Creator. Kind Human.</p>
+
+      <div class="cube-preview-pills">
+        <span class="cube-pill">🎓 1st Year Student @ NST × Rishihood</span>
+        <span class="cube-pill">🥉 2x National Olympiad Bronze</span>
+        <span class="cube-pill">🚀 Top 10 Scratch Hackathon</span>
+        <span class="cube-pill">🏛️ Proud Navodaya Alumnus</span>
+      </div>
+
+      <div class="cube-action-box">
+        <button id="start-journey-btn" class="cube-start-btn" title="Solve Cube & Enter Journey">
+          <span class="cube-start-icon">⚡</span>
+          <span>START MY JOURNEY</span>
+        </button>
+      </div>
+
+      <div class="cube-solve-status" id="cube-solve-status">
+        <span class="cube-status-dot"></span>
+        <span id="cube-status-msg">Click the 3D Cube or &quot;Start My Journey&quot; to solve in one cinematic animation</span>
+      </div>
+
+      <button id="skip-intro-btn" class="cube-skip-btn">Skip to Portfolio ↓</button>
+    </div>
+
+    <!-- Holographic Labels that emerge when solved -->
+    <div class="cube-holo-labels" id="cube-holo-labels" aria-hidden="true">
+      <div class="cube-holo-tag cube-holo-tag--orange" id="holo-journey">
+        <strong style="color: #fb923c;">📍 ROOTS &amp; JOURNEY</strong>
+        <small>Birbhum to Rishihood</small>
+      </div>
+      <div class="cube-holo-tag cube-holo-tag--cyan" id="holo-skills">
+        <strong style="color: #00f0e0;">💻 SKILLS &amp; CODE</strong>
+        <small>Python &amp; Algorithmic Logic</small>
+      </div>
+      <div class="cube-holo-tag cube-holo-tag--gold" id="holo-achieve">
+        <strong style="color: #facc15;">🏆 HONORS &amp; MEDALS</strong>
+        <small>Olympiads &amp; Scratch Top 10</small>
+      </div>
+      <div class="cube-holo-tag cube-holo-tag--green" id="holo-sports">
+        <strong style="color: #34d399;">🏸 SPORTS &amp; AGILITY</strong>
+        <small>Cricket &amp; Badminton</small>
+      </div>
+      <div class="cube-holo-tag cube-holo-tag--white" id="holo-kindness">
+        <strong style="color: #ffffff;">🤍 KINDNESS &amp; ETHICS</strong>
+        <small>Above all, a kind human</small>
+      </div>
+      <div class="cube-holo-tag cube-holo-tag--violet" id="holo-edu">
+        <strong style="color: #c084fc;">🎓 EDUCATION &amp; A.I</strong>
+        <small>Navodaya, Kota &amp; NST</small>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Theme toggle (CSS-only) -->
+<input type="checkbox" id="theme-toggle" aria-label="Toggle light and dark theme">
+
 
 <!-- Theme toggle (CSS-only) -->
 <input type="checkbox" id="theme-toggle" aria-label="Toggle light and dark theme">
 
 <div class="page-wrapper">
 
-  <!-- Custom cursor (desktop) -->
-  <div class="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" aria-hidden="true"></div>
+  <!-- Custom cursor moved to body root -->
 
   <!-- Ambient background -->
   <div class="ambient-grid" aria-hidden="true"></div>
@@ -2741,14 +4138,18 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
   <!-- ═══════ NAVIGATION ═══════ -->
   <nav class="navbar" aria-label="Main navigation">
     <a href="#hero" class="nav-logo" aria-label="Home">JJ</a>
+    <button id="intro-replay-btn" class="cyber-nav-btn" title="Replay Opening Rubik's Cube Experience">↺ Replay Intro</button>
     <button id="sfx-toggle" class="cyber-nav-btn" title="Toggle Cyber Audio FX" aria-label="Toggle Sound FX">🔊 FX: ON</button>
     <label for="theme-toggle" class="theme-toggle-label" title="Toggle theme" tabindex="0" role="switch" aria-label="Toggle light and dark theme"></label>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#journey" class="nav-journey-link">🌱 My Roots</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
       <li><a href="#achievements">Achievements</a></li>
       <li><a href="#hobbies">Hobbies</a></li>
       <li><a href="#sports">Sports</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#personality">Personality</a></li>
       <li><a href="#philosophy">Philosophy</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -2770,6 +4171,7 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
       <h1 class="hero-name">MD JUBAYED<br>JAMAN</h1>
       <p class="hero-tagline">Curious Mind. Future Creator. Kind Human.</p>
       <a href="#about" class="hero-cta">Explore My World ↓</a>
+      <a href="#journey" class="hero-cta hero-cta--journey" style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2)); border-color: rgba(0, 212, 255, 0.4); margin-left: 0.6rem;">🌱 My Roots →</a>
     </div>
     <div class="scroll-hint">
       <span>Scroll</span>
@@ -2835,6 +4237,142 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
     <div class="section-transition-dot"></div>
   </div>
 
+  <!-- ═══════ 3D GEOGRAPHIC JOURNEY ═══════ -->
+  <section id="journey" class="journey-section">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// GEOGRAPHICAL ORIGIN</p>
+        <h2 class="section-title">EVERY JOURNEY HAS<br>A BEGINNING.</h2>
+        <p class="section-subtitle">
+          An interactive 3D cartographic odyssey tracing my roots from the vast continent of Asia, into the subcontinent of India, across West Bengal, and directly into the red soil of Birbhum District where my journey began.
+        </p>
+      </div>
+
+      <div class="journey-stage-wrapper reveal stagger-1">
+        <div class="glass-card glow-border journey-stage-card">
+          <!-- 3D Globe Canvas Container -->
+          <div class="journey-canvas-container" id="journey-canvas-container">
+            <canvas id="journey-globe-canvas" class="journey-globe-canvas"></canvas>
+
+            <!-- Dynamic Birbhum Callout Badge (Only visible after entering West Bengal!) -->
+            <div class="birbhum-stage-callout" id="birbhum-stage-callout" aria-hidden="true">
+              <div class="callout-glass-pill">
+                <span class="callout-icon">📍</span>
+                <div class="callout-content">
+                  <span class="callout-title">★ BIRBHUM DISTRICT</span>
+                  <span class="callout-sub">Where My Journey Began • West Bengal</span>
+                </div>
+              </div>
+              <div class="callout-pointer-beacon">
+                <span class="beacon-pulse-ring"></span>
+                <span class="beacon-core-dot"></span>
+              </div>
+            </div>
+            
+            <!-- Live telemetry badge on canvas -->
+            <div class="journey-telemetry-badge">
+              <span class="cyber-telemetry-dot"></span>
+              <span id="globe-telemetry-status">3D GEO-SPATIAL CARTOGRAPHY // ACTIVE</span>
+              <span class="cyber-telemetry-sep">|</span>
+              <span id="globe-current-target">TARGET: ASIA</span>
+            </div>
+
+            <!-- Dynamic Approaching Region Banner -->
+            <div class="journey-approaching-banner" id="journey-approaching-banner">
+              <span class="approaching-eyebrow" id="approaching-eyebrow">APPROACHING CONTINENT</span>
+              <h4 class="approaching-title" id="approaching-title">ASIA</h4>
+              <span class="approaching-sub" id="approaching-sub">Global Earth Orbit</span>
+            </div>
+
+            <!-- Floating Cinematic Storytelling Narrative Card -->
+            <div class="journey-story-card" id="journey-story-card">
+              <div class="journey-story-badge" id="journey-story-badge">STAGE 01 / 04 • CONTINENT LEVEL</div>
+              <h3 class="journey-story-title" id="journey-story-title">Asia &amp; Planet Earth</h3>
+              <p class="journey-story-sub" id="journey-story-sub">The Global Stage of Endless Possibility</p>
+              <div class="journey-story-coords" id="journey-story-coords">LAT: 26.0000° N | LON: 84.0000° E</div>
+              <p class="journey-story-desc" id="journey-story-desc">
+                Every journey begins as a tiny coordinate on this pale blue planet. Floating in high orbit over the continent of Asia, preparing to descend into the Indian subcontinent.
+              </p>
+              <div class="journey-story-tags" id="journey-story-tags">
+                <span class="journey-tag">🌏 Global Orbit</span>
+                <span class="journey-tag">🗺️ Continent of Asia</span>
+                <span class="journey-tag">✨ Earth View</span>
+              </div>
+            </div>
+
+            <!-- Final Aerial 3D Terrain Card for Birbhum -->
+            <div class="birbhum-final-card" id="birbhum-final-card" aria-live="polite">
+              <div class="final-badge">DISTRICT OF ORIGIN • 3D TERRAIN AERIAL</div>
+              <h2 class="final-title">BIRBHUM</h2>
+              <h4 class="final-sub">WEST BENGAL, INDIA</h4>
+              <p class="final-quote">"My Roots. My Origin."</p>
+              <div class="final-terrain-pill">
+                <span>🌱 "Lal Matir Desh" (Land of Red Soil)</span>
+                <span>🪕 Baul Folk Music Heritage</span>
+                <span>🌾 Lush Gangetic Delta Plains</span>
+              </div>
+            </div>
+
+            <!-- Interaction hint -->
+            <div class="journey-drag-hint">
+              <span>🖱️ Drag to rotate 3D Globe • Click any stage below to zoom directly</span>
+            </div>
+          </div>
+
+          <!-- Scene Stepper Controls Bar (Replay + 4 Stages + Skip) -->
+          <div class="journey-controls-bar">
+            <div class="journey-controls-left">
+              <button id="journey-replay-btn" class="journey-ctrl-btn journey-ctrl-btn--primary" title="Replay Zoom Sequence from Earth to Birbhum">
+                <span>↺ Replay Flight</span>
+              </button>
+              <button id="journey-skip-btn" class="journey-ctrl-btn" title="Skip directly to Birbhum District">
+                <span>⚡ Skip to Birbhum</span>
+              </button>
+            </div>
+
+            <div class="journey-scenes-nav">
+              <button class="journey-step-btn active" data-scene="0" title="Stage 1: Earth &amp; Asia">
+                <span class="step-num">1</span><span class="step-label">Earth &amp; Asia</span>
+              </button>
+              <button class="journey-step-btn" data-scene="1" title="Stage 2: India Subcontinent">
+                <span class="step-num">2</span><span class="step-label">India</span>
+              </button>
+              <button class="journey-step-btn" data-scene="2" title="Stage 3: West Bengal">
+                <span class="step-num">3</span><span class="step-label">West Bengal</span>
+              </button>
+              <button class="journey-step-btn" data-scene="3" title="Stage 4: Birbhum District">
+                <span class="step-num">4</span><span class="step-label">Birbhum</span>
+              </button>
+            </div>
+
+            <div class="journey-controls-right">
+              <span class="journey-origin-badge">📍 BIRBHUM, WEST BENGAL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concluding Synthesis Banner (Where I Am From) -->
+      <div class="journey-synthesis-card reveal stagger-2">
+        <div class="synthesis-quote-mark">“</div>
+        <p class="synthesis-quote-body">
+          From my roots in <strong>Birbhum, West Bengal</strong> — the quiet red soil, the early sparks of curiosity in mathematics and science, and the enduring humility that shapes who I am. Every journey has a beginning.
+        </p>
+        <div class="synthesis-footer">
+          <span class="synthesis-author">— Md Jubayed Jaman</span>
+          <span class="synthesis-badge">📍 Birbhum, West Bengal • Roots of Curiosity</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <div class="section-transition" aria-hidden="true">
+    <div class="section-transition-line"></div>
+    <div class="section-transition-dot"></div>
+  </div>
+
   <!-- ═══════ SKILLS ═══════ -->
   <section id="skills">
     <div class="container">
@@ -2864,6 +4402,66 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
     <div class="section-transition-line"></div>
     <div class="section-transition-dot"></div>
   </div>
+
+  <!-- ═══════ PROJECTS ═══════ -->
+  <section id="projects" class="projects-section">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// CREATIVE &amp; TECHNICAL BUILDS</p>
+        <h2 class="section-title">Projects &amp;<br>Explorations</h2>
+        <p class="section-subtitle">
+          Real-world applications, algorithmic experiments, and competitive hackathon projects built with curiosity.
+        </p>
+      </div>
+
+      <div class="projects-grid reveal stagger-2">
+        <!-- 1. Scratch Hackathon Interactive Game (Top 10 Finalist) -->
+        <article class="glass-card glow-border project-card">
+          <div class="project-header">
+            <div class="project-icon-badge">🚀</div>
+            <span class="project-tag-pill project-tag-pill--orange">Top 10 Finalist 🏆</span>
+          </div>
+          <h3 class="project-title">Scratch Hackathon Interactive Game</h3>
+          <p class="project-desc">
+            Engineered under competitive hackathon pressure. Built a logic-driven interactive adventure game featuring dynamic collision physics, state management, and algorithmic puzzles that earned a prestigious Top 10 national ranking.
+          </p>
+          <div class="project-tech-stack">
+            <span class="tech-tag">Scratch</span>
+            <span class="tech-tag">Game Logic</span>
+            <span class="tech-tag">Event Systems</span>
+            <span class="tech-tag">Creative Tech</span>
+          </div>
+          <div class="project-actions">
+            <a href="#achievements" class="project-btn project-btn--primary">🏆 Milestone Details</a>
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="project-btn project-btn--sec">💡 Project Overview</a>
+          </div>
+        </article>
+
+        <!-- 2. Python Problem-Solving Suite -->
+        <article class="glass-card glow-border project-card">
+          <div class="project-header">
+            <div class="project-icon-badge">🐍</div>
+            <span class="project-tag-pill project-tag-pill--green">Computational Lab</span>
+          </div>
+          <h3 class="project-title">Python Problem-Solving Suite</h3>
+          <p class="project-desc">
+            A growing laboratory of Python algorithms exploring prime number sieves, scientific calculations, physical motion modeling, and competitive mathematical problem solving.
+          </p>
+          <div class="project-tech-stack">
+            <span class="tech-tag">Python 3</span>
+            <span class="tech-tag">Mathematics</span>
+            <span class="tech-tag">Data Structures</span>
+            <span class="tech-tag">Algorithms</span>
+          </div>
+          <div class="project-actions">
+            <a href="#skills" class="project-btn project-btn--primary">⚡ Skills Toolkit</a>
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="project-btn project-btn--sec">💻 View Code</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ═══════ ACHIEVEMENTS ═══════ -->
   <section id="achievements">
@@ -3076,6 +4674,30 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
         <h2 class="section-title">On the Field</h2>
         <p class="section-subtitle">Competition, teamwork, and the thrill of the game.</p>
       </div>
+
+      <!-- Dual Sports Title Banner (Below On the Field & Above the Games) -->
+      <div class="sports-arena-title-bar reveal stagger-1">
+        <div class="sports-title-pill sports-title-pill--cricket">
+          <span class="sport-pill-icon">🏏</span>
+          <div class="sport-pill-info">
+            <span class="sport-pill-super">PLAYABLE MATCH</span>
+            <span class="sport-pill-title">Cricket Championship</span>
+          </div>
+          <span class="sport-pill-badge">1-Over Challenge</span>
+        </div>
+
+        <div class="sports-title-sep">⚡</div>
+
+        <div class="sports-title-pill sports-title-pill--badminton">
+          <span class="sport-pill-icon">🏸</span>
+          <div class="sport-pill-info">
+            <span class="sport-pill-super">PLAYABLE RALLY</span>
+            <span class="sport-pill-title">Badminton Arena</span>
+          </div>
+          <span class="sport-pill-badge">Smash &amp; Rally</span>
+        </div>
+      </div>
+
       <div class="sports-grid reveal stagger-2">
         <!-- Cricket Card (Playable & Overview) -->
         <div class="glass-card glow-border sport-card" id="cricket-card">
@@ -3092,6 +4714,11 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
 
           <!-- Playable Cricket Mini-Game Arena -->
           <div class="sport-content-pane active" id="cricket-pane-game">
+            <!-- Direct Title Above Cricket Game -->
+            <div class="game-direct-title-header">
+              <h4 class="game-direct-title">🏏 CRICKET — 1-OVER BATTING CHAMPIONSHIP</h4>
+              <p class="game-direct-sub">Target: 18 Runs in 6 Deliveries • Move Mouse to Align Bat • Click to Swing!</p>
+            </div>
             <div class="game-arena">
               <div class="game-hud">
                 <div class="game-hud-stat">
@@ -3112,6 +4739,9 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
 
               <div class="game-canvas-wrap">
                 <canvas id="cricket-canvas" class="game-canvas" width="380" height="240"></canvas>
+                <div style="text-align: center; margin-top: 0.5rem;">
+                  <span class="game-field-title-bottom">✦ EDEN GARDENS CRICKET GROUND ✦</span>
+                </div>
                 <div class="game-overlay-banner" id="cricket-banner">
                   <div class="game-banner-title" id="cricket-banner-title">SIX! 🚀</div>
                   <div class="game-banner-sub" id="cricket-banner-sub">108m Stratospheric Launch!</div>
@@ -3179,6 +4809,11 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
 
           <!-- Playable Badminton Mini-Game Arena -->
           <div class="sport-content-pane active" id="badminton-pane-game">
+            <!-- Direct Title Above Badminton Game -->
+            <div class="game-direct-title-header game-direct-title-header--badminton">
+              <h4 class="game-direct-title">🏸 BADMINTON — SPEED &amp; REFLEXES CHAMPIONSHIP</h4>
+              <p class="game-direct-sub">First to 5 Points Wins • Move Mouse to Defend • Click to SWING &amp; SMASH!</p>
+            </div>
             <div class="game-arena">
               <div class="game-hud">
                 <div class="game-hud-stat">
@@ -3204,6 +4839,9 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
 
               <div class="game-canvas-wrap">
                 <canvas id="badminton-canvas" class="game-canvas" width="380" height="250"></canvas>
+                <div style="text-align: center; margin-top: 0.5rem;">
+                  <span class="game-field-title-bottom game-field-title-bottom--badminton">✦ ALL INDIA BADMINTON ARENA ✦</span>
+                </div>
                 <div class="game-overlay-banner" id="badminton-banner">
                   <div class="game-banner-title" id="badminton-banner-title">POWER SMASH! ⚡</div>
                   <div class="game-banner-sub" id="badminton-banner-sub">340 km/h Sonic Boom!</div>
@@ -3266,6 +4904,85 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
     <div class="section-transition-line"></div>
     <div class="section-transition-dot"></div>
   </div>
+
+  <!-- ═══════ EDUCATION ═══════ -->
+  <section id="education" class="education-section">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">// ACADEMIC TIMELINE</p>
+        <h2 class="section-title">My Educational<br>Odyssey</h2>
+        <p class="section-subtitle">
+          The formative environments that built my character, intellectual discipline, and drive to create.
+        </p>
+      </div>
+
+      <div class="education-timeline reveal stagger-2">
+        <!-- Milestone 1 -->
+        <div class="edu-card glass-card glow-border">
+          <div class="edu-card-marker">
+            <span class="edu-marker-dot"></span>
+            <span class="edu-marker-line"></span>
+          </div>
+          <div class="edu-card-content">
+            <span class="edu-period">Foundational Residential Schooling</span>
+            <h3 class="edu-institution">Jawahar Navodaya Vidyalaya</h3>
+            <p class="edu-role">Proud Alumnus &amp; Scholar</p>
+            <p class="edu-desc">
+              Selected through the competitive national entrance for Navodaya Vidyalaya. Formed by rigorous residential schooling that cultivated self-reliance, leadership, community solidarity, and a deep-seated love for mathematics and natural sciences.
+            </p>
+            <div class="edu-tags">
+              <span class="edu-tag">🌟 JNV Alumnus</span>
+              <span class="edu-tag">🏛️ Residential Culture</span>
+              <span class="edu-tag">📐 Math &amp; Science Foundation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 2 -->
+        <div class="edu-card glass-card glow-border">
+          <div class="edu-card-marker">
+            <span class="edu-marker-dot"></span>
+            <span class="edu-marker-line"></span>
+          </div>
+          <div class="edu-card-content">
+            <span class="edu-period">Advanced Academic Crucible</span>
+            <h3 class="edu-institution">Kota Academic Chapter</h3>
+            <p class="edu-role">Intensive Science &amp; Problem Solving</p>
+            <p class="edu-desc">
+              Immersed in Kota's renowned competitive crucible in Rajasthan. Developed enduring mental stamina, analytical rigor, and mastery over complex mathematical deduction and physics concepts under demanding problem sets.
+            </p>
+            <div class="edu-tags">
+              <span class="edu-tag">⚡ Analytical Rigor</span>
+              <span class="edu-tag">🔬 Physics &amp; Mathematics</span>
+              <span class="edu-tag">🎯 Mental Discipline</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 3 -->
+        <div class="edu-card glass-card glow-border">
+          <div class="edu-card-marker">
+            <span class="edu-marker-dot edu-marker-dot--active"></span>
+          </div>
+          <div class="edu-card-content">
+            <span class="edu-period">Undergraduate Studies • Current</span>
+            <h3 class="edu-institution">Newton School of Technology (NST) × Rishihood University</h3>
+            <p class="edu-role">First-Year Student in Computer Science &amp; A.I. • Sonipat, Delhi-NCR</p>
+            <p class="edu-desc">
+              Currently discovering new possibilities at the intersection of computer science, artificial intelligence (A.I.), and human empathy. Exploring software engineering, algorithmic logic, and collaborative innovation with an open mind.
+            </p>
+            <div class="edu-tags">
+              <span class="edu-tag edu-tag--cyan">🎓 1st Year Undergrad</span>
+              <span class="edu-tag edu-tag--violet">💻 Computer Science</span>
+              <span class="edu-tag edu-tag--pink">🤖 Artificial Intelligence (A.I.)</span>
+              <span class="edu-tag">📍 Sonipat, Haryana</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ═══════ PERSONALITY ═══════ -->
   <section id="personality">
@@ -3556,57 +5273,61 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
     mouseY: -100,
     ringX: -100,
     ringY: -100,
+    isActive: false,
 
     init() {
       const isFine = window.matchMedia('(pointer: fine)').matches;
       if (!isFine) return;
 
-      this.dot = document.querySelector('.cursor-dot');
-      this.ring = document.querySelector('.cursor-ring');
+      this.dot = document.getElementById('cursor-dot') || document.querySelector('.cursor-dot');
+      this.ring = document.getElementById('cursor-ring') || document.querySelector('.cursor-ring');
       if (!this.dot || !this.ring) return;
 
       window.addEventListener('mousemove', (e) => {
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
-      });
+        if (!this.isActive) {
+          this.isActive = true;
+          this.ringX = this.mouseX;
+          this.ringY = this.mouseY;
+          document.body.classList.add('has-custom-cursor');
+        }
+        this.dot.style.transform = `translate3d(${this.mouseX}px, ${this.mouseY}px, 0)`;
+      }, { passive: true });
 
       const animate = () => {
-        this.ringX += (this.mouseX - this.ringX) * 0.2;
-        this.ringY += (this.mouseY - this.ringY) * 0.2;
-
-        this.dot.style.transform = `translate3d(${this.mouseX}px, ${this.mouseY}px, 0)`;
-        this.ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0)`;
-
+        if (this.isActive) {
+          this.ringX += (this.mouseX - this.ringX) * 0.2;
+          this.ringY += (this.mouseY - this.ringY) * 0.2;
+          this.ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0)`;
+        }
         requestAnimationFrame(animate);
       };
       requestAnimationFrame(animate);
 
-      const hoverTargets = 'a, button, [role="button"], input, textarea, select, .glass-card, .cube-wrapper, canvas';
+      const hoverTargets = 'a, button, [role="button"], input, textarea, select, .glass-card, .cube-wrapper, canvas, .journey-step-btn, .cube-start-btn, .journey-ctrl-btn';
       document.addEventListener('mouseover', (e) => {
         if (e.target.closest(hoverTargets)) {
-          this.ring.classList.add('cursor-hover');
-          this.dot.classList.add('cursor-hover');
+          this.ring?.classList.add('cursor-hover');
+          this.dot?.classList.add('cursor-hover');
         }
       });
       document.addEventListener('mouseout', (e) => {
         if (e.target.closest(hoverTargets)) {
-          this.ring.classList.remove('cursor-hover');
-          this.dot.classList.remove('cursor-hover');
+          this.ring?.classList.remove('cursor-hover');
+          this.dot?.classList.remove('cursor-hover');
         }
       });
 
       window.addEventListener('mousedown', () => {
-        this.ring.classList.add('cursor-click');
+        this.ring?.classList.add('cursor-click');
       });
       window.addEventListener('mouseup', () => {
-        this.ring.classList.remove('cursor-click');
+        this.ring?.classList.remove('cursor-click');
       });
     }
   };
 
-  // ═══════════════════════════════════════════════
-  // 3D RUBIK'S CUBE (ALWAYS AUTO-SPINS, REVOLVE ON TOUCH)
-  // ═══════════════════════════════════════════════
   const CubeGame = {
     wrapper: null,
     container: null,
@@ -3965,6 +5686,14 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
       // Pitch background
       c.fillStyle = '#070b1a';
       c.fillRect(0, 0, 380, 240);
+
+      // Field Title Drawn on Field
+      c.save();
+      c.font = 'bold 11px "JetBrains Mono", monospace';
+      c.fillStyle = 'rgba(0, 212, 255, 0.5)';
+      c.textAlign = 'center';
+      c.fillText('✦ EDEN GARDENS CRICKET GROUND ✦', 190, 234);
+      c.restore();
 
       // Perspective Pitch
       c.fillStyle = 'rgba(0, 212, 255, 0.05)';
@@ -4419,6 +6148,14 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
       c.fillStyle = '#070b1a';
       c.fillRect(0, 0, 380, 250);
 
+      // Court Title Drawn on Court
+      c.save();
+      c.font = 'bold 10px "JetBrains Mono", monospace';
+      c.fillStyle = 'rgba(244, 114, 182, 0.5)';
+      c.textAlign = 'center';
+      c.fillText('✦ ALL INDIA BADMINTON ARENA ✦', 190, 244);
+      c.restore();
+
       // Court Boundary Lines (extended vertical space)
       c.strokeStyle = 'rgba(0, 240, 224, 0.22)';
       c.lineWidth = 1.5;
@@ -4613,6 +6350,2175 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
   // ═══════════════════════════════════════════════
   // 3D TILT PHYSICS & CARD LIGHTING
   // ═══════════════════════════════════════════════
+  
+  const CinematicAudio = {
+    ctx: null,
+    masterGain: null,
+    analyser: null,
+    synthGain: null,
+    sfxGain: null,
+    isPlaying: false,
+    isMuted: false,
+    volume: 0.7,
+    animFrame: null,
+    stepTimer: null,
+    step: 0,
+    chordIndex: 0,
+    
+    // Energetic, motivational electronic chord progression
+    // Dm9 -> Bbmaj7 -> Fsus2/C -> Am7
+    chords: [
+      [146.83, 174.61, 220.00, 261.63, 329.63], // Dm9 (D3, F3, A3, C4, E4)
+      [116.54, 146.83, 174.61, 220.00, 293.66], // Bbmaj7 (Bb2, D3, F3, A3, D4)
+      [130.81, 174.61, 196.00, 261.63, 329.63], // Fsus2/C (C3, F3, G3, C4, E4)
+      [110.00, 130.81, 164.81, 196.00, 246.94]  // Am7 (A2, C3, E3, G3, B3)
+    ],
+    bassNotes: [73.42, 58.27, 65.41, 55.00], // D2, Bb1, C2, A1
+    arpNotes: [
+      [293.66, 349.23, 440.00, 523.25, 659.25, 523.25, 440.00, 349.23],
+      [293.66, 349.23, 440.00, 587.33, 440.00, 349.23, 293.66, 233.08],
+      [261.63, 329.63, 392.00, 523.25, 659.25, 523.25, 392.00, 329.63],
+      [220.00, 261.63, 329.63, 440.00, 493.88, 440.00, 329.63, 261.63]
+    ],
+
+    init() {
+      // Load saved preferences
+      try {
+        const savedVol = localStorage.getItem('portfolio_music_vol');
+        if (savedVol !== null) this.volume = parseFloat(savedVol);
+        const savedMute = localStorage.getItem('portfolio_music_muted');
+        if (savedMute !== null) this.isMuted = (savedMute === 'true');
+      } catch (e) {}
+
+      this.bindUI();
+      this.drawWaveformIdle();
+    },
+
+    ensureContext() {
+      if (!this.ctx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return false;
+        this.ctx = new AudioCtx();
+
+        this.analyser = this.ctx.createAnalyser();
+        this.analyser.fftSize = 64;
+        this.analyser.smoothingTimeConstant = 0.8;
+
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.volume * 0.35, this.ctx.currentTime);
+
+        this.synthGain = this.ctx.createGain();
+        this.synthGain.gain.setValueAtTime(1.0, this.ctx.currentTime);
+
+        this.sfxGain = this.ctx.createGain();
+        this.sfxGain.gain.setValueAtTime(0.65, this.ctx.currentTime);
+
+        this.synthGain.connect(this.analyser);
+        this.sfxGain.connect(this.analyser);
+        this.analyser.connect(this.masterGain);
+        this.masterGain.connect(this.ctx.destination);
+      }
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      return true;
+    },
+
+    play() {
+      if (!this.ensureContext()) return;
+      if (this.isPlaying) return;
+      this.isPlaying = true;
+      this.step = 0;
+      this.chordIndex = 0;
+
+      // Update UI
+      const playIcon = document.getElementById('audio-play-icon');
+      if (playIcon) playIcon.textContent = '⏸';
+
+      // Start music loop at 116 BPM (step time = 129ms per 16th note)
+      this.stepTimer = setInterval(() => this.tick(), 129);
+      this.startWaveformVisualizer();
+    },
+
+    pause() {
+      if (!this.isPlaying) return;
+      this.isPlaying = false;
+      clearInterval(this.stepTimer);
+      this.stepTimer = null;
+
+      const playIcon = document.getElementById('audio-play-icon');
+      if (playIcon) playIcon.textContent = '▶';
+    },
+
+    togglePlay() {
+      if (this.isPlaying) this.pause();
+      else this.play();
+    },
+
+    toggleMute() {
+      this.isMuted = !this.isMuted;
+      try {
+        localStorage.setItem('portfolio_music_muted', this.isMuted.toString());
+      } catch (e) {}
+
+      if (this.masterGain && this.ctx) {
+        const target = this.isMuted ? 0 : this.volume * 0.35;
+        this.masterGain.gain.setTargetAtTime(target, this.ctx.currentTime, 0.05);
+      }
+
+      const muteIcon = document.getElementById('audio-mute-icon');
+      if (muteIcon) muteIcon.textContent = this.isMuted ? '🔇' : '🔊';
+    },
+
+    setVolume(val) {
+      this.volume = Math.max(0, Math.min(1, val));
+      try {
+        localStorage.setItem('portfolio_music_vol', this.volume.toString());
+      } catch (e) {}
+
+      if (this.masterGain && this.ctx && !this.isMuted) {
+        this.masterGain.gain.setTargetAtTime(this.volume * 0.35, this.ctx.currentTime, 0.05);
+      }
+    },
+
+    tick() {
+      if (!this.ctx || !this.isPlaying) return;
+      const t = this.ctx.currentTime;
+      const beat16 = this.step % 16;
+      const bar = Math.floor(this.step / 16) % 4;
+      this.chordIndex = bar;
+
+      // 1. Lush Chord Pad on beat 0 of each bar (every 16 steps)
+      if (beat16 === 0) {
+        this.playPadChord(this.chords[bar], t);
+      }
+
+      // 2. Driving Bassline on 8th notes (0, 2, 4, 6, 8, 10, 12, 14)
+      if (beat16 % 2 === 0) {
+        const root = this.bassNotes[bar];
+        const oct = (beat16 === 6 || beat16 === 14) ? 1.5 : 1.0;
+        this.playBassPulse(root * oct, t);
+      }
+
+      // 3. Shimmering Cyber Arpeggio (16th notes)
+      const arpList = this.arpNotes[bar];
+      const noteFreq = arpList[this.step % arpList.length];
+      this.playArpNote(noteFreq, t);
+
+      // 4. Subtle Digital Pulse on beats 0, 4, 8, 12
+      if (beat16 % 4 === 0) {
+        this.playSubPulse(t);
+      }
+
+      this.step = (this.step + 1) % 64;
+    },
+
+    playPadChord(chord, t) {
+      chord.forEach(freq => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, t);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(650, t);
+        filter.frequency.exponentialRampToValueAtTime(1400, t + 1.2);
+        filter.frequency.exponentialRampToValueAtTime(700, t + 2.0);
+
+        gain.gain.setValueAtTime(0.001, t);
+        gain.gain.linearRampToValueAtTime(0.025, t + 0.3);
+        gain.gain.linearRampToValueAtTime(0.015, t + 1.5);
+        gain.gain.linearRampToValueAtTime(0.0001, t + 2.1);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.synthGain);
+
+        osc.start(t);
+        osc.stop(t + 2.15);
+      });
+    },
+
+    playBassPulse(freq, t) {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, t);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(450, t);
+      filter.Q.setValueAtTime(3, t);
+
+      gain.gain.setValueAtTime(0.06, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.synthGain);
+
+      osc.start(t);
+      osc.stop(t + 0.24);
+    },
+
+    playArpNote(freq, t) {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, t);
+
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1200 + Math.sin(this.step * 0.2) * 500, t);
+      filter.Q.setValueAtTime(2.5, t);
+
+      gain.gain.setValueAtTime(0.035, t);
+      gain.gain.exponentialRampToValueAtTime(0.0008, t + 0.16);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.synthGain);
+
+      osc.start(t);
+      osc.stop(t + 0.17);
+    },
+
+    playSubPulse(t) {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(95, t);
+      osc.frequency.exponentialRampToValueAtTime(38, t + 0.12);
+
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+
+      osc.connect(gain);
+      gain.connect(this.synthGain);
+
+      osc.start(t);
+      osc.stop(t + 0.15);
+    },
+
+    // Sound FX for Cube and Interactions
+    playTick() {
+      if (!this.ensureContext()) return;
+      const t = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800 + Math.random() * 300, t);
+      osc.frequency.exponentialRampToValueAtTime(220, t + 0.05);
+
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+
+      osc.start(t);
+      osc.stop(t + 0.06);
+    },
+
+    playSolveChime() {
+      if (!this.ensureContext()) return;
+      const t = this.ctx.currentTime;
+      const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C E G C E
+
+      notes.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, t + idx * 0.09);
+
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.setValueAtTime(0.08, t + idx * 0.09);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + idx * 0.09 + 0.9);
+
+        osc.connect(gain);
+        gain.connect(this.sfxGain);
+
+        osc.start(t + idx * 0.09);
+        osc.stop(t + idx * 0.09 + 0.95);
+      });
+    },
+
+    playWhoosh() {
+      if (!this.ensureContext()) return;
+      const t = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(140, t);
+      osc.frequency.exponentialRampToValueAtTime(45, t + 0.7);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(200, t);
+      filter.frequency.exponentialRampToValueAtTime(1800, t + 0.35);
+      filter.frequency.exponentialRampToValueAtTime(150, t + 0.75);
+
+      gain.gain.setValueAtTime(0.001, t);
+      gain.gain.linearRampToValueAtTime(0.09, t + 0.3);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.75);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.sfxGain);
+
+      osc.start(t);
+      osc.stop(t + 0.8);
+    },
+
+    bindUI() {
+      const playBtn = document.getElementById('audio-play-btn');
+      if (playBtn) playBtn.onclick = () => this.togglePlay();
+
+      const muteBtn = document.getElementById('audio-mute-btn');
+      if (muteBtn) muteBtn.onclick = () => this.toggleMute();
+
+      const slider = document.getElementById('audio-volume-slider');
+      if (slider) {
+        slider.value = Math.round(this.volume * 100);
+        slider.oninput = (e) => this.setVolume(e.target.value / 100);
+      }
+    },
+
+    startWaveformVisualizer() {
+      const canvas = document.getElementById('audio-waveform-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const bufferLength = this.analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      const draw = () => {
+        if (!this.isPlaying) {
+          this.drawWaveformIdle();
+          return;
+        }
+        this.animFrame = requestAnimationFrame(draw);
+        this.analyser.getByteFrequencyData(dataArray);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const barCount = 10;
+        const barWidth = 3;
+        const gap = 3;
+        const startX = (canvas.width - (barCount * barWidth + (barCount - 1) * gap)) / 2;
+
+        for (let i = 0; i < barCount; i++) {
+          const val = dataArray[i * 2] || 0;
+          const percent = val / 255;
+          const barHeight = Math.max(3, percent * (canvas.height - 2));
+          const x = startX + i * (barWidth + gap);
+          const y = (canvas.height - barHeight) / 2;
+
+          const grad = ctx.createLinearGradient(0, y, 0, y + barHeight);
+          grad.addColorStop(0, '#00f0e0');
+          grad.addColorStop(1, '#a855f7');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.roundRect ? ctx.roundRect(x, y, barWidth, barHeight, 2) : ctx.fillRect(x, y, barWidth, barHeight);
+          ctx.fill();
+        }
+      };
+      draw();
+    },
+
+    drawWaveformIdle() {
+      const canvas = document.getElementById('audio-waveform-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const barCount = 10;
+      const barWidth = 3;
+      const gap = 3;
+      const startX = (canvas.width - (barCount * barWidth + (barCount - 1) * gap)) / 2;
+
+      for (let i = 0; i < barCount; i++) {
+        const barHeight = 3 + Math.sin(i * 0.6) * 1.5;
+        const x = startX + i * (barWidth + gap);
+        const y = (canvas.height - barHeight) / 2;
+        ctx.fillStyle = 'rgba(0, 240, 224, 0.35)';
+        ctx.fillRect(x, y, barWidth, barHeight);
+      }
+    }
+  };
+
+  // ═══════════════════════════════════════════════
+  // THE OPENING EXPERIENCE — SOLVING RUBIK'S CUBE (Three.js + Fallback)
+  // ═══════════════════════════════════════════════
+
+  const RubikOpeningStage = {
+    stage: null,
+    canvas: null,
+    renderer: null,
+    scene: null,
+    camera: null,
+    cubeGroup: null,
+    cubies: [],
+    particles: null,
+    isSolving: false,
+    isSolved: false,
+    isDragging: false,
+    prevMousePos: { x: 0, y: 0 },
+    rotSpeed: { x: 0.003, y: 0.005 },
+    animId: null,
+
+    // Moves for scramble: [axis, sliceIndex (-1 or 1), angle (PI/2 or -PI/2)]
+    scrambleMoves: [
+      { axis: 'x', slice: 1, angle: Math.PI / 2 },
+      { axis: 'y', slice: 1, angle: -Math.PI / 2 },
+      { axis: 'z', slice: 1, angle: Math.PI / 2 },
+      { axis: 'x', slice: -1, angle: -Math.PI / 2 },
+      { axis: 'y', slice: -1, angle: Math.PI / 2 },
+      { axis: 'z', slice: -1, angle: -Math.PI / 2 },
+      { axis: 'x', slice: 1, angle: -Math.PI / 2 },
+      { axis: 'y', slice: 1, angle: Math.PI / 2 }
+    ],
+
+    init() {
+      this.stage = document.getElementById('intro-cube-stage');
+      this.canvas = document.getElementById('intro-cube-canvas');
+      if (!this.stage || !this.canvas) return;
+
+      if (window.THREE) {
+        this.initWebGL();
+      } else {
+        this.initFallback();
+      }
+
+      this.bindEvents();
+    },
+
+    initWebGL() {
+      const THREE = window.THREE;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      this.camera.position.set(0, 0, 7.5);
+
+      this.renderer = new THREE.WebGLRenderer({
+        canvas: this.canvas,
+        antialias: true,
+        alpha: true
+      });
+      this.renderer.setSize(width, height);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Lighting
+      const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+      this.scene.add(ambient);
+
+      const dirLight1 = new THREE.DirectionalLight(0x00f0e0, 1.3);
+      dirLight1.position.set(5, 6, 7);
+      this.scene.add(dirLight1);
+
+      const dirLight2 = new THREE.DirectionalLight(0xa855f7, 1.2);
+      dirLight2.position.set(-6, -4, 5);
+      this.scene.add(dirLight2);
+
+      const pointLight = new THREE.PointLight(0xffffff, 0.8, 15);
+      pointLight.position.set(0, 0, 4);
+      this.scene.add(pointLight);
+
+      // Starfield Dust Particles
+      const pCount = 800;
+      const pGeo = new THREE.BufferGeometry();
+      const pPos = new Float32Array(pCount * 3);
+      for (let i = 0; i < pCount * 3; i += 3) {
+        pPos[i] = (Math.random() - 0.5) * 35;
+        pPos[i + 1] = (Math.random() - 0.5) * 35;
+        pPos[i + 2] = (Math.random() - 0.5) * 20 - 5;
+      }
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+      const pMat = new THREE.PointsMaterial({
+        size: 0.08,
+        color: 0x00d4ff,
+        transparent: true,
+        opacity: 0.55
+      });
+      this.particles = new THREE.Points(pGeo, pMat);
+      this.scene.add(this.particles);
+
+      // Create Rubik's Cube
+      this.cubeGroup = new THREE.Group();
+      this.cubeGroup.rotation.set(0.45, -0.55, 0);
+      this.scene.add(this.cubeGroup);
+
+      // Face Colors: +X Orange, -X Red, +Y White, -Y Yellow, +Z Green, -Z Blue
+      const colors = {
+        right: 0xf97316,  // Orange (Journey)
+        left: 0xef4444,   // Red (Strategy)
+        top: 0xffffff,    // White (Kindness)
+        bottom: 0xfacc15, // Yellow (Olympiads)
+        front: 0x10b981,  // Green (Sports)
+        back: 0x00d4ff,   // Cyan (Skills)
+        inner: 0x111625   // Dark Core
+      };
+
+      const size = 0.94;
+      const geo = new THREE.BoxGeometry(size, size, size);
+
+      this.cubies = [];
+      for (let x = -1; x <= 1; x++) {
+        for (let y = -1; y <= 1; y++) {
+          for (let z = -1; z <= 1; z++) {
+            // Build 6 materials per cubie
+            const mats = [
+              new THREE.MeshStandardMaterial({ color: x === 1 ? colors.right : colors.inner, roughness: 0.35, metalness: 0.1 }),
+              new THREE.MeshStandardMaterial({ color: x === -1 ? colors.left : colors.inner, roughness: 0.35, metalness: 0.1 }),
+              new THREE.MeshStandardMaterial({ color: y === 1 ? colors.top : colors.inner, roughness: 0.35, metalness: 0.1 }),
+              new THREE.MeshStandardMaterial({ color: y === -1 ? colors.bottom : colors.inner, roughness: 0.35, metalness: 0.1 }),
+              new THREE.MeshStandardMaterial({ color: z === 1 ? colors.front : colors.inner, roughness: 0.35, metalness: 0.1 }),
+              new THREE.MeshStandardMaterial({ color: z === -1 ? colors.back : colors.inner, roughness: 0.35, metalness: 0.1 })
+            ];
+
+            const mesh = new THREE.Mesh(geo, mats);
+            mesh.position.set(x * 1.02, y * 1.02, z * 1.02);
+            mesh.userData = { origPos: mesh.position.clone(), coords: { x, y, z } };
+            this.cubeGroup.add(mesh);
+            this.cubies.push(mesh);
+          }
+        }
+      }
+
+      // Pre-apply scramble instantaneously
+      this.applyInstantScramble();
+
+      // Start render loop
+      this.animate();
+    },
+
+    applyInstantScramble() {
+      // Rotate slices to make it genuinely scrambled
+      const THREE = window.THREE;
+      this.scrambleMoves.forEach(m => {
+        const sliceCubies = this.cubies.filter(c => Math.abs(c.position[m.axis] - m.slice * 1.02) < 0.4);
+        const pivot = new THREE.Group();
+        this.cubeGroup.add(pivot);
+        sliceCubies.forEach(c => pivot.attach(c));
+        pivot.rotation[m.axis] += m.angle;
+        pivot.updateMatrixWorld(true);
+        sliceCubies.forEach(c => this.cubeGroup.attach(c));
+        this.cubeGroup.remove(pivot);
+      });
+    },
+
+    animate() {
+      this.animId = requestAnimationFrame(() => this.animate());
+
+      const t = Date.now() * 0.001;
+
+      // Gentle tumbling when idle
+      if (!this.isDragging && !this.isSolving && !this.isSolved) {
+        this.cubeGroup.rotation.y += this.rotSpeed.y;
+        this.cubeGroup.rotation.x = 0.45 + Math.sin(t * 0.8) * 0.12;
+        this.cubeGroup.position.y = Math.sin(t * 1.4) * 0.12;
+      }
+
+      // Swirl particles
+      if (this.particles) {
+        this.particles.rotation.y += 0.001;
+      }
+
+      if (this.renderer && this.scene && this.camera) {
+        this.renderer.render(this.scene, this.camera);
+      }
+    },
+
+    solveCube() {
+      if (this.isSolving || this.isSolved) return;
+      this.isSolving = true;
+
+      // 1. Start music immediately
+      CinematicAudio.play();
+
+      // Update status text
+      const msg = document.getElementById('cube-status-msg');
+      if (msg) msg.textContent = "⚡ Solving in progress... Aligning Rubik's cube";
+      const statusText = document.getElementById('cube-telemetry-text');
+      if (statusText) statusText.textContent = 'ALGORITHMIC ENGINE // COMPUTING OPTIMAL PATH';
+
+      const THREE = window.THREE;
+      if (!THREE) {
+        this.fallbackSolve();
+        return;
+      }
+
+      // Execute moves in reverse to solve cleanly
+      const reversed = [...this.scrambleMoves].reverse().map(m => ({
+        axis: m.axis,
+        slice: m.slice,
+        angle: -m.angle
+      }));
+
+      let moveIdx = 0;
+      const executeNextMove = () => {
+        if (moveIdx >= reversed.length) {
+          this.onSolveComplete();
+          return;
+        }
+
+        const m = reversed[moveIdx];
+        const sliceCubies = this.cubies.filter(c => Math.abs(c.position[m.axis] - m.slice * 1.02) < 0.4);
+        const pivot = new THREE.Group();
+        this.cubeGroup.add(pivot);
+        sliceCubies.forEach(c => pivot.attach(c));
+
+        const startAngle = 0;
+        const targetAngle = m.angle;
+        const duration = 200; // ms
+        const startTime = Date.now();
+
+        CinematicAudio.playTick();
+
+        const stepAnim = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          // Ease in-out
+          const ease = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+          pivot.rotation[m.axis] = startAngle + targetAngle * ease;
+
+          if (progress < 1) {
+            requestAnimationFrame(stepAnim);
+          } else {
+            pivot.rotation[m.axis] = targetAngle;
+            pivot.updateMatrixWorld(true);
+            sliceCubies.forEach(c => this.cubeGroup.attach(c));
+            this.cubeGroup.remove(pivot);
+            moveIdx++;
+            setTimeout(executeNextMove, 30);
+          }
+        };
+        stepAnim();
+      };
+
+      executeNextMove();
+    },
+
+    onSolveComplete() {
+      this.isSolving = false;
+      this.isSolved = true;
+
+      // Play victory chime and whoosh
+      CinematicAudio.playSolveChime();
+
+      // Status text
+      const msg = document.getElementById('cube-status-msg');
+      if (msg) msg.textContent = '✨ SOLVED! Expanding reality into portfolio interface...';
+      const statusText = document.getElementById('cube-telemetry-text');
+      if (statusText) statusText.textContent = 'QUANTUM ARCHITECTURE // FULLY SOLVED // UNFOLDING';
+
+      // 1. Glow effect on face stickers
+      this.cubies.forEach(c => {
+        c.material.forEach(m => {
+          if (m.color.getHex() !== 0x111625) {
+            m.emissive = m.color.clone();
+            m.emissiveIntensity = 0.85;
+          }
+        });
+      });
+
+      // 2. Show holographic labels
+      const holoLabels = document.getElementById('cube-holo-labels');
+      if (holoLabels) holoLabels.classList.add('is-active');
+
+      // 3. Unfold / Explode outward after brief pause
+      setTimeout(() => {
+        CinematicAudio.playWhoosh();
+        const startT = Date.now();
+        const dur = 1300;
+
+        const unfoldAnim = () => {
+          const elapsed = Date.now() - startT;
+          const p = Math.min(1, elapsed / dur);
+          const ease = p * p * (3 - 2 * p); // smooth cubic
+
+          this.cubies.forEach(c => {
+            const dir = c.userData.origPos.clone().normalize();
+            c.position.copy(c.userData.origPos).add(dir.multiplyScalar(ease * 3.6));
+            c.rotation.x += 0.02 * ease;
+            c.rotation.y += 0.03 * ease;
+          });
+
+          // Zoom camera through
+          if (this.camera) {
+            this.camera.position.z = 7.5 - ease * 4.5;
+          }
+
+          if (p < 1) {
+            requestAnimationFrame(unfoldAnim);
+          } else {
+            // Dismiss stage and enter portfolio
+            this.dismissStage();
+          }
+        };
+        unfoldAnim();
+      }, 750);
+    },
+
+    dismissStage() {
+      if (!this.stage) return;
+      this.stage.classList.add('is-hidden');
+      document.body.style.overflow = 'auto';
+
+      // Scroll smoothly to hero/about
+      const hero = document.getElementById('hero');
+      if (hero) hero.scrollIntoView({ behavior: 'smooth' });
+    },
+
+    replay() {
+      if (!this.stage) return;
+      this.isSolved = false;
+      this.isSolving = false;
+      this.stage.classList.remove('is-hidden');
+      document.body.style.overflow = 'hidden';
+
+      const holoLabels = document.getElementById('cube-holo-labels');
+      if (holoLabels) holoLabels.classList.remove('is-active');
+
+      const msg = document.getElementById('cube-status-msg');
+      if (msg) msg.textContent = 'Click the 3D Cube or "Start My Journey" to solve in one cinematic animation';
+
+      // Reset camera and cubies
+      if (this.camera) this.camera.position.set(0, 0, 7.5);
+      if (this.cubies && this.cubies.length) {
+        this.cubies.forEach(c => {
+          c.position.copy(c.userData.origPos);
+          c.rotation.set(0, 0, 0);
+          c.material.forEach(m => {
+            m.emissiveIntensity = 0;
+          });
+        });
+        this.applyInstantScramble();
+      }
+    },
+
+    bindEvents() {
+      // Start journey button
+      const startBtn = document.getElementById('start-journey-btn');
+      if (startBtn) startBtn.onclick = () => this.solveCube();
+
+      // Skip button
+      const skipBtn = document.getElementById('skip-intro-btn');
+      if (skipBtn) skipBtn.onclick = () => {
+        CinematicAudio.play();
+        this.dismissStage();
+      };
+
+      // Click on canvas to solve
+      if (this.canvas) {
+        this.canvas.addEventListener('click', (e) => {
+          if (!this.isSolved && !this.isSolving) {
+            this.solveCube();
+          }
+        });
+
+        // Drag to rotate cube
+        this.canvas.addEventListener('mousedown', (e) => {
+          this.isDragging = true;
+          this.prevMousePos = { x: e.clientX, y: e.clientY };
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!this.isDragging || !this.cubeGroup) return;
+          const dx = e.clientX - this.prevMousePos.x;
+          const dy = e.clientY - this.prevMousePos.y;
+          this.cubeGroup.rotation.y += dx * 0.008;
+          this.cubeGroup.rotation.x += dy * 0.008;
+          this.prevMousePos = { x: e.clientX, y: e.clientY };
+        });
+
+        window.addEventListener('mouseup', () => {
+          this.isDragging = false;
+        });
+
+        // Touch support
+        this.canvas.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 1) {
+            this.isDragging = true;
+            this.prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+          }
+        });
+
+        window.addEventListener('touchmove', (e) => {
+          if (!this.isDragging || !this.cubeGroup || e.touches.length !== 1) return;
+          const dx = e.touches[0].clientX - this.prevMousePos.x;
+          const dy = e.touches[0].clientY - this.prevMousePos.y;
+          this.cubeGroup.rotation.y += dx * 0.008;
+          this.cubeGroup.rotation.x += dy * 0.008;
+          this.prevMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        });
+
+        window.addEventListener('touchend', () => {
+          this.isDragging = false;
+        });
+      }
+
+      // Window resize
+      window.addEventListener('resize', () => {
+        if (!this.renderer || !this.camera) return;
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // Navbar replay button
+      const replayBtn = document.getElementById('intro-replay-btn');
+      if (replayBtn) replayBtn.onclick = () => this.replay();
+    },
+
+    initFallback() {
+      // CSS3D fallback if WebGL is unavailable
+      const ctx = this.canvas.getContext('2d');
+      if (!ctx) return;
+      let rot = 0;
+      const render2D = () => {
+        if (this.isSolved) return;
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        rot += 0.01;
+        ctx.save();
+        ctx.translate(this.canvas.width / 2, this.canvas.height / 2);
+        ctx.rotate(rot);
+        ctx.strokeStyle = '#00f0e0';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(-60, -60, 120, 120);
+        ctx.restore();
+        requestAnimationFrame(render2D);
+      };
+      render2D();
+    },
+
+    fallbackSolve() {
+      setTimeout(() => {
+        this.onSolveComplete();
+      }, 1000);
+    }
+  };
+
+  // ═══════════════════════════════════════════════
+  // GEOGRAPHICAL JOURNEY — "EVERY JOURNEY HAS A BEGINNING"
+  // ═══════════════════════════════════════════════
+  // CONTINUOUS CINEMATIC 3D JOURNEY TO BIRBHUM
+  // ═══════════════════════════════════════════════
+
+    // ═══════════════════════════════════════════════
+  // 26. 3D GEOGRAPHIC JOURNEY (BIRBHUM -> KOTA -> RISHIHOOD)
+  // ═══════════════════════════════════════════════
+  const GeographicJourney = {
+    canvas: null,
+    renderer: null,
+    scene: null,
+    camera: null,
+    globeGroup: null,
+    earthMesh: null,
+    cloudMesh: null,
+    atmosMesh: null,
+    terrainGroup: null,
+    terrainMesh: null,
+    birbhumRing: null,
+    birbhumPin: null,
+    currentScene: 0,
+    isFlying: false,
+    flightSequenceId: 0,
+    flightTimeouts: [],
+    isDragging: false,
+    prevMouse: { x: 0, y: 0 },
+    hasAutoStarted: false,
+    targetRotation: { x: 0.4538, y: -3.0369 },
+    targetCamDist: 245,
+
+    // 4 DISTINCT GEOGRAPHICAL STAGES (Roots & Origins):
+    // Stage 1: Earth & Asia (Deep cosmic orbit, whole planet and continents outlined)
+    // Stage 2: India Subcontinent (Camera zooms into India, occupies full central view with all 28 states outlined)
+    // Stage 3: West Bengal (Camera zooms into West Bengal with all 23 districts outlined in emerald green)
+    // Stage 4: Birbhum District (Camera zooms onto Birbhum with 3D terrain elevation & origin beacon)
+    scenes: [
+      {
+        id: 'asia',
+        badge: 'STAGE 01 / 04 • CONTINENT LEVEL',
+        approachingType: 'APPROACHING CONTINENT',
+        approachingName: 'ASIA',
+        title: 'Asia & Planet Earth',
+        sub: 'Global Earth Orbit',
+        coords: 'LAT: 26.0000° N | LON: 84.0000° E',
+        desc: 'Every journey begins as a tiny coordinate on this pale blue planet. Floating in high orbit over the continent of Asia, with continental shelves and ocean basins clearly outlined, preparing to descend into the Indian subcontinent.',
+        tags: ['🌏 Global Orbit', '🗺️ Continent of Asia', '✨ Earth View'],
+        camDist: 245,
+        rotY: -3.0369,
+        rotX: 0.4538
+      },
+      {
+        id: 'india',
+        badge: 'STAGE 02 / 04 • COUNTRY LEVEL',
+        approachingType: 'APPROACHING COUNTRY',
+        approachingName: 'INDIA',
+        title: 'INDIA',
+        sub: 'The Sovereign Subcontinent (28 States Outlined)',
+        coords: 'LAT: 22.5000° N | LON: 79.5000° E',
+        desc: 'Descending through the atmosphere into India. A sovereign land of 28 states, ancient traditions, and vibrant intellectual ambition. Outlining national borders and internal states as we descend toward Eastern India.',
+        tags: ['🇮🇳 Republic of India', '🏛️ 28 States Outlined', '🌟 National Border'],
+        camDist: 92, // ENLARGED SO ONLY INDIA IS VISIBLE!
+        rotY: -2.9583,
+        rotX: 0.3927
+      },
+      {
+        id: 'bengal',
+        badge: 'STAGE 03 / 04 • STATE LEVEL',
+        approachingType: 'APPROACHING STATE',
+        approachingName: 'WEST BENGAL',
+        title: 'WEST BENGAL',
+        sub: 'State of Intellectual Heritage (23 Districts Outlined)',
+        coords: 'LAT: 24.2000° N | LON: 87.8000° E',
+        desc: 'Focusing into West Bengal in Eastern India. Steeping into a state renowned for literary mastery, mathematical giants, and philosophical depth. Outlining all 23 districts across the Rarh and delta regions.',
+        tags: ['🏛️ State of West Bengal', '📚 23 Districts Outlined', '🌿 Gangetic Delta'],
+        camDist: 76, // ENLARGED SO ONLY WEST BENGAL IS VISIBLE!
+        rotY: -3.1032,
+        rotX: 0.4224
+      },
+      {
+        id: 'birbhum',
+        badge: 'STAGE 04 / 04 • DISTRICT OF ORIGIN',
+        approachingType: 'APPROACHING DISTRICT',
+        approachingName: 'BIRBHUM DISTRICT',
+        title: 'BIRBHUM, WEST BENGAL',
+        sub: 'Where My Journey Began',
+        coords: 'LAT: 23.8407° N | LON: 87.6186° E',
+        desc: 'My roots lie in the red soil of Birbhum. Here, surrounded by rural warmth and family, my fascination with mathematical patterns and scientific inquiry was born. It gave me the humility and grounding I carry everywhere.',
+        tags: ['🌱 Red Soil Roots', '🧮 First Olympiad Spark', '🏡 Rural Grounding', '🌟 Hometown Origin'],
+        camDist: 73, // ENLARGED A LITTLE MORE AS REQUESTED FOR CLOSE-UP DETAIL!
+        rotY: -3.1000,
+        rotX: 0.4161
+      }
+    ],
+
+    init() {
+      this.canvas = document.getElementById('journey-globe-canvas');
+      if (!this.canvas) return;
+
+      const tryInit = (retries = 35) => {
+        if (window.THREE) {
+          this.initWebGL();
+        } else if (retries > 0) {
+          setTimeout(() => tryInit(retries - 1), 80);
+        } else {
+          this.initFallback();
+        }
+      };
+      tryInit();
+
+      this.bindControls();
+      this.updateNarrative(0);
+
+      // AUTOMATIC ZOOM SEQUENCE TRIGGER WHEN USER IS IN THAT SLIDE:
+      // Plays once and stops at Birbhum District!
+      if ('IntersectionObserver' in window) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting && !this.hasAutoStarted) {
+              this.hasAutoStarted = true;
+              this.startSingleFlightSequence();
+            }
+          });
+        }, { threshold: 0.15 });
+        const journeySec = document.getElementById('journey');
+        if (journeySec) obs.observe(journeySec);
+      }
+
+      // Also trigger flight on clicking navbar or hero journey links
+      document.querySelectorAll('a[href="#journey"]').forEach(link => {
+        link.addEventListener('click', () => {
+          setTimeout(() => {
+            this.replayFlight();
+          }, 350);
+        });
+      });
+    },
+
+    latLongToVector3(lat, lon, radius) {
+      const phi = (90 - lat) * (Math.PI / 180);
+      const theta = (lon + 180) * (Math.PI / 180);
+      const x = -radius * Math.sin(phi) * Math.cos(theta);
+      const z = radius * Math.sin(phi) * Math.sin(theta);
+      const y = radius * Math.cos(phi);
+      return new window.THREE.Vector3(x, y, z);
+    },
+
+    initWebGL() {
+      const THREE = window.THREE;
+      if (!THREE || this.renderer) return;
+
+      const container = this.canvas.parentElement;
+      const width = container.clientWidth || window.innerWidth;
+      const height = container.clientHeight || 560;
+
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      this.camera.position.set(0, 0, this.targetCamDist);
+
+      // Directional Sun and Ambient Lighting
+      const ambient = new THREE.AmbientLight(0xffffff, 1.35);
+      this.scene.add(ambient);
+
+      const sunLight = new THREE.DirectionalLight(0xfffbeb, 1.6);
+      sunLight.position.set(120, 100, 140);
+      this.scene.add(sunLight);
+
+      const earthShine = new THREE.DirectionalLight(0x0284c7, 0.65);
+      earthShine.position.set(-100, -60, -100);
+      this.scene.add(earthShine);
+
+      // Deep Space Parallax Cosmic Starfield (750 Celestial Stars)
+      const starCount = 750;
+      const starGeo = new THREE.BufferGeometry();
+      const starPositions = new Float32Array(starCount * 3);
+      const starColors = new Float32Array(starCount * 3);
+      for (let i = 0; i < starCount; i++) {
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * 2.0 * Math.PI;
+        const phi = Math.acos(2.0 * v - 1.0);
+        const r = 380 + Math.random() * 320; // Spherical orbit beyond the planet
+        starPositions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
+        starPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+        starPositions[i * 3 + 2] = r * Math.cos(phi);
+
+        // Subtle celestial hues: diamond white, blue giant, warm gold, cyan
+        const starHues = [
+          [1.0, 1.0, 1.0],
+          [0.6, 0.85, 1.0],
+          [1.0, 0.92, 0.7],
+          [0.7, 0.95, 1.0]
+        ];
+        const hue = starHues[Math.floor(Math.random() * starHues.length)];
+        starColors[i * 3]     = hue[0];
+        starColors[i * 3 + 1] = hue[1];
+        starColors[i * 3 + 2] = hue[2];
+      }
+      starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+      starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+      const starMat = new THREE.PointsMaterial({
+        size: 1.8,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.85
+      });
+      this.starField = new THREE.Points(starGeo, starMat);
+      this.scene.add(this.starField);
+
+      this.renderer = new THREE.WebGLRenderer({
+        canvas: this.canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+      this.renderer.setSize(width, height);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // 3D Globe Group
+      this.globeGroup = new THREE.Group();
+      this.globeGroup.rotation.x = this.targetRotation.x;
+      this.globeGroup.rotation.y = this.targetRotation.y;
+      this.scene.add(this.globeGroup);
+
+      const radius = 68;
+
+      // 3D Displaced Earth Sphere Geometry (Himalayan Mountains Elevation)
+      const earthGeo = new THREE.SphereGeometry(radius, 128, 128);
+      const pos = earthGeo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const vx = pos.getX(i);
+        const vy = pos.getY(i);
+        const vz = pos.getZ(i);
+
+        const lat = 90 - Math.acos(vy / radius) * (180 / Math.PI);
+        const lon = (Math.atan2(vz, -vx) * (180 / Math.PI)) - 180;
+
+        if (lat >= 27 && lat <= 36 && lon >= 74 && lon <= 96) {
+          const latDist = (lat - 31.5) / 4.5;
+          const lonDist = (lon - 85.0) / 11.0;
+          const distSq = latDist * latDist + lonDist * lonDist;
+          if (distSq < 1.0) {
+            const hShape = Math.cos(distSq * (Math.PI / 2));
+            const rugged = Math.sin(lat * 1.5) * Math.cos(lon * 1.5) * 0.3;
+            const elevation = (hShape * 2.8 + rugged) * 0.85;
+            const norm = Math.sqrt(vx * vx + vy * vy + vz * vz);
+            const scale = (radius + Math.max(0, elevation)) / norm;
+            pos.setXYZ(i, vx * scale, vy * scale, vz * scale);
+          }
+        }
+      }
+      earthGeo.computeVertexNormals();
+
+      // High-resolution 4K canvas texture with natural satellite imagery, defined continent, ocean, state, and district borders
+      const canvasTex = this.createProceduralEarthCanvas();
+      const texture = new THREE.CanvasTexture(canvasTex);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.ClampToEdgeWrapping;
+      texture.generateMipmaps = true;
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      texture.needsUpdate = true;
+
+      const earthMat = new THREE.MeshPhongMaterial({
+        map: texture,
+        shininess: 18,
+        specular: 0x0f3b7a
+      });
+      this.earthMesh = new THREE.Mesh(earthGeo, earthMat);
+      this.globeGroup.add(this.earthMesh);
+
+      // Cloud Layer
+      const cloudGeo = new THREE.SphereGeometry(radius * 1.012, 64, 64);
+      const cloudCanvas = this.createCloudCanvas();
+      const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
+      cloudTexture.wrapS = THREE.RepeatWrapping;
+      cloudTexture.wrapT = THREE.ClampToEdgeWrapping;
+      const cloudMat = new THREE.MeshPhongMaterial({
+        map: cloudTexture,
+        transparent: true,
+        opacity: 0.38,
+        blending: THREE.NormalBlending,
+        depthWrite: false
+      });
+      this.cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
+      this.globeGroup.add(this.cloudMesh);
+
+      // Atmospheric Limb Glow
+      const atmosGeo = new THREE.SphereGeometry(radius * 1.042, 64, 64);
+      const atmosMat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.24,
+        side: THREE.BackSide
+      });
+      this.atmosMesh = new THREE.Mesh(atmosGeo, atmosMat);
+      this.globeGroup.add(this.atmosMesh);
+
+      // 3D Aerial Terrain Model at Birbhum (lat = 23.8407, lon = 87.6186)
+      const vBirbhum = this.latLongToVector3(23.8407, 87.6186, radius);
+      this.terrainGroup = new THREE.Group();
+      this.terrainGroup.position.copy(vBirbhum);
+      this.terrainGroup.lookAt(vBirbhum.clone().multiplyScalar(2));
+      this.terrainGroup.visible = false;
+      this.globeGroup.add(this.terrainGroup);
+
+      const terrainW = 6.5;
+      const terrainH = 6.5;
+      const terrainGeo = new THREE.PlaneGeometry(terrainW, terrainH, 120, 120);
+      const tPos = terrainGeo.attributes.position;
+      for (let i = 0; i < tPos.count; i++) {
+        const lx = tPos.getX(i);
+        const ly = tPos.getY(i);
+        const dCenter = Math.sqrt(lx * lx + ly * ly);
+        const envelope = Math.max(0, 1.0 - (dCenter / (terrainW * 0.48)));
+        const chotaNagpurRidge = Math.sin((lx + terrainW * 0.5) * 1.2) * Math.cos(ly * 1.1) * 0.65;
+        const ajayMayurakshiValley = Math.sin((ly - lx * 0.4) * 2.2) * 0.32;
+        const lateriteKnolls = Math.sin(lx * 4.5) * Math.sin(ly * 4.5) * 0.16;
+        const zElevation = Math.max(0, (chotaNagpurRidge + ajayMayurakshiValley + lateriteKnolls + 0.4) * envelope * 1.35);
+        tPos.setZ(i, zElevation);
+      }
+      terrainGeo.computeVertexNormals();
+
+      const regionalCanvas = this.createBirbhumRegionalTextureCanvas();
+      const regionalTex = new THREE.CanvasTexture(regionalCanvas);
+      const terrainMat = new THREE.MeshStandardMaterial({
+        map: regionalTex,
+        roughness: 0.8,
+        metalness: 0.05,
+        side: THREE.DoubleSide
+      });
+      this.terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
+      this.terrainMesh.position.z = 0.25;
+      this.terrainGroup.add(this.terrainMesh);
+
+      // Birbhum Pulsing Radar Beacon Rings
+      const rGeo = new THREE.RingGeometry(0.3, 0.55, 32);
+      const rMat = new THREE.MeshBasicMaterial({
+        color: 0xfacc15,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.85
+      });
+      this.birbhumRing = new THREE.Mesh(rGeo, rMat);
+      this.birbhumRing.position.z = 1.6;
+      this.terrainGroup.add(this.birbhumRing);
+
+      // Birbhum Origin Pin on Globe
+      const pinGeo = new THREE.SphereGeometry(1.4, 16, 16);
+      const pinMat = new THREE.MeshBasicMaterial({ color: 0xfacc15 });
+      this.birbhumPin = new THREE.Mesh(pinGeo, pinMat);
+      this.birbhumPin.position.copy(vBirbhum);
+      this.globeGroup.add(this.birbhumPin);
+
+      this.bindDragControls();
+
+      const onResize = () => {
+        if (!this.canvas || !this.renderer || !this.camera) return;
+        const w = container.clientWidth || window.innerWidth;
+        const h = container.clientHeight || 560;
+        if (w > 0 && h > 0) {
+          this.camera.aspect = w / h;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(w, h);
+        }
+      };
+      window.addEventListener('resize', onResize);
+      if ('ResizeObserver' in window) {
+        const ro = new ResizeObserver(onResize);
+        ro.observe(container);
+      }
+
+      this.animate();
+    },
+
+    createCloudCanvas() {
+      const c = document.createElement('canvas');
+      c.width = 2048;
+      c.height = 1024;
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      for (let i = 0; i < 450; i++) {
+        const x = Math.random() * c.width;
+        const y = Math.random() * c.height;
+        const radX = 25 + Math.random() * 85;
+        const radY = 12 + Math.random() * 35;
+        const alpha = 0.08 + Math.random() * 0.22;
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.beginPath();
+        ctx.ellipse(x, y, radX, radY, Math.PI / 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      return c;
+    },
+
+    // High-Resolution 3D Regional Satellite Texture for Birbhum (Lush Green!)
+    createBirbhumRegionalTextureCanvas() {
+      const c = document.createElement('canvas');
+      c.width = 1024;
+      c.height = 1024;
+      const ctx = c.getContext('2d');
+
+      // 1. Base Gradient: Natural Lush Gangetic Green across West Bengal!
+      const grad = ctx.createLinearGradient(0, 0, c.width, 0);
+      grad.addColorStop(0.00, '#1b4332'); // Western Chota Nagpur fringe forest green
+      grad.addColorStop(0.35, '#2d6a4f'); // Undulating Birbhum green uplands
+      grad.addColorStop(0.70, '#22c55e'); // Vibrant agricultural emerald plain
+      grad.addColorStop(1.00, '#16a34a'); // Fertile alluvial floodplain
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      // 2. Agricultural Paddy Patchwork in vibrant fresh greens
+      ctx.fillStyle = 'rgba(74, 222, 128, 0.32)';
+      for (let x = 80; x < c.width - 50; x += 45) {
+        for (let y = 50; y < c.height - 50; y += 45) {
+          if (Math.random() > 0.3) {
+            ctx.fillRect(x + 2, y + 2, 40, 40);
+          }
+        }
+      }
+
+      // 3. Winding River Paths: Mayurakshi River & Ajay River of Birbhum
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 14;
+      ctx.beginPath();
+      ctx.moveTo(0, 480);
+      ctx.bezierCurveTo(300, 500, 600, 560, 1024, 530);
+      ctx.stroke();
+
+      ctx.lineWidth = 12;
+      ctx.beginPath();
+      ctx.moveTo(0, 820);
+      ctx.bezierCurveTo(350, 850, 700, 870, 1024, 840);
+      ctx.stroke();
+
+      // 4. District Center of Birbhum (Suri / Bolpur)
+      const rx = 512;
+      const ry = 512;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.fillRect(rx - 50, ry - 50, 100, 100);
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(rx - 50, ry - 50, 100, 100);
+
+      // Typography inside terrain
+      ctx.font = 'bold 24px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.shadowColor = '#000000';
+      ctx.shadowBlur = 8;
+      ctx.fillText('★ BIRBHUM', rx, ry - 60);
+      ctx.font = '16px "JetBrains Mono", monospace';
+      ctx.fillStyle = '#fde047';
+      ctx.fillText('WEST BENGAL, INDIA', rx, ry + 75);
+      ctx.shadowBlur = 0;
+
+      return c;
+    },
+
+    // 4K Procedural Satellite Earth Texture with Natural Green Continents & Blue Oceans
+
+    createProceduralEarthCanvas() {
+      const c = document.createElement('canvas');
+      c.width = 4096;
+      c.height = 2048;
+      const ctx = c.getContext('2d');
+
+      const toXY = (lat, lon) => ({
+        x: ((lon + 180) / 360) * c.width,
+        y: ((90 - lat) / 180) * c.height
+      });
+
+      // 1. Natural Deep Marine Ocean Gradient (Realistic Satellite Azure & Deep Blue)
+      const oceanGrad = ctx.createLinearGradient(0, 0, 0, c.height);
+      oceanGrad.addColorStop(0.00, '#0c3266'); // Arctic deep blue
+      oceanGrad.addColorStop(0.15, '#0f488e'); // Sub-arctic rich marine blue
+      oceanGrad.addColorStop(0.35, '#135fa8'); // Temperate oceanic blue
+      oceanGrad.addColorStop(0.50, '#1565c0'); // Vibrant equatorial / tropical azure ocean blue
+      oceanGrad.addColorStop(0.65, '#135fa8'); // Indian Ocean & southern tropical blue
+      oceanGrad.addColorStop(0.85, '#0f488e'); // Southern oceanic blue
+      oceanGrad.addColorStop(1.00, '#0c3266'); // Antarctic deep marine blue
+      ctx.fillStyle = oceanGrad;
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      // 2. Polar Ice Sheets
+      const arcY = toXY(72, 0).y;
+      const arcGrad = ctx.createLinearGradient(0, 0, 0, arcY);
+      arcGrad.addColorStop(0.0, 'rgba(255, 255, 255, 0.98)');
+      arcGrad.addColorStop(0.7, 'rgba(224, 242, 254, 0.85)');
+      arcGrad.addColorStop(1.0, 'rgba(186, 230, 253, 0)');
+      ctx.fillStyle = arcGrad;
+      ctx.fillRect(0, 0, c.width, arcY);
+
+      const antY = toXY(-66, 0).y;
+      const antGrad = ctx.createLinearGradient(0, antY, 0, c.height);
+      antGrad.addColorStop(0.0, 'rgba(186, 230, 253, 0)');
+      antGrad.addColorStop(0.35, 'rgba(224, 242, 254, 0.88)');
+      antGrad.addColorStop(1.0, 'rgba(255, 255, 255, 0.98)');
+      ctx.fillStyle = antGrad;
+      ctx.fillRect(0, antY, c.width, c.height - antY);
+
+      function drawPoly(pts, fillColor, strokeColor, lineWidth = 1) {
+        if (!pts || pts.length < 3) return;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.closePath();
+        if (fillColor) {
+          ctx.fillStyle = fillColor;
+          ctx.fill();
+        }
+        if (strokeColor && lineWidth > 0) {
+          ctx.strokeStyle = strokeColor;
+          ctx.lineWidth = lineWidth;
+          ctx.stroke();
+        }
+      }
+
+      function drawLandmass(pts, landColor, hasShelf = true) {
+        if (!pts || pts.length < 3) return;
+        if (hasShelf) {
+          ctx.beginPath();
+          ctx.moveTo(pts[0].x, pts[0].y);
+          for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+          ctx.closePath();
+          // Turquoise continental shelf halo (matching Image 1 & 2)
+          ctx.strokeStyle = 'rgba(0, 229, 255, 0.42)';
+          ctx.lineWidth = 26;
+          ctx.stroke();
+          ctx.strokeStyle = 'rgba(38, 198, 218, 0.75)';
+          ctx.lineWidth = 14;
+          ctx.stroke();
+          ctx.strokeStyle = 'rgba(77, 208, 225, 0.95)';
+          ctx.lineWidth = 6;
+          ctx.stroke();
+        }
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.closePath();
+        ctx.fillStyle = landColor;
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(2, 6, 23, 0.55)';
+        ctx.lineWidth = 4.0;
+        ctx.stroke();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.88)';
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+      }
+
+      // 3. Continents with Natural Satellite Vegetation Green (Land is Green!)
+      const eurasia = [
+        toXY(71, 28), toXY(71, 60), toXY(68, 90), toXY(66, 120), toXY(60, 140),
+        toXY(50, 142), toXY(38, 128), toXY(25, 120), toXY(12, 108), toXY(2, 104),
+        toXY(8, 98), toXY(22, 90), toXY(21, 70), toXY(25, 60), toXY(30, 48),
+        toXY(36, 36), toXY(42, 28), toXY(55, 12), toXY(60, 20)
+      ];
+      drawLandmass(eurasia, '#2e7d32', true); // Natural satellite vegetation green
+
+      const europeWest = [
+        toXY(60, 20), toXY(55, 12), toXY(44, -1), toXY(36, -6), toXY(36, 5),
+        toXY(44, 15), toXY(50, 5), toXY(58, 6), toXY(62, 10)
+      ];
+      drawLandmass(europeWest, '#388e3c', true); // Lush temperate green
+
+      const britain = [
+        toXY(58, -3), toXY(55, 0), toXY(51, 1), toXY(50, -5), toXY(54, -4)
+      ];
+      drawLandmass(britain, '#43a047', true); // Fresh emerald green
+
+      const japan = [
+        toXY(44, 144), toXY(40, 141), toXY(35, 136), toXY(32, 131), toXY(34, 132),
+        toXY(38, 140), toXY(42, 143)
+      ];
+      drawLandmass(japan, '#388e3c', true); // Verdant green
+
+      const seAsia1 = [
+        toXY(5, 96), toXY(0, 104), toXY(-6, 106), toXY(-8, 115), toXY(-4, 120),
+        toXY(0, 118), toXY(4, 114), toXY(6, 102)
+      ];
+      drawLandmass(seAsia1, '#2e7d32', true); // Tropical lush canopy
+
+      const africa = [
+        toXY(36, -5), toXY(37, 10), toXY(32, 32), toXY(12, 44), toXY(4, 48),
+        toXY(0, 42), toXY(-15, 40), toXY(-34, 20), toXY(-34, 18), toXY(-22, 14),
+        toXY(5, 4), toXY(15, -16), toXY(30, -10)
+      ];
+      drawLandmass(africa, '#2e7d32', true); // Natural equatorial & savannah green
+
+      const sahara = [
+        toXY(35, -5), toXY(36, 10), toXY(31, 32), toXY(22, 36), toXY(16, 32),
+        toXY(15, 10), toXY(16, -15), toXY(28, -12)
+      ];
+      drawPoly(sahara, '#d4a359', 'rgba(255, 255, 255, 0.45)', 2); // Natural warm desert sand
+
+      const arabia = [
+        toXY(30, 34), toXY(32, 42), toXY(26, 52), toXY(24, 58), toXY(17, 54),
+        toXY(13, 44), toXY(18, 40), toXY(24, 38)
+      ];
+      drawLandmass(arabia, '#d4a359', true); // Desert dunes
+
+      const northAmerica = [
+        toXY(72, -165), toXY(72, -130), toXY(60, -85), toXY(50, -55), toXY(30, -80),
+        toXY(25, -80), toXY(18, -96), toXY(15, -92), toXY(20, -105), toXY(30, -115),
+        toXY(48, -125), toXY(60, -140)
+      ];
+      drawLandmass(northAmerica, '#2e7d32', true); // Lush temperate forest green
+
+      const greenland = [
+        toXY(82, -30), toXY(80, -20), toXY(70, -22), toXY(60, -44), toXY(72, -55),
+        toXY(78, -60), toXY(82, -45)
+      ];
+      drawLandmass(greenland, '#ffffff', true); // Arctic ice cap
+
+      const southAmerica = [
+        toXY(12, -75), toXY(8, -60), toXY(-5, -35), toXY(-22, -40), toXY(-35, -53),
+        toXY(-54, -67), toXY(-40, -74), toXY(-18, -75), toXY(-5, -80)
+      ];
+      drawLandmass(southAmerica, '#1b5e20', true); // Lush Amazon rainforest green
+
+      const australia = [
+        toXY(-12, 131), toXY(-15, 144), toXY(-25, 153), toXY(-38, 148),
+        toXY(-38, 140), toXY(-34, 116), toXY(-22, 114), toXY(-15, 126)
+      ];
+      drawLandmass(australia, '#388e3c', true); // Natural vegetation green
+
+      const sriLanka = [
+        toXY(9.8, 80.2), toXY(8.6, 81.6), toXY(6.9, 81.8), toXY(5.9, 80.6),
+        toXY(6.8, 79.8), toXY(8.4, 79.8)
+      ];
+      drawLandmass(sriLanka, '#2e7d32', true); // Lush tropical island
+
+      // Continent & World Political Boundaries (Prominent, High-Contrast & Defined)
+      const worldCountryLines = [
+        // US-Canada 49th parallel & US-Mexico border
+        [toXY(49, -123), toXY(49, -95), toXY(45, -75)],
+        [toXY(32, -117), toXY(31, -111), toXY(26, -97)],
+        // South American borders (Brazil, Peru, Colombia, Argentina)
+        [toXY(0, -70), toXY(-10, -75), toXY(-22, -68), toXY(-34, -58)],
+        [toXY(-4, -80), toXY(-12, -77), toXY(-18, -70)],
+        // European national boundaries
+        [toXY(50, 2), toXY(43, 3), toXY(42, 9)],
+        [toXY(54, 14), toXY(48, 13), toXY(46, 16)],
+        [toXY(55, 21), toXY(50, 24), toXY(45, 29)],
+        // African borders
+        [toXY(22, 25), toXY(22, 34)],
+        [toXY(31, 25), toXY(22, 25)],
+        [toXY(13, 14), toXY(4, 8), toXY(4, 14)],
+        [toXY(-18, 12), toXY(-18, 24), toXY(-26, 28)],
+        // Asian national borders (Russia, China, Central Asia, Southeast Asia)
+        [toXY(52, 88), toXY(48, 88), toXY(42, 80)],
+        [toXY(45, 80), toXY(36, 75), toXY(30, 62)],
+        [toXY(42, 130), toXY(40, 124)],
+        [toXY(22, 100), toXY(10, 106)]
+      ];
+
+      // High-contrast dark shadow under-stroke for national boundaries
+      ctx.strokeStyle = 'rgba(2, 6, 23, 0.75)';
+      ctx.lineWidth = 5.5;
+      worldCountryLines.forEach(line => {
+        ctx.beginPath();
+        ctx.moveTo(line[0].x, line[0].y);
+        for (let i = 1; i < line.length; i++) ctx.lineTo(line[i].x, line[i].y);
+        ctx.stroke();
+      });
+
+      // Sharp bright national boundaries
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.lineWidth = 3.2;
+      worldCountryLines.forEach(line => {
+        ctx.beginPath();
+        ctx.moveTo(line[0].x, line[0].y);
+        for (let i = 1; i < line.length; i++) ctx.lineTo(line[i].x, line[i].y);
+        ctx.stroke();
+      });
+
+      // Asia Continent Boundary (Illuminated Cyan Contour)
+      const asiaBorder = [
+        toXY(72, 60), toXY(68, 90), toXY(65, 120), toXY(60, 140), toXY(45, 135),
+        toXY(35, 120), toXY(15, 105), toXY(2, 104), toXY(10, 75), toXY(25, 60),
+        toXY(40, 50), toXY(55, 55)
+      ];
+      ctx.beginPath();
+      ctx.moveTo(asiaBorder[0].x, asiaBorder[0].y);
+      asiaBorder.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(0, 212, 255, 0.6)';
+      ctx.lineWidth = 10.0;
+      ctx.stroke();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 5.0;
+      ctx.stroke();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.2;
+      ctx.stroke();
+
+      // 4. India Subcontinent (Matching Image 2 Relief & Turquoise Coastal Shelves)
+      const indiaPoints = [
+        toXY(35.5, 74.5), toXY(34.0, 77.5), toXY(32.5, 79.0), toXY(30.0, 81.0),
+        toXY(28.0, 84.0), toXY(27.5, 88.5), toXY(28.0, 95.0), toXY(27.0, 97.0),
+        toXY(24.5, 93.0), toXY(23.0, 91.5), toXY(21.6, 89.0), toXY(19.8, 85.8),
+        toXY(16.5, 82.0), toXY(13.0, 80.2), toXY(8.2, 77.5),  toXY(10.0, 75.8),
+        toXY(13.0, 74.8), toXY(16.5, 73.3), toXY(19.0, 72.8), toXY(21.0, 72.7),
+        toXY(22.3, 69.0), toXY(24.0, 68.7), toXY(27.5, 70.5), toXY(31.0, 72.5),
+        toXY(33.0, 73.5)
+      ];
+
+      // Coastal turquoise shelves encircling India
+      ctx.beginPath();
+      ctx.moveTo(indiaPoints[0].x, indiaPoints[0].y);
+      indiaPoints.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(0, 229, 255, 0.65)';
+      ctx.lineWidth = 32;
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(38, 198, 218, 0.95)';
+      ctx.lineWidth = 16;
+      ctx.stroke();
+
+      ctx.fillStyle = '#16a34a'; // Lush Gangetic green
+      ctx.fill();
+
+      // Western Ghats ridge
+      const westernGhats = [
+        toXY(20.5, 73.2), toXY(18.5, 73.5), toXY(15.5, 74.2), toXY(12.0, 75.5),
+        toXY(8.8, 77.2), toXY(9.5, 76.5), toXY(13.5, 74.6), toXY(17.0, 73.2)
+      ];
+      drawPoly(westernGhats, '#14532d', null);
+
+      // Deccan Plateau
+      const deccanPlateau = [
+        toXY(20.5, 74.5), toXY(21.0, 78.5), toXY(19.0, 80.5), toXY(15.5, 79.5),
+        toXY(13.5, 77.5), toXY(14.0, 75.5), toXY(17.5, 74.5)
+      ];
+      drawPoly(deccanPlateau, '#84cc16', null);
+
+      // Thar Desert
+      const tharDesert = [
+        toXY(28.5, 70.5), toXY(28.0, 74.0), toXY(25.5, 73.5), toXY(24.5, 70.8),
+        toXY(26.5, 69.8)
+      ];
+      drawPoly(tharDesert, '#ca8a04', null);
+
+      // The Great Himalayas Snow Ridge
+      const himalayas = [
+        toXY(35.5, 74.5), toXY(34.2, 77.5), toXY(31.8, 79.5), toXY(29.8, 81.8),
+        toXY(28.2, 84.5), toXY(27.8, 88.5), toXY(28.2, 92.5), toXY(28.0, 96.0),
+        toXY(26.8, 95.5), toXY(27.0, 89.0), toXY(27.4, 85.0), toXY(29.0, 82.0),
+        toXY(30.8, 79.8), toXY(33.0, 77.8), toXY(34.5, 74.8)
+      ];
+      drawPoly(himalayas, '#ffffff', 'rgba(186, 230, 253, 0.95)', 2.5);
+
+      // Major Blue River Networks (Water is Blue across Green Continents!)
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 3.6;
+
+      // Ganges & Yamuna River through northern India & Bengal Delta
+      const gangesRiver = [
+        toXY(30.9, 78.9), toXY(29.9, 78.2), toXY(28.0, 79.5), toXY(26.5, 80.5),
+        toXY(25.4, 81.9), toXY(25.3, 83.0), toXY(25.6, 85.1), toXY(25.2, 87.0),
+        toXY(24.8, 87.9), toXY(24.1, 88.3), toXY(23.2, 88.4), toXY(21.8, 88.9)
+      ];
+      ctx.beginPath();
+      ctx.moveTo(gangesRiver[0].x, gangesRiver[0].y);
+      for (let i = 1; i < gangesRiver.length; i++) ctx.lineTo(gangesRiver[i].x, gangesRiver[i].y);
+      ctx.stroke();
+
+      // Brahmaputra River through Assam into Bay of Bengal
+      const brahmaputraRiver = [
+        toXY(29.0, 94.0), toXY(27.5, 95.0), toXY(26.2, 92.0), toXY(26.0, 90.0),
+        toXY(25.1, 89.8), toXY(23.5, 90.5), toXY(22.0, 90.8)
+      ];
+      ctx.beginPath();
+      ctx.moveTo(brahmaputraRiver[0].x, brahmaputraRiver[0].y);
+      for (let i = 1; i < brahmaputraRiver.length; i++) ctx.lineTo(brahmaputraRiver[i].x, brahmaputraRiver[i].y);
+      ctx.stroke();
+
+      // Indus River flowing to the Arabian Sea
+      const indusRiver = [
+        toXY(33.0, 75.5), toXY(32.5, 73.0), toXY(30.0, 71.0), toXY(27.5, 68.5),
+        toXY(24.5, 67.5)
+      ];
+      ctx.beginPath();
+      ctx.moveTo(indusRiver[0].x, indusRiver[0].y);
+      for (let i = 1; i < indusRiver.length; i++) ctx.lineTo(indusRiver[i].x, indusRiver[i].y);
+      ctx.stroke();
+
+      // Nile River across Egypt into the Mediterranean
+      const nileRiver = [
+        toXY(0.5, 33.0), toXY(9.0, 31.5), toXY(15.5, 32.5), toXY(24.0, 32.8),
+        toXY(30.0, 31.2), toXY(31.5, 31.0)
+      ];
+      ctx.beginPath();
+      ctx.moveTo(nileRiver[0].x, nileRiver[0].y);
+      for (let i = 1; i < nileRiver.length; i++) ctx.lineTo(nileRiver[i].x, nileRiver[i].y);
+      ctx.stroke();
+
+      // Amazon River through South America into Atlantic
+      const amazonRiver = [
+        toXY(-4.5, -73.5), toXY(-3.2, -65.0), toXY(-3.1, -60.0), toXY(-2.5, -55.0),
+        toXY(-0.5, -50.0)
+      ];
+      ctx.lineWidth = 4.5;
+      ctx.beginPath();
+      ctx.moveTo(amazonRiver[0].x, amazonRiver[0].y);
+      for (let i = 1; i < amazonRiver.length; i++) ctx.lineTo(amazonRiver[i].x, amazonRiver[i].y);
+      ctx.stroke();
+
+      // Neighboring borders (Bangladesh)
+      const bangladeshBorder = [
+        toXY(26.2, 88.9), toXY(25.8, 88.5), toXY(25.2, 88.6), toXY(24.8, 88.3),
+        toXY(24.2, 88.7), toXY(23.6, 88.9), toXY(22.8, 89.0), toXY(21.65, 89.1),
+        toXY(21.4, 91.8), toXY(23.5, 92.5), toXY(25.1, 91.8), toXY(25.2, 89.8),
+        toXY(26.2, 89.8)
+      ];
+      ctx.beginPath();
+      ctx.moveTo(bangladeshBorder[0].x, bangladeshBorder[0].y);
+      bangladeshBorder.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.lineWidth = 3.0;
+      ctx.stroke();
+
+      // India Sovereign Boundary (Bold Golden-Amber Perimeter)
+      ctx.beginPath();
+      ctx.moveTo(indiaPoints[0].x, indiaPoints[0].y);
+      indiaPoints.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(250, 204, 21, 0.75)';
+      ctx.lineWidth = 14;
+      ctx.stroke();
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 7.0;
+      ctx.stroke();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3.0;
+      ctx.stroke();
+
+      // Defined State boundaries across India (All 28 States Demarcation)
+      const stateLines = [
+        // North: J&K, Ladakh, Himachal, Punjab, Haryana, Uttarakhand
+        [toXY(35.5, 75.0), toXY(33.5, 76.5), toXY(32.5, 78.5)],
+        [toXY(33.0, 74.5), toXY(31.5, 75.2), toXY(29.8, 76.5)],
+        [toXY(31.5, 75.2), toXY(31.0, 77.2), toXY(30.0, 79.5)],
+        [toXY(29.8, 76.5), toXY(28.6, 77.2), toXY(28.0, 77.8)], // Delhi / Haryana
+        // West: Rajasthan, Gujarat
+        [toXY(29.8, 73.5), toXY(28.0, 74.5), toXY(24.5, 73.0), toXY(21.5, 73.0)],
+        [toXY(24.5, 73.0), toXY(23.5, 70.0), toXY(22.0, 70.5)], // Gujarat Kutch/Kathiawar
+        // Central: Madhya Pradesh, Uttar Pradesh, Chhattisgarh
+        [toXY(28.5, 78.0), toXY(26.5, 80.5), toXY(25.5, 83.5)], // UP / Bihar
+        [toXY(26.0, 77.5), toXY(24.5, 77.0), toXY(23.0, 79.0), toXY(21.8, 80.5)], // MP / Rajasthan
+        [toXY(24.5, 82.5), toXY(22.0, 82.5), toXY(20.5, 81.5), toXY(18.5, 81.0)], // Chhattisgarh
+        // East: Bihar, Jharkhand, Odisha
+        [toXY(25.0, 83.5), toXY(24.5, 87.2)], // Bihar / Jharkhand
+        [toXY(23.5, 83.5), toXY(22.5, 85.5), toXY(22.0, 86.8)], // Jharkhand / Odisha
+        [toXY(22.0, 86.8), toXY(20.0, 85.0), toXY(18.5, 83.0), toXY(18.0, 80.5)], // Odisha
+        // South: Maharashtra, Karnataka, Telangana, Andhra, Tamil Nadu, Kerala
+        [toXY(21.5, 73.0), toXY(20.5, 76.0), toXY(20.5, 80.0)], // Maharashtra / MP
+        [toXY(18.5, 73.0), toXY(16.5, 76.5), toXY(16.0, 80.5)], // Maharashtra / Karnataka
+        [toXY(19.0, 78.0), toXY(17.5, 79.5), toXY(16.5, 81.0)], // Telangana / Andhra
+        [toXY(15.0, 75.0), toXY(12.5, 77.2), toXY(11.5, 79.5)], // Karnataka / Tamil Nadu
+        [toXY(12.0, 75.5), toXY(10.0, 76.5), toXY(8.5, 77.5)], // Kerala / Tamil Nadu
+        // North-East: Sikkim, Assam, Meghalaya, Arunachal, Nagaland, Manipur, Mizoram, Tripura
+        [toXY(27.8, 88.5), toXY(27.2, 88.6)], // Sikkim
+        [toXY(26.2, 89.8), toXY(26.0, 93.0), toXY(27.5, 95.5)], // Assam
+        [toXY(25.8, 90.5), toXY(25.2, 92.5)], // Meghalaya
+        [toXY(25.5, 93.5), toXY(24.0, 93.5)], // Nagaland / Manipur
+        [toXY(24.0, 92.0), toXY(23.0, 92.0)] // Tripura / Mizoram
+      ];
+
+      // Dark under-stroke for prominent Indian states demarcation
+      ctx.strokeStyle = 'rgba(2, 6, 23, 0.8)';
+      ctx.lineWidth = 6.5;
+      stateLines.forEach(line => {
+        ctx.beginPath();
+        ctx.moveTo(line[0].x, line[0].y);
+        for (let i = 1; i < line.length; i++) ctx.lineTo(line[i].x, line[i].y);
+        ctx.stroke();
+      });
+
+      // Bright white crisp state boundary lines (Super Defined!)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.98)';
+      ctx.lineWidth = 3.6;
+      stateLines.forEach(line => {
+        ctx.beginPath();
+        ctx.moveTo(line[0].x, line[0].y);
+        for (let i = 1; i < line.length; i++) ctx.lineTo(line[i].x, line[i].y);
+        ctx.stroke();
+      });
+
+      // 5. WEST BENGAL STATE (Authentic geometry matching Image 3!)
+      // PURE LUSH NATURAL GANGIC GREEN ACROSS THE ENTIRE STATE!
+      const wbPoly = [
+        toXY(27.2, 88.1), toXY(27.1, 88.9), toXY(26.8, 89.9), toXY(26.2, 89.8), toXY(26.2, 88.9),
+        toXY(25.8, 88.5), toXY(25.2, 88.6), toXY(24.8, 88.3), toXY(24.2, 88.7), toXY(23.6, 88.9),
+        toXY(22.8, 89.0), toXY(21.65, 89.1), toXY(21.55, 88.5), toXY(21.6, 87.5), toXY(22.2, 86.8),
+        toXY(23.1, 86.6), toXY(23.5, 86.7), toXY(23.75, 86.9), toXY(23.85, 87.2), toXY(24.35, 87.5),
+        toXY(24.4, 87.8), toXY(25.0, 87.7), toXY(25.8, 87.9), toXY(26.2, 88.1), toXY(26.8, 88.0)
+      ];
+      ctx.beginPath();
+      ctx.moveTo(wbPoly[0].x, wbPoly[0].y);
+      wbPoly.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      // Pure Lush Agricultural Gangetic Green (West Bengal is Green!)
+      ctx.fillStyle = '#16a34a';
+      ctx.fill();
+
+      // Radiant Defined Cyan State Border (Super Prominent!)
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.85)';
+      ctx.lineWidth = 18;
+      ctx.stroke();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 9.0;
+      ctx.stroke();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 4.0;
+      ctx.stroke();
+
+      // High-Contrast Defined District Boundaries across West Bengal (23 Districts)
+      const wbDistrictLines = [
+        // 1. Darjeeling / Kalimpong / Jalpaiguri / Alipurduar / Cooch Behar (North Bengal Hills & Dooars)
+        [toXY(27.15, 88.25), toXY(26.95, 88.55), toXY(27.05, 88.85)],
+        [toXY(26.85, 88.6), toXY(26.75, 89.2), toXY(26.8, 89.7)],
+        [toXY(26.6, 88.5), toXY(26.45, 89.1), toXY(26.35, 89.8)],
+        // 2. Siliguri Corridor / North Dinajpur
+        [toXY(26.3, 88.15), toXY(26.15, 88.5), toXY(26.1, 88.85)],
+        // 3. South Dinajpur & Malda
+        [toXY(25.6, 88.1), toXY(25.4, 88.5), toXY(25.35, 88.9)],
+        [toXY(25.1, 87.85), toXY(24.95, 88.2), toXY(24.85, 88.4)],
+        // 4. Murshidabad & Nadia (Ganges floodplain)
+        [toXY(24.45, 87.9), toXY(24.2, 88.3), toXY(23.95, 88.8)],
+        [toXY(23.85, 88.15), toXY(23.5, 88.55)],
+        // 5. Birbhum district borders (flanked by Murshidabad, Bardhaman & Jharkhand)
+        [toXY(24.35, 87.85), toXY(24.1, 87.95), toXY(23.85, 87.85)],
+        [toXY(23.85, 87.85), toXY(23.65, 87.82), toXY(23.60, 87.65), toXY(23.70, 87.35)],
+        [toXY(23.70, 87.35), toXY(23.95, 87.25), toXY(24.25, 87.55), toXY(24.35, 87.85)],
+        // 6. Purba Bardhaman & Paschim Bardhaman (Durgapur/Asansol corridor)
+        [toXY(23.75, 86.9), toXY(23.55, 87.35), toXY(23.4, 87.85)],
+        [toXY(23.4, 87.85), toXY(23.3, 88.25), toXY(23.15, 88.4)],
+        // 7. Purulia & Bankura (Chota Nagpur fringe)
+        [toXY(23.5, 86.8), toXY(23.1, 86.9), toXY(22.8, 87.0)],
+        [toXY(23.35, 87.15), toXY(23.05, 87.35), toXY(22.65, 87.35)],
+        // 8. Paschim Medinipur & Purba Medinipur & Jhargram
+        [toXY(22.7, 87.0), toXY(22.3, 87.15), toXY(21.85, 87.45)],
+        [toXY(22.4, 87.55), toXY(21.95, 87.65), toXY(21.65, 87.7)],
+        // 9. Hooghly, Howrah & Kolkata
+        [toXY(23.15, 87.95), toXY(22.8, 88.15), toXY(22.5, 88.1)],
+        [toXY(22.65, 88.25), toXY(22.55, 88.35)], // Howrah / Kolkata
+        // 10. North 24 Parganas & South 24 Parganas (Sundarbans Delta channels)
+        [toXY(22.75, 88.45), toXY(22.45, 88.75), toXY(22.2, 88.95)],
+        [toXY(22.25, 88.35), toXY(21.85, 88.55), toXY(21.6, 88.85)]
+      ];
+
+      // Dark under-stroke for high contrast against green land
+      ctx.strokeStyle = 'rgba(4, 20, 10, 0.9)';
+      ctx.lineWidth = 7.5;
+      wbDistrictLines.forEach(line => {
+        ctx.beginPath();
+        ctx.moveTo(line[0].x, line[0].y);
+        for (let i = 1; i < line.length; i++) ctx.lineTo(line[i].x, line[i].y);
+        ctx.stroke();
+      });
+
+      // Bright white crisp district lines (Defined & Visible!)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.98)';
+      ctx.lineWidth = 4.0;
+      wbDistrictLines.forEach(line => {
+        ctx.beginPath();
+        ctx.moveTo(line[0].x, line[0].y);
+        for (let i = 1; i < line.length; i++) ctx.lineTo(line[i].x, line[i].y);
+        ctx.stroke();
+      });
+
+      // Subtle cyan accent stroke
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.65)';
+      ctx.lineWidth = 1.8;
+      wbDistrictLines.forEach(line => {
+        ctx.beginPath();
+        ctx.moveTo(line[0].x, line[0].y);
+        for (let i = 1; i < line.length; i++) ctx.lineTo(line[i].x, line[i].y);
+        ctx.stroke();
+      });
+
+      // 6. BIRBHUM DISTRICT (Pure Lush Green with Glowing Golden-Amber Border Outline)
+      const birbhumPoly = [
+        toXY(24.35, 87.85), toXY(24.1, 87.95), toXY(23.85, 87.85), toXY(23.65, 87.82),
+        toXY(23.60, 87.65), toXY(23.70, 87.35), toXY(23.95, 87.25), toXY(24.25, 87.55)
+      ];
+      ctx.beginPath();
+      ctx.moveTo(birbhumPoly[0].x, birbhumPoly[0].y);
+      birbhumPoly.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      // Lush green fill matching the fertile plains
+      ctx.fillStyle = '#22c55e';
+      ctx.fill();
+
+      // Bold Golden-Amber Outline for Birbhum District (Extremely Prominent!)
+      ctx.strokeStyle = 'rgba(250, 204, 21, 0.9)';
+      ctx.lineWidth = 22;
+      ctx.stroke();
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 10.0;
+      ctx.stroke();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 4.5;
+      ctx.stroke();
+
+
+      // Birbhum Coordinate Marker on 4K map
+      const pBir = toXY(23.8407, 87.6186);
+      ctx.beginPath();
+      ctx.arc(pBir.x, pBir.y, 14, 0, Math.PI * 2);
+      ctx.fillStyle = '#facc15';
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      // Note: Birbhum text callout is rendered dynamically in West Bengal & Birbhum stages!
+
+      return c;
+    },
+
+    // Single-pass flight from Earth/Asia -> India -> West Bengal -> Birbhum District
+    // Automatically stops at Birbhum District! Does NOT repeat!
+    startSingleFlightSequence() {
+      this.clearFlightTimers();
+      this.isFlying = true;
+      const seqId = ++this.flightSequenceId;
+
+      // Stage 0: Earth & Asia in space
+      this.goToScene(0);
+
+      const schedule = (sceneIdx, delayMs) => {
+        const timer = setTimeout(() => {
+          if (this.flightSequenceId !== seqId) return;
+          this.goToScene(sceneIdx);
+          if (sceneIdx === 3) {
+            this.isFlying = false; // STOPS AT BIRBHUM!
+          }
+        }, delayMs);
+        this.flightTimeouts.push(timer);
+      };
+
+      schedule(1, 3200);  // Stage 1: Smoothly zoom into India (at 3.2s)
+      schedule(2, 6800);  // Stage 2: Smoothly zoom into West Bengal (at 6.8s)
+      schedule(3, 10500); // Stage 3: Smoothly zoom into Birbhum District (at 10.5s) and STOPS!
+    },
+
+    clearFlightTimers() {
+      this.flightTimeouts.forEach(t => clearTimeout(t));
+      this.flightTimeouts = [];
+      this.flightSequenceId++;
+      this.isFlying = false;
+    },
+
+    replayFlight() {
+      this.clearFlightTimers();
+      this.isDragging = false;
+      this.startSingleFlightSequence();
+    },
+
+    skipToDestination() {
+      this.clearFlightTimers();
+      this.goToScene(3); // Jump directly to Birbhum District
+    },
+
+    animate() {
+      requestAnimationFrame(() => this.animate());
+
+      const t = Date.now() * 0.001;
+
+      if (this.birbhumRing && this.terrainGroup && this.terrainGroup.visible) {
+        const s = 1.0 + Math.sin(t * 3.5) * 0.35;
+        this.birbhumRing.scale.set(s, s, s);
+      }
+
+      if (this.cloudMesh) {
+        this.cloudMesh.rotation.y += 0.0006;
+      }
+      if (this.starField) {
+        this.starField.rotation.y += 0.00018; // Subtle deep space parallax drift
+      }
+
+      // Smooth camera and globe rotation lerp with shortest-angle wrapping
+      if (this.globeGroup && !this.isDragging) {
+        let diffY = (this.targetRotation.y - this.globeGroup.rotation.y) % (Math.PI * 2);
+        if (diffY > Math.PI) diffY -= Math.PI * 2;
+        if (diffY < -Math.PI) diffY += Math.PI * 2;
+        this.globeGroup.rotation.y += diffY * 0.08;
+
+        let diffX = (this.targetRotation.x - this.globeGroup.rotation.x);
+        this.globeGroup.rotation.x += diffX * 0.08;
+      }
+
+      if (this.camera) {
+        this.camera.position.z += (this.targetCamDist - this.camera.position.z) * 0.10;
+      }
+
+      if (this.renderer && this.scene && this.camera) {
+        this.renderer.render(this.scene, this.camera);
+      }
+    },
+
+    goToScene(idx) {
+      if (idx < 0 || idx >= this.scenes.length) return;
+      this.isDragging = false; // Never let drag state stall camera zoom or navigation!
+      this.currentScene = idx;
+      const s = this.scenes[idx];
+
+      this.targetRotation.y = s.rotY;
+      this.targetRotation.x = s.rotX;
+      this.targetCamDist = s.camDist;
+
+      // Show 3D terrain ONLY at Birbhum (Scene 3)
+      if (this.terrainGroup) {
+        this.terrainGroup.visible = (idx === 3);
+      }
+
+      this.updateNarrative(idx);
+
+      // Update active stage buttons
+      document.querySelectorAll('.journey-step-btn').forEach(b => {
+        const bIdx = parseInt(b.getAttribute('data-scene'));
+        b.classList.toggle('active', bIdx === idx);
+      });
+
+      // Update telemetry
+      const targetLbl = document.getElementById('globe-current-target');
+      if (targetLbl) targetLbl.textContent = `TARGET: ${s.approachingName || s.title.toUpperCase()}`;
+
+      // Update dynamic approaching banner (Only shows the place being approached!)
+      const appBanner = document.getElementById('journey-approaching-banner');
+      const appEyebrow = document.getElementById('approaching-eyebrow');
+      const appTitle = document.getElementById('approaching-title');
+      const appSub = document.getElementById('approaching-sub');
+
+      if (appBanner && appTitle) {
+        appBanner.classList.remove('is-active');
+        void appBanner.offsetWidth; // trigger reflow
+        if (appEyebrow) appEyebrow.textContent = s.approachingType || 'DESTINATION';
+        appTitle.textContent = s.approachingName || s.title;
+        if (appSub) appSub.textContent = s.sub;
+        appBanner.classList.add('is-active');
+      }
+
+      // Birbhum callout & 3D pin ONLY visible after entering West Bengal (Stage 2: bengal & Stage 3: birbhum)!
+      const inWestBengalOrBirbhum = (idx >= 2);
+      if (this.birbhumPin) {
+        this.birbhumPin.visible = inWestBengalOrBirbhum;
+      }
+      const calloutEl = document.getElementById('birbhum-stage-callout');
+      if (calloutEl) {
+        calloutEl.classList.toggle('is-visible', inWestBengalOrBirbhum);
+      }
+
+      const finalCard = document.getElementById('birbhum-final-card');
+      if (finalCard) {
+        finalCard.classList.toggle('is-visible', idx === 3);
+      }
+    },
+
+    updateNarrative(idx) {
+      const s = this.scenes[idx];
+      const card = document.getElementById('journey-story-card');
+      if (!card) return;
+
+      card.style.opacity = '0.35';
+      card.style.transform = 'translateY(8px)';
+
+      setTimeout(() => {
+        const badge = document.getElementById('journey-story-badge');
+        const title = document.getElementById('journey-story-title');
+        const sub = document.getElementById('journey-story-sub');
+        const coords = document.getElementById('journey-story-coords');
+        const desc = document.getElementById('journey-story-desc');
+        const tags = document.getElementById('journey-story-tags');
+
+        if (badge) badge.textContent = s.badge;
+        if (title) title.textContent = s.title;
+        if (sub) sub.textContent = s.sub;
+        if (coords) coords.textContent = s.speciality || s.coords || '';
+        if (desc) desc.textContent = s.desc;
+
+        if (tags && s.tags) {
+          tags.innerHTML = s.tags.map(t => `<span class="journey-tag">${t}</span>`).join('');
+        }
+
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 140);
+    },
+
+    bindControls() {
+      // 4 directly clickable stage buttons: Earth & Asia, India, West Bengal, Birbhum
+      document.querySelectorAll('.journey-step-btn').forEach(btn => {
+        const handler = (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          this.clearFlightTimers();
+          this.isDragging = false;
+          const idx = parseInt(btn.getAttribute('data-scene'), 10);
+          if (!isNaN(idx)) {
+            this.goToScene(idx);
+            if (window.CinematicAudio && window.CinematicAudio.playClick) {
+              window.CinematicAudio.playClick();
+            }
+          }
+        };
+        btn.addEventListener('click', handler);
+        btn.addEventListener('touchend', handler, { passive: false });
+      });
+
+      // Replay button: re-runs flight and stops at Birbhum
+      const replayBtn = document.getElementById('journey-replay-btn');
+      if (replayBtn) {
+        const replayHandler = (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          this.replayFlight();
+          if (window.CinematicAudio && window.CinematicAudio.playClick) {
+            window.CinematicAudio.playClick();
+          }
+        };
+        replayBtn.addEventListener('click', replayHandler);
+        replayBtn.addEventListener('touchend', replayHandler, { passive: false });
+      }
+
+      // Skip button: skips directly to Birbhum District
+      const skipBtn = document.getElementById('journey-skip-btn');
+      if (skipBtn) {
+        const skipHandler = (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          this.skipToDestination();
+          if (window.CinematicAudio && window.CinematicAudio.playClick) {
+            window.CinematicAudio.playClick();
+          }
+        };
+        skipBtn.addEventListener('click', skipHandler);
+        skipBtn.addEventListener('touchend', skipHandler, { passive: false });
+      }
+    },
+
+    bindDragControls() {
+      const c = this.canvas;
+      if (!c) return;
+
+      // Note: NO wheel / scroll-to-zoom listener! Page scroll is 100% natural and unhindered.
+      const onStart = (clientX, clientY) => {
+        this.clearFlightTimers();
+        this.isDragging = true;
+        this.prevMouse = { x: clientX, y: clientY };
+      };
+
+      const onMove = (clientX, clientY) => {
+        if (!this.isDragging) return;
+        const dx = clientX - this.prevMouse.x;
+        const dy = clientY - this.prevMouse.y;
+        this.prevMouse = { x: clientX, y: clientY };
+
+        this.targetRotation.y += dx * 0.007;
+        this.targetRotation.x += dy * 0.007;
+
+        this.targetRotation.x = Math.max(-1.1, Math.min(1.1, this.targetRotation.x));
+
+        if (this.globeGroup) {
+          this.globeGroup.rotation.y = this.targetRotation.y;
+          this.globeGroup.rotation.x = this.targetRotation.x;
+        }
+      };
+
+      const onEnd = () => {
+        this.isDragging = false;
+      };
+
+      c.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
+      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', onEnd);
+
+      c.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) onStart(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) onMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', onEnd);
+      window.addEventListener('touchcancel', onEnd);
+    },
+
+    initFallback() {
+      const ctx = this.canvas.getContext('2d');
+      if (!ctx) return;
+      ctx.fillStyle = '#060d1f';
+      ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      ctx.fillStyle = '#00f0e0';
+      ctx.font = '16px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('3D WebGL Initializing...', this.canvas.width / 2, this.canvas.height / 2);
+    }
+  };
+
   function init3DTilt() {
     const cards = document.querySelectorAll('.glass-card');
     cards.forEach(card => {
@@ -4658,11 +8564,19 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
   // ═══════════════════════════════════════════════
   function startAll() {
     CircleCursor.init();
+    CinematicAudio.init();
+    RubikOpeningStage.init();
+    GeographicJourney.init();
     init3DTilt();
     CubeGame.init();
     Cricket.init();
     Badminton.init();
     initSportTabs();
+
+    const replayIntroBtn = document.getElementById('intro-replay-btn');
+    if (replayIntroBtn) {
+      replayIntroBtn.onclick = () => RubikOpeningStage.replay();
+    }
 
     const sfxBtn = document.getElementById('sfx-toggle');
     if (sfxBtn) sfxBtn.onclick = () => AudioEngine.toggle();
@@ -4686,6 +8600,46 @@ a, button, input, textarea, select, canvas, label, [role="button"], .glass-card,
 
 })();
 </script>
+
+
+  <!-- ═══════ CINEMATIC PERSISTENT AUDIO PLAYER ═══════ -->
+  <div id="cinematic-audio-dock" class="cinematic-audio-dock" aria-label="Cinematic Background Audio Controls">
+    <!-- Mini Live Waveform Canvas -->
+    <div class="audio-waveform-wrap" title="Real-time Audio Waveform">
+      <canvas id="audio-waveform-canvas" width="60" height="20" class="audio-waveform-canvas"></canvas>
+    </div>
+
+    <!-- Play/Pause Button -->
+    <button id="audio-play-btn" class="audio-dock-btn" title="Play / Pause Soundtrack" aria-label="Play or Pause Soundtrack">
+      <span id="audio-play-icon">⏸</span>
+    </button>
+
+    <!-- Track Info & Visualizer Indicator -->
+    <div class="audio-track-info" title="Current Soundtrack">
+      <span class="audio-track-title">Odyssey of Curiosity</span>
+      <span class="audio-track-sub">Md Jubayed Jaman • Synth Score</span>
+    </div>
+
+    <!-- Mute / Unmute Button -->
+    <button id="audio-mute-btn" class="audio-dock-btn" title="Mute / Unmute" aria-label="Mute or Unmute">
+      <span id="audio-mute-icon">🔊</span>
+    </button>
+
+    <!-- Volume Slider -->
+    <div class="audio-volume-wrap">
+      <input type="range" id="audio-volume-slider" min="0" max="100" value="70" class="audio-volume-slider" title="Soundtrack Volume" aria-label="Soundtrack Volume">
+    </div>
+
+    <!-- Sound FX indicator -->
+    <div class="audio-sfx-indicator" id="audio-sfx-badge" title="Dynamic sound effects active">
+      <span class="sfx-pulse-dot"></span>
+      <span class="sfx-lbl">SYNTH 48kHz</span>
+    </div>
+  </div>
+
+  <!-- ═══════ HIGH-PRIORITY GLOBAL CUSTOM CURSOR ═══════ -->
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
 </body>
 </html>
