@@ -380,9 +380,67 @@ body.light-theme .journey-synthesis-card {
 body.light-theme .synthesis-quote {
   color: #0f172a !important;
 }
+#theme-toggle:checked ~ .page-wrapper .synthesis-quote-body,
+body.light-theme .synthesis-quote-body {
+  color: #1e293b !important;
+}
+/* Highlight Birbhum, West Bengal clearly in Light Mode */
+#theme-toggle:checked ~ .page-wrapper .synthesis-quote-body strong,
+body.light-theme .synthesis-quote-body strong {
+  color: #0369a1 !important;
+  background: rgba(2, 132, 199, 0.12) !important;
+  padding: 0.15rem 0.5rem !important;
+  border-radius: 6px !important;
+  text-shadow: none !important;
+  font-weight: 800 !important;
+}
 #theme-toggle:checked ~ .page-wrapper .synthesis-author,
 body.light-theme .synthesis-author {
+  color: #0284c7 !important;
+}
+#theme-toggle:checked ~ .page-wrapper .synthesis-badge,
+body.light-theme .synthesis-badge {
+  background: #f1f5f9 !important;
   color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+#theme-toggle:checked ~ .page-wrapper .synthesis-quote-mark,
+body.light-theme .synthesis-quote-mark {
+  color: #7c3aed !important;
+  opacity: 0.3 !important;
+}
+
+/* Birbhum Final Aerial Card in Light Theme (Never black in light mode!) */
+#theme-toggle:checked ~ .page-wrapper .birbhum-final-card,
+body.light-theme .birbhum-final-card {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid rgba(202, 138, 4, 0.45) !important;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12), 0 0 25px rgba(234, 179, 8, 0.15) !important;
+}
+#theme-toggle:checked ~ .page-wrapper .final-title,
+body.light-theme .final-title {
+  color: #0f172a !important;
+}
+#theme-toggle:checked ~ .page-wrapper .final-sub,
+body.light-theme .final-sub {
+  color: #b45309 !important;
+}
+#theme-toggle:checked ~ .page-wrapper .final-quote,
+body.light-theme .final-quote {
+  color: #334155 !important;
+}
+#theme-toggle:checked ~ .page-wrapper .final-badge,
+body.light-theme .final-badge {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  border: 1px solid #fde047 !important;
+}
+#theme-toggle:checked ~ .page-wrapper .final-terrain-pill span,
+body.light-theme .final-terrain-pill span {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  font-weight: 600 !important;
 }
 #theme-toggle:checked ~ .page-wrapper .callout-glass-pill,
 body.light-theme .callout-glass-pill {
@@ -4604,26 +4662,28 @@ body.has-custom-cursor * {
    ═══════════════════════════════════════════════ */
 .birbhum-final-card {
   position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(24px);
-  background: rgba(4, 9, 24, 0.9);
+  bottom: 24px;
+  right: 20px;
+  left: auto;
+  transform: translateY(20px);
+  background: rgba(4, 9, 24, 0.92);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(250, 204, 21, 0.5);
-  box-shadow: 0 0 40px rgba(250, 204, 21, 0.3), 0 25px 50px rgba(0, 0, 0, 0.8);
-  padding: 1.3rem 2.2rem;
-  border-radius: 20px;
+  box-shadow: 0 0 35px rgba(250, 204, 21, 0.25), 0 20px 45px rgba(0, 0, 0, 0.7);
+  padding: 1.15rem 1.6rem;
+  border-radius: 18px;
   text-align: center;
   opacity: 0;
   pointer-events: none;
-  transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 25;
-  max-width: 92%;
+  transition: all 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+  max-width: 360px;
+  width: 100%;
 }
 .birbhum-final-card.is-visible {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
 .final-badge {
   font-family: 'JetBrains Mono', monospace;
@@ -8025,27 +8085,31 @@ body.has-custom-cursor * {
       this.bindControls();
       this.updateNarrative(0);
 
-      // AUTOMATIC ZOOM SEQUENCE TRIGGER WHEN USER IS IN THAT SLIDE:
-      // Plays once and stops at Birbhum District!
-      if ('IntersectionObserver' in window) {
+      // AUTOMATIC ZOOM SEQUENCE TRIGGER:
+      // Only starts after the user has scrolled past the quote and reached the full 3D tile!
+      const stageTile = document.getElementById('journey-canvas-container') || document.querySelector('.journey-stage-card');
+      if ('IntersectionObserver' in window && stageTile) {
         const obs = new IntersectionObserver((entries) => {
           entries.forEach(e => {
-            if (e.isIntersecting && !this.hasAutoStarted) {
+            if (e.isIntersecting && e.intersectionRatio >= 0.5 && !this.hasAutoStarted) {
               this.hasAutoStarted = true;
               this.startSingleFlightSequence();
             }
           });
-        }, { threshold: 0.15 });
-        const journeySec = document.getElementById('journey');
-        if (journeySec) obs.observe(journeySec);
+        }, { threshold: [0.2, 0.5, 0.8] });
+        obs.observe(stageTile);
       }
 
       // Also trigger flight on clicking navbar or hero journey links
       document.querySelectorAll('a[href="#journey"]').forEach(link => {
         link.addEventListener('click', () => {
+          this.hasAutoStarted = true;
           setTimeout(() => {
+            if (stageTile) {
+              stageTile.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             this.replayFlight();
-          }, 350);
+          }, 500);
         });
       });
     },
@@ -8959,9 +9023,9 @@ body.has-custom-cursor * {
         this.flightTimeouts.push(timer);
       };
 
-      schedule(1, 3200);  // Stage 1: Smoothly zoom into India (at 3.2s)
-      schedule(2, 6800);  // Stage 2: Smoothly zoom into West Bengal (at 6.8s)
-      schedule(3, 10500); // Stage 3: Smoothly zoom into Birbhum District (at 10.5s) and STOPS!
+      schedule(1, 1800);  // Scene 1 (India): after 1.8s (slightly reduced from 2.2s)
+      schedule(2, 4000);  // Scene 2 (West Bengal): after 2.2s (at 4.0s)
+      schedule(3, 6200);  // Scene 3 (Birbhum District): after 2.2s (at 6.2s) and STOPS!
     },
 
     clearFlightTimers() {
@@ -9011,7 +9075,7 @@ body.has-custom-cursor * {
       }
 
       if (this.camera) {
-        this.camera.position.z += (this.targetCamDist - this.camera.position.z) * 0.10;
+        this.camera.position.z += (this.targetCamDist - this.camera.position.z) * 0.09;
       }
 
       if (this.renderer && this.scene && this.camera) {
